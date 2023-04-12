@@ -1,9 +1,21 @@
 import React from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../type';
 
 
-function SellerHomePage(): JSX.Element {
+type NavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ProductListPage'
+>;
+
+type Props = {
+  navigation: NavigationProp;
+};
+
+function SellerHomePage({navigation}: Props): JSX.Element {
   return (
     <SafeAreaView>
       <View >

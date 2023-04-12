@@ -5,13 +5,13 @@ import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../type';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
+type NavigationProp = StackNavigationProp<
   RootStackParamList,
   'Splash'
 >;
 
 type Props = {
-  navigation: ProfileScreenNavigationProp;
+  navigation: NavigationProp;
 };
 
 function SplashPage({navigation}: Props): JSX.Element {

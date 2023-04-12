@@ -4,6 +4,14 @@ type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     TabNavigationRoutes: undefined;
+    ProfilePage: undefined;
+    ProfileEditPage: undefined;
+    HomePage: undefined;
+    BuyerHomePage: undefined;
+    SellerHomePage: undefined;
+    ProductListPage: undefined;
+    ProductDescriptionPage: undefined;
+    UploadPage: undefined;
   };
 
 export {

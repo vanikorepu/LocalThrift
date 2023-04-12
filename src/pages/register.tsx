@@ -5,13 +5,13 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../type';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
+type NavigationProp = StackNavigationProp<
   RootStackParamList,
   'Register'
 >;
 
 type Props = {
-    navigation: ProfileScreenNavigationProp;
+    navigation: NavigationProp;
   };
 
 function RegisterPage({navigation}: Props): JSX.Element {

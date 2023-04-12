@@ -153,31 +153,27 @@ function Auth(): JSX.Element {
   );
 }
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        {/* SplashScreen which will come once for 5 Seconds */}
         <Stack.Screen
           name="Splash"
           component={SplashPage}
-          // Hiding header for Splash Screen
           options={{headerShown: false}}
         />
-        {/* Auth Navigator: Include Login and Signup */}
         <Stack.Screen
           name="Auth"
           component={Auth}
-          options={{headerShown: false}}
+          options={{
+            headerShown: false, 
+          }}
         />
-        {/* Navigation Drawer as a landing page */}
         <Stack.Screen
           name="TabNavigationRoutes"
           component={TabNavigationRoutes}
-          // Hiding header for Navigation Drawer
           options={{headerShown: false}}
         />
       </Stack.Navigator>

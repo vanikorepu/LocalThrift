@@ -5,13 +5,13 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../type';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
+type NavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
 >;
 
 type Props = {
-  navigation: ProfileScreenNavigationProp;
+  navigation: NavigationProp;
 };
 
 function LoginPage({navigation}: Props): JSX.Element {
@@ -26,7 +26,7 @@ function LoginPage({navigation}: Props): JSX.Element {
         <TextInput placeholder="Email" />
         <Text>Password</Text>
         <TextInput placeholder="Password" />
-        
+
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={handleSubmitPress}>
