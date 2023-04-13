@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button
 } from 'react-native';
 
 import {
@@ -28,15 +29,26 @@ import {
 import 'react-native-gesture-handler';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 
 import SplashPage from './src/pages/splash';
 import LoginPage from './src/pages/login';
 import RegisterPage from './src/pages/register';
 import TabNavigationRoutes from './src/pages/tab_navigation_routes';
+import UploadPage from './src/pages/tab_pages/upload';
+import Summary from './src/pages/tab_pages/summary';
 
 import { RootStackParamList } from './src/type';
+
+import { FONT } from './assets/setting';
+
+import setDefaultProps from 'react-native-simple-default-props'
+
+const defaultText = {
+  style: [{fontFamily: FONT}],
+};
+
+setDefaultProps(Text, defaultText)
 
 // type SectionProps = PropsWithChildren<{
 //   title: string;
@@ -120,7 +132,10 @@ import { RootStackParamList } from './src/type';
 
 function Auth(): JSX.Element {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator 
+      initialRouteName="Login"
+      screenOptions={{cardStyle: { backgroundColor: 'white' }}}
+    >
       <Stack.Screen
         name="Login"
         component={LoginPage}
@@ -130,9 +145,7 @@ function Auth(): JSX.Element {
             backgroundColor: '#307ecc', //Set Header color
           },
           headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
+          headerTitleStyle: styles.headerTitle,
         }}
       />
       <Stack.Screen
@@ -144,9 +157,7 @@ function Auth(): JSX.Element {
             backgroundColor: '#307ecc', //Set Header color
           },
           headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
+          headerTitleStyle: styles.headerTitle,
         }}
       />
     </Stack.Navigator>
@@ -155,10 +166,24 @@ function Auth(): JSX.Element {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-function App(): JSX.Element {
+type NavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'HomePage'
+>;
+
+type Props = {
+  navigation: NavigationProp;
+};
+
+function App({navigation}: Props): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator 
+        initialRouteName="Splash"
+        screenOptions={{
+          cardStyle: { backgroundColor: 'white' }
+        }}
+      >
         <Stack.Screen
           name="Splash"
           component={SplashPage}
@@ -176,28 +201,64 @@ function App(): JSX.Element {
           component={TabNavigationRoutes}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="UploadPage"
+          component={UploadPage}
+          options={{
+              presentation: 'modal',
+              animationEnabled: false,
+              headerTitleStyle: styles.headerTitle,
+              // animationTypeForReplace: 'pop',
+              headerShown: true,
+              headerShadowVisible: false,
+              headerTitle: "Upload",
+              gestureEnabled: false, 
+              headerLeft: () => <></>,
+          }}
+          />
+        <Stack.Screen
+          name="Summary"
+          component={Summary}
+          options={{
+              presentation: 'modal',
+              animationEnabled: false,
+              headerTitleStyle: styles.headerTitle,
+              // animationTypeForReplace: 'pop',
+              headerShown: true,
+              headerShadowVisible: false,
+              headerTitle: "Summary",
+              gestureEnabled: false, 
+              headerLeft: () => <></>,
+          }}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  headerTitle: {
+    fontWeight: 'normal',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  // sectionContainer: {
+  //   marginTop: 32,
+  //   paddingHorizontal: 24,
+  // },
+  // sectionTitle: {
+  //   fontSize: 24,
+  //   fontWeight: '600',
+  // },
+  // sectionDescription: {
+  //   marginTop: 8,
+  //   fontSize: 18,
+  //   fontWeight: '400',
+  // },
+  // highlight: {
+  //   fontWeight: '700',
+  // },
+  // header: {
+  //   fontFamily: FONT
+  // }
 });
 
 export default App;

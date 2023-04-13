@@ -45,21 +45,44 @@ const Stack = createStackNavigator();
 
 function ProfileStack({navigation}: Props): JSX.Element {
   return (
-    <Stack.Navigator initialRouteName="ProfilePage">
+    <Stack.Navigator 
+        initialRouteName="ProfilePage"
+        screenOptions={{
+            cardStyle: {backgroundColor: 'white'},
+            headerShadowVisible: false,
+            animationEnabled: false
+        }}
+    >
         <Stack.Screen
             name="ProfilePage"
             component={ProfilePage}
-            options={{headerShown: false}}
+            options={{
+                headerShown: true,
+                headerTitle: "Profile",
+                headerTitleStyle: styles.headerTitle,
+                gestureEnabled: false, 
+                headerLeft: () => <></>
+              }}
         />
         <Stack.Screen
             name="ProfileEditPage"
             component={ProfileEditPage}
             options={{
-                headerShown: false,
-            }}
+                headerShown: true,
+                headerTitle: "Edit Profile",
+                headerTitleStyle: styles.headerTitle,
+                gestureEnabled: false, 
+                headerLeft: () => <></>
+              }}
         />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+    headerTitle: {
+        fontWeight: 'normal',
+    },
+});
 
 export default ProfileStack;

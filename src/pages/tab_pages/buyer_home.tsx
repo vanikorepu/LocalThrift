@@ -20,23 +20,22 @@ function BuyerHomePage({navigation}: Props): JSX.Element {
   return (
     <SafeAreaView>
       <View >
-        <Text>Buyer Home</Text>
+        <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {navigation.push('ProductListPage');}}>
+            <Text>TOPS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {navigation.push('ProductListPage');}}>
+            <Text>BOTTOMS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {navigation.push('ProductListPage');}}>
+            <Text>WINTER CLOTHES</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {navigation.push('ProductListPage');}}>
-          <Text>TOPS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {navigation.push('ProductListPage');}}>
-          <Text>BOTTOMS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {navigation.push('ProductListPage');}}>
-          <Text>WINTER CLOTHES</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 }

@@ -12,6 +12,8 @@ type RootStackParamList = {
     ProductListPage: undefined;
     ProductDescriptionPage: undefined;
     UploadPage: undefined;
+    Summary: undefined;
+    Cart: undefined;
   };
 
 export {

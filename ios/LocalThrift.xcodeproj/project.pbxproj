@@ -9,11 +9,29 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* LocalThriftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LocalThriftTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-LocalThrift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-LocalThrift.a */; };
+		11C18DC383AC4151B81FDF87 /* Cover.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5617B4C068C64A228BFA9ED4 /* Cover.jpg */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		224E8B3FD71D4F73AAC3D1EE /* upload.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3EFD8210B3D4422BA2A2F40B /* upload.svg */; };
+		2E930729D348443FBCDFE82E /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp in Resources */ = {isa = PBXBuildFile; fileRef = 1CA51EA9224C4DB1B0C67D32 /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp */; };
+		2EBA3FB9748D4EEC8795B3E8 /* tops.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B54EC8E611AD46248B1F8602 /* tops.jpg */; };
+		323AB5A37AF341E387E9EEE1 /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp in Resources */ = {isa = PBXBuildFile; fileRef = E829200B888A4F8E9CE015AE /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp */; };
+		32CFDE8524D142A994AEF93F /* buying2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 180694C3116A4BD5AC8C5DA9 /* buying2.jpg */; };
+		4FF443DE8788427B96CB1225 /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp in Resources */ = {isa = PBXBuildFile; fileRef = CA47F78D26534A07B822254E /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp */; };
+		68076FC734084628A0B1978F /* Bottoms.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 47497F5E3C1741ADBC582D35 /* Bottoms.jpg */; };
 		7699B88040F8A987B510C191 /* libPods-LocalThrift-LocalThriftTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LocalThrift-LocalThriftTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8210E68E4DAA42BE8B8D3189 /* cover image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E1A1B365117241C1BD1888DD /* cover image2.jpg */; };
+		88BC4D240FBE49A68813971E /* profile.svg in Resources */ = {isa = PBXBuildFile; fileRef = 607DA5237FE04CABB1E6AB8C /* profile.svg */; };
+		8DBB6F1F18AF48F2AD6D84F5 /* winterwear.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1137EF9EA01E41D9992C7F90 /* winterwear.jpg */; };
+		A056BF05F02B4CAC97D55D10 /* image_assest.tsx in Resources */ = {isa = PBXBuildFile; fileRef = 6B323A64C8E040F8BFDE54BC /* image_assest.tsx */; };
+		A12C9EE9856542EAB13D7CE5 /* home.svg in Resources */ = {isa = PBXBuildFile; fileRef = 50B8CDA9BAAF436295324984 /* home.svg */; };
+		A54AE500FA3F432097E250A2 /* selling2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6933128BFEF045A885880276 /* selling2.jpg */; };
+		BB2D35E660F44524A99DFF78 /* 0790601600004NEW_00_041.webp in Resources */ = {isa = PBXBuildFile; fileRef = 9B2C8752B01D4D40BFBC4352 /* 0790601600004NEW_00_041.webp */; };
+		E9DC49A2BD3B4AE191C9443F /* cart.svg in Resources */ = {isa = PBXBuildFile; fileRef = F88765B317094E848BB80A61 /* cart.svg */; };
+		EFDA0E42D3ED4B30839E6202 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C660F103B827451D9026C62B /* Montserrat-Italic-VariableFont_wght.ttf */; };
+		F331950ABD924B41BCD42523 /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEB266D5661E4546A00FAD04 /* Montserrat-VariableFont_wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,20 +48,38 @@
 		00E356EE1AD99517003FC87E /* LocalThriftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalThriftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LocalThriftTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalThriftTests.m; sourceTree = "<group>"; };
+		1137EF9EA01E41D9992C7F90 /* winterwear.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = winterwear.jpg; path = ../assets/images/winterwear.jpg; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* LocalThrift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalThrift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = LocalThrift/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = LocalThrift/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LocalThrift/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LocalThrift/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LocalThrift/main.m; sourceTree = "<group>"; };
+		180694C3116A4BD5AC8C5DA9 /* buying2.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = buying2.jpg; path = ../assets/images/buying2.jpg; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LocalThrift-LocalThriftTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LocalThrift-LocalThriftTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CA51EA9224C4DB1B0C67D32 /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp; path = ../assets/images/16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-LocalThrift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalThrift.debug.xcconfig"; path = "Target Support Files/Pods-LocalThrift/Pods-LocalThrift.debug.xcconfig"; sourceTree = "<group>"; };
+		3EFD8210B3D4422BA2A2F40B /* upload.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = upload.svg; path = ../assets/icons/upload.svg; sourceTree = "<group>"; };
+		47497F5E3C1741ADBC582D35 /* Bottoms.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Bottoms.jpg; path = ../assets/images/Bottoms.jpg; sourceTree = "<group>"; };
+		50B8CDA9BAAF436295324984 /* home.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = home.svg; path = ../assets/icons/home.svg; sourceTree = "<group>"; };
+		5617B4C068C64A228BFA9ED4 /* Cover.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Cover.jpg; path = ../assets/images/Cover.jpg; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LocalThrift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalThrift.release.xcconfig"; path = "Target Support Files/Pods-LocalThrift/Pods-LocalThrift.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-LocalThrift-LocalThriftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalThrift-LocalThriftTests.debug.xcconfig"; path = "Target Support Files/Pods-LocalThrift-LocalThriftTests/Pods-LocalThrift-LocalThriftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-LocalThrift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LocalThrift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		607DA5237FE04CABB1E6AB8C /* profile.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = profile.svg; path = ../assets/icons/profile.svg; sourceTree = "<group>"; };
+		6933128BFEF045A885880276 /* selling2.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = selling2.jpg; path = ../assets/images/selling2.jpg; sourceTree = "<group>"; };
+		6B323A64C8E040F8BFDE54BC /* image_assest.tsx */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = image_assest.tsx; path = ../assets/images/image_assest.tsx; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LocalThrift/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LocalThrift-LocalThriftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalThrift-LocalThriftTests.release.xcconfig"; path = "Target Support Files/Pods-LocalThrift-LocalThriftTests/Pods-LocalThrift-LocalThriftTests.release.xcconfig"; sourceTree = "<group>"; };
+		9B2C8752B01D4D40BFBC4352 /* 0790601600004NEW_00_041.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = 0790601600004NEW_00_041.webp; path = ../assets/images/0790601600004NEW_00_041.webp; sourceTree = "<group>"; };
+		B54EC8E611AD46248B1F8602 /* tops.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = tops.jpg; path = ../assets/images/tops.jpg; sourceTree = "<group>"; };
+		BEB266D5661E4546A00FAD04 /* Montserrat-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-VariableFont_wght.ttf"; path = "../assets/fonts/Montserrat-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		C660F103B827451D9026C62B /* Montserrat-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic-VariableFont_wght.ttf"; path = "../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		CA47F78D26534A07B822254E /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp; path = ../assets/images/1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp; sourceTree = "<group>"; };
+		E1A1B365117241C1BD1888DD /* cover image2.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "cover image2.jpg"; path = "../assets/images/cover image2.jpg"; sourceTree = "<group>"; };
+		E829200B888A4F8E9CE015AE /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp; path = ../assets/images/16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F88765B317094E848BB80A61 /* cart.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = cart.svg; path = ../assets/icons/cart.svg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +158,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				CE5C5AA5C0734BDF97673C22 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -146,6 +183,32 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-LocalThrift-LocalThriftTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CE5C5AA5C0734BDF97673C22 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C660F103B827451D9026C62B /* Montserrat-Italic-VariableFont_wght.ttf */,
+				BEB266D5661E4546A00FAD04 /* Montserrat-VariableFont_wght.ttf */,
+				9B2C8752B01D4D40BFBC4352 /* 0790601600004NEW_00_041.webp */,
+				CA47F78D26534A07B822254E /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp */,
+				1CA51EA9224C4DB1B0C67D32 /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp */,
+				E829200B888A4F8E9CE015AE /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp */,
+				47497F5E3C1741ADBC582D35 /* Bottoms.jpg */,
+				180694C3116A4BD5AC8C5DA9 /* buying2.jpg */,
+				E1A1B365117241C1BD1888DD /* cover image2.jpg */,
+				6933128BFEF045A885880276 /* selling2.jpg */,
+				B54EC8E611AD46248B1F8602 /* tops.jpg */,
+				1137EF9EA01E41D9992C7F90 /* winterwear.jpg */,
+				5617B4C068C64A228BFA9ED4 /* Cover.jpg */,
+				6B323A64C8E040F8BFDE54BC /* image_assest.tsx */,
+				F88765B317094E848BB80A61 /* cart.svg */,
+				50B8CDA9BAAF436295324984 /* home.svg */,
+				607DA5237FE04CABB1E6AB8C /* profile.svg */,
+				3EFD8210B3D4422BA2A2F40B /* upload.svg */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +307,24 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				EFDA0E42D3ED4B30839E6202 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */,
+				F331950ABD924B41BCD42523 /* Montserrat-VariableFont_wght.ttf in Resources */,
+				BB2D35E660F44524A99DFF78 /* 0790601600004NEW_00_041.webp in Resources */,
+				4FF443DE8788427B96CB1225 /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp in Resources */,
+				2E930729D348443FBCDFE82E /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp in Resources */,
+				323AB5A37AF341E387E9EEE1 /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp in Resources */,
+				68076FC734084628A0B1978F /* Bottoms.jpg in Resources */,
+				32CFDE8524D142A994AEF93F /* buying2.jpg in Resources */,
+				8210E68E4DAA42BE8B8D3189 /* cover image2.jpg in Resources */,
+				A54AE500FA3F432097E250A2 /* selling2.jpg in Resources */,
+				2EBA3FB9748D4EEC8795B3E8 /* tops.jpg in Resources */,
+				8DBB6F1F18AF48F2AD6D84F5 /* winterwear.jpg in Resources */,
+				11C18DC383AC4151B81FDF87 /* Cover.jpg in Resources */,
+				A056BF05F02B4CAC97D55D10 /* image_assest.tsx in Resources */,
+				E9DC49A2BD3B4AE191C9443F /* cart.svg in Resources */,
+				A12C9EE9856542EAB13D7CE5 /* home.svg in Resources */,
+				88BC4D240FBE49A68813971E /* profile.svg in Resources */,
+				224E8B3FD71D4F73AAC3D1EE /* upload.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

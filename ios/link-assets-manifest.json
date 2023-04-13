@@ -1,0 +1,77 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Montserrat-Italic-VariableFont_wght.ttf",
+      "sha1": "df1a17b6a12a7518575abe3f5cdc1d6cb0c7b390"
+    },
+    {
+      "path": "assets/fonts/Montserrat-VariableFont_wght.ttf",
+      "sha1": "b30f63a27bcdc61c2458d0ddfbbe738a01e39714"
+    },
+    {
+      "path": "assets/images/0790601600004NEW_00_041.webp",
+      "sha1": "5088a677d2b7727d6c913356bea9982fd9514bd1"
+    },
+    {
+      "path": "assets/images/1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp",
+      "sha1": "db014494192dbe0039893965c7671e1deadaffe2"
+    },
+    {
+      "path": "assets/images/16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp",
+      "sha1": "12f37761f1741bade2bf29cd6f1e89d07c5a3952"
+    },
+    {
+      "path": "assets/images/16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp",
+      "sha1": "96a5af6d3c96e154807665d223f4693fda80b7cf"
+    },
+    {
+      "path": "assets/images/Bottoms.jpg",
+      "sha1": "80eb489f1976fa3cf2f7b7c2023a802285524519"
+    },
+    {
+      "path": "assets/images/Cover.jpg",
+      "sha1": "3a2e5a8e771ff6bcb6f6f1e6cca6c1cae4db3172"
+    },
+    {
+      "path": "assets/images/buying2.jpg",
+      "sha1": "c46b20e58c13f5efe60f9c871961994da2fb7488"
+    },
+    {
+      "path": "assets/images/cover image2.jpg",
+      "sha1": "2060c75f139b325c51fe5bf780c3e400dcf593ae"
+    },
+    {
+      "path": "assets/images/image_assest.tsx",
+      "sha1": "64c009599746a215b1af5db67d56a0f48ef2c62a"
+    },
+    {
+      "path": "assets/images/selling2.jpg",
+      "sha1": "af38395eaebc2ba52728044fb0efb053166b1742"
+    },
+    {
+      "path": "assets/images/tops.jpg",
+      "sha1": "de2741a186d9dc1a46d338c05afe36898f133e9c"
+    },
+    {
+      "path": "assets/images/winterwear.jpg",
+      "sha1": "95f5a9e1f300a93c00bee7b01c58df32c2241803"
+    },
+    {
+      "path": "assets/icons/cart.svg",
+      "sha1": "79ff2b13d3f3d9bbfdb9a4fce6fd894db961d1bc"
+    },
+    {
+      "path": "assets/icons/home.svg",
+      "sha1": "37469c853ec0f3b3fcaf9c11c05eb30266e06380"
+    },
+    {
+      "path": "assets/icons/profile.svg",
+      "sha1": "8335f5cb7a34b345bf836c2b2f5a22df40743278"
+    },
+    {
+      "path": "assets/icons/upload.svg",
+      "sha1": "5f28d00c5b0206e145950d32902f8b212fba467a"
+    }
+  ]
+}
