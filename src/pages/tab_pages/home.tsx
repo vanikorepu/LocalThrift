@@ -17,6 +17,7 @@ import { COLOR, FONT } from '../../../assets/setting';
 import { ImagesAssets } from '../../../assets/images/image_assest';
 
 import Upload from '../../../assets/icons/upload.svg';
+import Back from '../../../assets/icons/left_arrow.svg';
 
 type NavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -83,6 +84,7 @@ function HomeStack({navigation}: Props): JSX.Element {
             component={BuyerHomePage}
             options={{
               headerShown: true,
+              headerTitle: "Explore",
               gestureEnabled: false, 
               headerTitleStyle: styles.headerTitle,
               headerLeft: () => <></>
@@ -91,12 +93,16 @@ function HomeStack({navigation}: Props): JSX.Element {
         <Stack.Screen
             name="ProductListPage"
             component={ProductListPage}
-            options={{
-              headerShown: true,
-              gestureEnabled: true, 
-              headerTitleStyle: styles.headerTitle,
-              headerLeft: () => <Button title="back" onPress={navigation.goBack} />
-            }}
+            options={
+              ({ route }) => ({ 
+                title: route.params.name,
+                headerShown: true,
+                gestureEnabled: true, 
+                headerTitleStyle: styles.headerTitle,
+                headerLeft: () => <TouchableOpacity onPress={navigation.goBack}>
+                      <Back style={styles.back} stroke={'black'}/>
+                </TouchableOpacity>
+            })}
         />
         <Stack.Screen
             name="ProductDescriptionPage"
@@ -105,7 +111,9 @@ function HomeStack({navigation}: Props): JSX.Element {
               headerShown: true,
               gestureEnabled: false, 
               headerTitleStyle: styles.headerTitle,
-              headerLeft: () => <Button title="back" onPress={navigation.goBack} />
+              headerLeft: () => <TouchableOpacity onPress={navigation.goBack}>
+                    <Back style={styles.back} stroke={'black'}/>
+              </TouchableOpacity>
             }}
         />
         <Stack.Screen
@@ -120,9 +128,7 @@ function HomeStack({navigation}: Props): JSX.Element {
                 headerRight: () => <TouchableOpacity onPress={()=>{
                       navigation.push('UploadPage')
                     }}>
-                    <View>
-                        <Upload style={styles.upload}/>
-                    </View>
+                      <Upload style={styles.upload}/>
                 </TouchableOpacity>
                 
                 // <Button title="Upload" onPress={() => {
@@ -184,6 +190,11 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 20,
+  },
+  back: {
+    height: 20,
+    width: 20,
+    marginLeft: 20,
   }
 });
 

@@ -10,6 +10,9 @@ import { RootStackParamList } from '../../type';
 
 import { COLOR, FONT } from '../../../assets/setting';
 
+import Cross from '../../../assets/icons/cross.svg';
+
+
 type NavigationProp = StackNavigationProp<
   RootStackParamList,
   'UploadPage'
@@ -22,9 +25,15 @@ type Props = {
 function UploadPage({navigation}: Props): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button title="Cancel" onPress={() => {
+      headerRight: () => 
+      <TouchableOpacity onPress={()=>{
         navigation.navigate('TabNavigationRoutes', {screen: 'Home'})
-      }} />
+          }}>
+        <Cross style={styles.cancel}/>
+      </TouchableOpacity>
+      // <Button title="Cancel" onPress={() => {
+      //   navigation.navigate('TabNavigationRoutes', {screen: 'Home'})
+      // }} />
     });
   }, [navigation]);
 
@@ -163,6 +172,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 15,
+  },
+  cancel: {
+    marginRight: 20,
+    width: 20,
+    height: 20,
   }
 });
 

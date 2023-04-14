@@ -15,7 +15,7 @@ import ProfilePage from './tab_pages/profile';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../type';
 
-import { COLOR, FONT } from '../../assets/setting';
+import { COLOR, FONT, CLICK_COLOR } from '../../assets/setting';
 
 import Home from '../../assets/icons/home.svg';
 import Profile from '../../assets/icons/profile.svg';
@@ -50,8 +50,10 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Home style={{width: size, height: size}} />
+            <Home style={{width: size, height: size}} fill={color} />
           ),
+          tabBarActiveTintColor: CLICK_COLOR,
+          tabBarInactiveTintColor: 'white',
         }}
         listeners={() => ({
           tabPress: (e) => {
@@ -66,8 +68,10 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Profile style={{width: size, height: size}} />
+            <Profile style={{width: size, height: size}} fill={color}/>
           ),
+          tabBarActiveTintColor: CLICK_COLOR,
+          tabBarInactiveTintColor: 'white',
         }}
         listeners={() => ({
           tabPress: (e) => {
@@ -81,10 +85,13 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
         options={{
           headerShown: true,
           headerTitle: "Shopping Cart",
+          headerTitleStyle: styles.headerTitle,
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Cart style={{width: size, height: size}} />
+            <Cart style={{width: size, height: size}} fill={color}/>
           ),
+          tabBarActiveTintColor: CLICK_COLOR,
+          tabBarInactiveTintColor: 'white',
         }}
         listeners={() => ({
           tabPress: (e) => {
@@ -97,6 +104,9 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  headerTitle: {
+    fontWeight: 'normal',
+  },
   tabBar: {
     backgroundColor: COLOR,
     marginHorizontal: 40,

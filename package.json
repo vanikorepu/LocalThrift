@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^6.3.16",
     "react": "18.2.0",
     "react-native": "0.71.6",
+    "react-native-auto-height-image": "^3.2.4",
     "react-native-camera": "^4.2.1",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "^2.9.0",
@@ -28,7 +29,9 @@
     "react-native-screens": "^3.20.0",
     "react-native-simple-default-props": "^1.0.0",
     "react-native-svg": "^13.9.0",
-    "react-native-svg-transformer": "^1.0.0"
+    "react-native-svg-transformer": "^1.0.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
