@@ -34,6 +34,10 @@
       "sha1": "3a2e5a8e771ff6bcb6f6f1e6cca6c1cae4db3172"
     },
     {
+      "path": "assets/images/Logo.png",
+      "sha1": "8441b29ccb54fde8d2a60481443b4d6d7256e044"
+    },
+    {
       "path": "assets/images/Tops.jpeg",
       "sha1": "b541595de912559a555349e007d79b29e9401ef0"
     },
@@ -47,7 +51,7 @@
     },
     {
       "path": "assets/images/image_assest.tsx",
-      "sha1": "965cd0c0639c530a2a2a2d3a042ce1c7e5508b4c"
+      "sha1": "a22754e18ae11372c1cd70fa846df7809e2132e0"
     },
     {
       "path": "assets/images/selling2.jpg",
@@ -74,6 +78,10 @@
       "sha1": "946ce04f1cfb05ac545095b2a6bd82b875fa259b"
     },
     {
+      "path": "assets/icons/empty.svg",
+      "sha1": "a8c742161d7a2f9676fba8a05601f9c1d2e7a6c6"
+    },
+    {
       "path": "assets/icons/filter.svg",
       "sha1": "09afbf7db152b5fdde1f4e9448ac2258be2a954d"
     },
@@ -86,6 +94,10 @@
       "sha1": "e24a35a66b35713f4061ebc53b608636fd7ade92"
     },
     {
+      "path": "assets/icons/pen.svg",
+      "sha1": "71494f8cd1dce4eb66fda6b9ebbd7c7f5400aa82"
+    },
+    {
       "path": "assets/icons/profile.svg",
       "sha1": "df524a3505982768dea17bf25fffe96436e0f0f6"
     },
@@ -94,8 +106,16 @@
       "sha1": "ce35cd141a5e483aaa9831152f7832c44f788adc"
     },
     {
+      "path": "assets/icons/sms.svg",
+      "sha1": "d8ac839a99d2c5e7f4fa6c21b502c6054056bfc8"
+    },
+    {
       "path": "assets/icons/sold.svg",
       "sha1": "d4576403deba2b8081de1e08977e54a3d170206b"
+    },
+    {
+      "path": "assets/icons/trash.svg",
+      "sha1": "3af039d71c5000ebf91a85eac4c445fdae7b054e"
     },
     {
       "path": "assets/icons/upload.svg",

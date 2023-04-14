@@ -1,0 +1,33 @@
+[
+    {
+        "seller": 1,
+        "product": [
+            {
+                "id": 1,
+                "size": "S",
+                "price": 100,
+                "usage": "Good Condition",
+                "brand": "H&M"
+            },
+            {
+                "id": 2,
+                "size": "M",
+                "price": 80,
+                "usage": "Almost New",
+                "brand": "Uniqlo"
+            }
+        ]
+    },
+    {
+        "seller": 2,
+        "product": [
+            {
+                "id": 3,
+                "size": "L",
+                "price": 50,
+                "usage": "Almost New",
+                "brand": "H&M"
+            }
+        ]
+    }
+]

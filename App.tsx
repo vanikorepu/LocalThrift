@@ -139,26 +139,12 @@ function Auth(): JSX.Element {
       <Stack.Screen
         name="Login"
         component={LoginPage}
-        options={{
-          title: 'Login', //Set Header Title
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: styles.headerTitle,
-        }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Register"
         component={RegisterPage}
-        options={{
-          title: 'Register', //Set Header Title
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: styles.headerTitle,
-        }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
