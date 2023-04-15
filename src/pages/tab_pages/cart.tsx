@@ -1,24 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
 
+import Menu, { MenuItem } from '../../components/manu';
+
 import CartProduct from '../../../data/cart.json';
 import Empty from '../../../assets/icons/empty.svg';
-import {COLOR} from '../../../assets/setting';
+import {COLOR, CLICK_COLOR} from '../../../assets/setting';
 
 import { TabScreenProps } from '../../type';
 
 import { ImagesAssets } from '../../../assets/images/image_assest';
 import Trash from '../../../assets/icons/trash.svg';
 
+import Gmail from '../../../assets/icons/gmail.svg';
+import SMS from '../../../assets/icons/sms.svg';
+
 function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
   const trash = (item: number) => {
 
   }
+
+  const send_sms = (items: {}) => {
+  }
+
+  const send_gmail = (items: {}) => {
+  
+  }
   
   const cart = CartProduct;
   const sum = cart.reduce((acc, cur) => acc + cur.product.length, 0);
-
+  
   let content: JSX.Element;
   if (sum === 0) {
     content = (<View style={styles.container}>
@@ -34,7 +46,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
   } else {
     content = (<ScrollView>
       <View style={[styles.container, {paddingTop: 10}]}>
-        {cart.map((items) => (
+        {cart.map((items, index) => (
           <View>
             <Text style={styles.sellerText}>Selled by: {items.seller}</Text>
             <View style={styles.seller}>
@@ -58,14 +70,19 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
                 ))
                 }
               </View>
-              <View style={styles.contact}>
-                <TouchableOpacity
-                    style={{}}
-                    activeOpacity={0.5}
-                    onPress={() => {}}>
-                    <Text style={styles.contactText}>Contact Seller</Text>
-                </TouchableOpacity>
-              </View>
+              <Menu 
+                style={styles.modal}
+                trigger={<View style={styles.contactButton}><Text style={styles.contactText}>Contact Seller</Text></View>}
+                >
+                <MenuItem
+                  element={<SMS style={[styles.icon]}/>}
+                  onPress={() => {send_sms(items)}}
+                />
+                <MenuItem
+                  element={<Gmail style={[styles.icon]}/>}
+                  onPress={() => {send_gmail(items)}}
+                />
+              </Menu>
             </View>
           </View>
         ))}
@@ -128,7 +145,6 @@ const styles = StyleSheet.create({
     width: '90%',
     borderBottomWidth: 1,
     marginHorizontal: '5%',
-    // marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -163,16 +179,35 @@ const styles = StyleSheet.create({
   },
   contact: {
     flex: 1,
-    backgroundColor: COLOR,
+    height: 80,
+    alignItems: 'center',
+  },
+  contactButton: {
+    width: 80,
     borderRadius: 12,
+    backgroundColor: COLOR,
+    justifyContent: 'center',
     alignItems: 'center',
     height: 25,
-    justifyContent: 'center',
+
   },
   contactText: {
     fontSize: 9,
     fontWeight: '600',
     color: 'white'
+  },
+  modal: {
+    flexDirection: 'row',
+    width: 80,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'space-around',
+    backgroundColor: CLICK_COLOR,
+    alignItems: 'center',
+  },
+  icon: {
+    width: 35,
+    height: 35,
   }
 });
 

@@ -4,8 +4,11 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-nati
 
 import { ProfileStackScreenProps } from '../../type';
 
+import BuyerProfile from '../../../data/buyer_profile.json';
 
 function ProfileEditPage({ navigation, route }: ProfileStackScreenProps<'ProfileEditPage'>): JSX.Element {
+  const user = BuyerProfile;
+  
   return (
     <SafeAreaView>
       <View >

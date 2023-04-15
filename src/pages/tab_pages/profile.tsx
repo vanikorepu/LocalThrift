@@ -7,14 +7,18 @@ import ProfileEditPage from './profile_edit';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TabScreenProps, ProfileStackScreenProps, ProfileStackParamList } from '../../type';
 
+import BuyerProfile from '../../../data/buyer_profile.json';
+
 
 function ProfilePage({ navigation, route }: ProfileStackScreenProps<'ProfilePage'>): JSX.Element {
+    const user = BuyerProfile;
+
     return (
         <SafeAreaView>
-          <View >
-            <Text>Account ID: Evana</Text>
-            <Text>Email: evana@umass.edu</Text>
-            <Text>Phone Number: 123-456-7890</Text>
+
+            <Text>Name: {user.name}</Text>
+            <Text>Email: {user.email}</Text>
+            <Text>Phone Number: {user.phone}</Text>
     
             <TouchableOpacity
                 activeOpacity={0.5}
@@ -24,10 +28,9 @@ function ProfilePage({ navigation, route }: ProfileStackScreenProps<'ProfilePage
     
             <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => navigation.replace('Auth')}>
+                onPress={() => navigation.replace('Login')}>
                 <Text>LOGOUT</Text>
             </TouchableOpacity>
-          </View>
         </SafeAreaView>
       );
 }

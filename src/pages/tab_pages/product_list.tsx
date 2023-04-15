@@ -5,7 +5,7 @@ import {ScrollView, StyleSheet, Modal, Text, View, TouchableOpacity, Image, Imag
 
 import { HomeStackScreenProps } from '../../type';
 
-import {COLOR} from '../../../assets/setting'
+import {COLOR} from '../../../assets/setting';
 
 import Filter from '../../../assets/icons/filter.svg';
 import Product from '../../../data/product_list.json';

@@ -19,6 +19,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { PortalHost, PortalProvider } from "@gorhom/portal";
 
 import 'react-native-gesture-handler';
 
@@ -71,77 +72,80 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Splash"
-        screenOptions={{
-          cardStyle: { backgroundColor: 'white' }
-        }}
-      >
-        <Stack.Screen
-          name="Splash"
-          component={SplashPage}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{
-            headerShown: false, 
+    <PortalProvider>
+      <PortalHost name="menu" />
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName="Splash"
+          screenOptions={{
+            cardStyle: { backgroundColor: 'white' }
           }}
-        />
-        <Stack.Screen
-          name="TabNavigationRoutes"
-          component={TabNavigationRoutes}
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="UploadPage"
-          component={UploadPage}
-          options={{
-              presentation: 'modal',
-              animationEnabled: false,
-              headerTitleStyle: styles.headerTitle,
-              // animationTypeForReplace: 'pop',
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: "Upload",
-              gestureEnabled: false, 
-              headerLeft: () => <></>,
-          }}
+        >
+          <Stack.Screen
+            name="Splash"
+            component={SplashPage}
+            options={{headerShown: false}}
           />
-        <Stack.Screen
-          name="Summary"
-          component={Summary}
-          options={{
-              presentation: 'modal',
-              animationEnabled: false,
-              headerTitleStyle: styles.headerTitle,
-              // animationTypeForReplace: 'pop',
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: "Post Summary",
-              gestureEnabled: false, 
-              headerLeft: () => <></>,
-          }}
+          <Stack.Screen
+            name="Auth"
+            component={Auth}
+            options={{
+              headerShown: false, 
+            }}
           />
-        <Stack.Screen
-          name="ProductDescriptionPage"
-          component={ProductDescriptionPage}
-          options={
-            ({ route }) => ({ 
-            title: Category[route.params.category],
-            headerShown: true,
-            gestureEnabled: false, 
-            headerShadowVisible: false,
-            headerTitleStyle: styles.headerTitle,
-            headerLeft: () =>  <></>,
-          })}
-      />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="TabNavigationRoutes"
+            component={TabNavigationRoutes}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name="UploadPage"
+            component={UploadPage}
+            options={{
+                presentation: 'modal',
+                animationEnabled: false,
+                headerTitleStyle: styles.headerTitle,
+                // animationTypeForReplace: 'pop',
+                headerShown: true,
+                headerShadowVisible: false,
+                headerTitle: "Upload",
+                gestureEnabled: false, 
+                headerLeft: () => <></>,
+            }}
+            />
+          <Stack.Screen
+            name="Summary"
+            component={Summary}
+            options={{
+                presentation: 'modal',
+                animationEnabled: false,
+                headerTitleStyle: styles.headerTitle,
+                // animationTypeForReplace: 'pop',
+                headerShown: true,
+                headerShadowVisible: false,
+                headerTitle: "Post Summary",
+                gestureEnabled: false, 
+                headerLeft: () => <></>,
+            }}
+            />
+          <Stack.Screen
+            name="ProductDescriptionPage"
+            component={ProductDescriptionPage}
+            options={
+              ({ route }) => ({ 
+              title: Category[route.params.category],
+              headerShown: true,
+              gestureEnabled: false, 
+              headerShadowVisible: false,
+              headerTitleStyle: styles.headerTitle,
+              headerLeft: () =>  <></>,
+            })}
+        />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PortalProvider>
   );
 }
 

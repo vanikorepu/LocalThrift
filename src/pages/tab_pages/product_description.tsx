@@ -56,20 +56,18 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
             </View>
           )}
       />
-      <View style={styles.arrows}>
-        <TouchableOpacity
-          style={styles.arrowButton}
-          activeOpacity={0.5}
-          onPress={() => {carousel.current?.prev()}}>
-          <LeftArrow stroke={'white'} style={[styles.arrow]}/>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.arrowButton}
-          activeOpacity={0.5}
-          onPress={() => {carousel.current?.next()}}>
-          <RightArrow stroke={'white'} style={[styles.arrow]}/>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={[styles.arrowButton, {}]}
+        activeOpacity={0.5}
+        onPress={() => {carousel.current?.prev()}}>
+        <LeftArrow stroke={'white'} style={[styles.arrow]}/>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.arrowButton, {right: 0}]}
+        activeOpacity={0.5}
+        onPress={() => {carousel.current?.next()}}>
+        <RightArrow stroke={'white'} style={[styles.arrow]}/>
+      </TouchableOpacity>
       {/* <View style={{flex: 3}}/> */}
       <View style={styles.info}>
         <View style={{width: '100%'}}>
@@ -120,7 +118,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   arrowButton: {
-    height: '100%',
+    position: 'absolute',
+    height: '65%',
     justifyContent: 'center',
   },
   arrow: {
