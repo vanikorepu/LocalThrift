@@ -3,8 +3,7 @@ import React, {useLayoutEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Modal, Text, View, TouchableOpacity, Image, ImageBackground, Dimensions} from 'react-native';
 
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { HomeStackScreenProps } from '../../type';
 
 import {COLOR} from '../../../assets/setting'
 
@@ -16,17 +15,7 @@ import {ImagesAssets} from '../../../assets/images/image_assest';
 import AutoHeightImage from 'react-native-auto-height-image';
 import RNPickerSelect from 'react-native-picker-select';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ProductListPage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-
-function ProductListPage({navigation}: Props): JSX.Element {
+function ProductListPage({ navigation, route }: HomeStackScreenProps<'ProductListPage'>): JSX.Element {
   // const [modalVisible, setModalVisible] = useState(false);
 
   useLayoutEffect(() => {
@@ -63,13 +52,13 @@ function ProductListPage({navigation}: Props): JSX.Element {
   }, [navigation]);
   
   const images = [ImagesAssets.bottoms, ImagesAssets.tops]
-  const products = Product.map((item, index) => {
+  const products = Product.filter((item) => item.category === route.params.category).map((item, index) => {
     return {
       ...item,
       image: images[index % 2],
     }
   })
-  const lst = [[], []]
+  const lst: Array<typeof Product> = [[], []]
   let sum = [0, 0]
   for (const product of products) {
     const aspectRatio = product.height / product.width
@@ -93,7 +82,7 @@ function ProductListPage({navigation}: Props): JSX.Element {
                   return <TouchableOpacity
                       style={styles.product}
                       activeOpacity={0.5}
-                      onPress={() => {navigation.push('ProductDescriptionPage');}}>
+                      onPress={() => {navigation.push('ProductDescriptionPage', {category: item.category, product: item.id});}}>
                       <AutoHeightImage source={item.image} width={200}/>
                       <Text 
                         style={styles.price}

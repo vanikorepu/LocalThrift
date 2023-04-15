@@ -2,23 +2,12 @@ import React from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ImageBackground} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { HomeStackScreenProps } from '../../type';
 
 import { ImagesAssets } from '../../../assets/images/image_assest';
 import {COLOR} from '../../../assets/setting';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'BuyerHomePage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-
-function BuyerHomePage({navigation}: Props): JSX.Element {
+function BuyerHomePage({ navigation, route }: HomeStackScreenProps<'BuyerHomePage'>): JSX.Element {
   return (
     <SafeAreaView>
       <View >
@@ -27,7 +16,7 @@ function BuyerHomePage({navigation}: Props): JSX.Element {
             style={styles.button}
             activeOpacity={0.5}
             onPress={() => {
-              navigation.push('ProductListPage', {name: 'Tops'});
+              navigation.push('ProductListPage', {category: 0});
             }}>
             <ImageBackground source={ImagesAssets.tops} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Tops</Text>
@@ -35,14 +24,14 @@ function BuyerHomePage({navigation}: Props): JSX.Element {
         <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            onPress={() => {navigation.push('ProductListPage', {name: 'Bottoms'});}}>
+            onPress={() => {navigation.push('ProductListPage', {category: 1});}}>
             <ImageBackground source={ImagesAssets.bottoms} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Bottoms</Text>
         </TouchableOpacity>
         <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            onPress={() => {navigation.push('ProductListPage', {name: 'Winter Wear'});}}>
+            onPress={() => {navigation.push('ProductListPage', {category: 2});}}>
             <ImageBackground source={ImagesAssets.winterwear} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Winter Wear</Text>
         </TouchableOpacity>

@@ -5,29 +5,18 @@ import {SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacit
 import RNPickerSelect from 'react-native-picker-select';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { RootStackScreenProps } from '../../type';
 
-import { COLOR, FONT } from '../../../assets/setting';
+import { COLOR } from '../../../assets/setting';
 
 import Cross from '../../../assets/icons/cross.svg';
 
-
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'UploadPage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-function UploadPage({navigation}: Props): JSX.Element {
+function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => 
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('TabNavigationRoutes', {screen: 'Home'})
+        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})
           }}>
         <Cross style={styles.cancel}/>
       </TouchableOpacity>

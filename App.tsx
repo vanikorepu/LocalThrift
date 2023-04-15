@@ -15,21 +15,15 @@ import {
   Text,
   useColorScheme,
   View,
-  Button
+  Button,
+  TouchableOpacity
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 import 'react-native-gesture-handler';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import SplashPage from './src/pages/splash';
 import LoginPage from './src/pages/login';
@@ -37,6 +31,7 @@ import RegisterPage from './src/pages/register';
 import TabNavigationRoutes from './src/pages/tab_navigation_routes';
 import UploadPage from './src/pages/tab_pages/upload';
 import Summary from './src/pages/tab_pages/summary';
+import ProductDescriptionPage from './src/pages/tab_pages/product_description';
 
 import { RootStackParamList } from './src/type';
 
@@ -44,91 +39,13 @@ import { FONT } from './assets/setting';
 
 import setDefaultProps from 'react-native-simple-default-props'
 
+import Category from './data/category.json'
+
 const defaultText = {
   style: [{fontFamily: FONT}],
 };
 
 setDefaultProps(Text, defaultText)
-
-// type SectionProps = PropsWithChildren<{
-//   title: string;
-// }>;
-
-// function Section({children, title}: SectionProps): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   );
-// }
-
-// function SettingsScreen() {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//       <Text>Settings!</Text>
-//     </View>
-//   );
-// }
-
-// function HomeScreen(): JSX.Element {
-//   const isDarkMode = useColorScheme() === 'dark';
-
-//   const backgroundStyle = {
-//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-//   };
-
-//   return (
-//     <SafeAreaView style={backgroundStyle}>
-//         <StatusBar
-//           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-//           backgroundColor={backgroundStyle.backgroundColor}
-//         />
-//         <ScrollView
-//           contentInsetAdjustmentBehavior="automatic"
-//           style={backgroundStyle}>
-//           <Header />
-//           <View
-//             style={{
-//               backgroundColor: isDarkMode ? Colors.black : Colors.white,
-//             }}>
-//             <Section title="Step One">
-//               test test test
-//               Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-//               screen and then come back to see your edits.
-//             </Section>
-//             <Section title="See Your Changes">
-//               <ReloadInstructions />
-//             </Section>
-//             <Section title="Debug">
-//               <DebugInstructions />
-//             </Section>
-//             <Section title="Learn More">
-//               Read the docs to discover what to do next:
-//             </Section>
-//             <LearnMoreLinks />
-//           </View>
-//         </ScrollView>
-//       </SafeAreaView>
-//   );
-// }
 
 function Auth(): JSX.Element {
   return (
@@ -152,16 +69,7 @@ function Auth(): JSX.Element {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'HomePage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-function App({navigation}: Props): JSX.Element {
+function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator 
@@ -185,7 +93,9 @@ function App({navigation}: Props): JSX.Element {
         <Stack.Screen
           name="TabNavigationRoutes"
           component={TabNavigationRoutes}
-          options={{headerShown: false}}
+          options={{
+            headerShown: false
+          }}
         />
         <Stack.Screen
           name="UploadPage"
@@ -217,6 +127,19 @@ function App({navigation}: Props): JSX.Element {
               headerLeft: () => <></>,
           }}
           />
+        <Stack.Screen
+          name="ProductDescriptionPage"
+          component={ProductDescriptionPage}
+          options={
+            ({ route }) => ({ 
+            title: Category[route.params.category],
+            headerShown: true,
+            gestureEnabled: false, 
+            headerShadowVisible: false,
+            headerTitleStyle: styles.headerTitle,
+            headerLeft: () =>  <></>,
+          })}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -226,25 +149,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontWeight: 'normal',
   },
-  // sectionContainer: {
-  //   marginTop: 32,
-  //   paddingHorizontal: 24,
-  // },
-  // sectionTitle: {
-  //   fontSize: 24,
-  //   fontWeight: '600',
-  // },
-  // sectionDescription: {
-  //   marginTop: 8,
-  //   fontSize: 18,
-  //   fontWeight: '400',
-  // },
-  // highlight: {
-  //   fontWeight: '700',
-  // },
-  // header: {
-  //   fontFamily: FONT
-  // }
 });
 
 export default App;

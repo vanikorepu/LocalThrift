@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "category": "Tops",
+        "category": 0,
         "size": "S",
         "price": 15,
         "brand": "H&M",
@@ -9,11 +9,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 1,
+        "meeting": 0
     },
     {
         "id": 2,
-        "category": "Tops",
+        "category": 0,
         "size": "M",
         "price": 10,
         "brand": "Uniqlo",
@@ -21,11 +22,12 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 2,
+        "meeting": 0
     },
     {
         "id": 3,
-        "category": "Tops",
+        "category": 0,
         "size": "L",
         "price": 20,
         "brand": "Zara",
@@ -33,11 +35,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 5,
+        "meeting": 1
     },
     {
         "id": 4,
-        "category": "Tops",
+        "category": 0,
         "size": "XS",
         "price": 13,
         "brand": "H&M",
@@ -45,11 +48,12 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 3,
+        "meeting": 1
     },
     {
         "id": 5,
-        "category": "Bottoms",
+        "category": 1,
         "size": "10",
         "price": 20,
         "brand": "Zara",
@@ -57,11 +61,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 4,
+        "meeting": 0
     },
     {
         "id": 6,
-        "category": "Bottoms",
+        "category": 1,
         "size": "12",
         "price": 10,
         "brand": "H&M",
@@ -69,11 +74,12 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 3,
+        "meeting": 0
     },
     {
         "id": 7,
-        "category": "Bottoms",
+        "category": 1,
         "size": "8",
         "price": 15,
         "brand": "Uniqlo",
@@ -81,11 +87,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 2,
+        "meeting": 1
     },
     {
         "id": 8,
-        "category": "Bottoms",
+        "category": 1,
         "size": "9",
         "price": 23,
         "brand": "Uniqlo",
@@ -93,11 +100,12 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 2,
+        "meeting": 1
     },
     {
         "id": 9,
-        "category": "Winter Wear",
+        "category": 2,
         "size": "S",
         "price": 30,
         "brand": "EMS",
@@ -105,11 +113,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 1,
+        "meeting": 0
     },
     {
         "id": 10,
-        "category": "Winter Wear",
+        "category": 2,
         "size": "L",
         "price": 50,
         "brand": "Columbia",
@@ -117,11 +126,12 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 1,
+        "meeting": 0
     },
     {
         "id": 11,
-        "category": "Winter Wear",
+        "category": 2,
         "size": "XL",
         "price": 25,
         "brand": "The North Face",
@@ -129,11 +139,12 @@
         "image": "cover image2.jpg",
         "height": 408,
         "width": 612,
-        "seller": 1
+        "seller": 3,
+        "meeting": 1
     },
     {
         "id": 12,
-        "category": "Winter Wear",
+        "category": 2,
         "size": "M",
         "price": 40,
         "brand": "Timberland",
@@ -141,6 +152,7 @@
         "image": "cover image2.jpg",
         "height": 664,
         "width": 1689,
-        "seller": 1
+        "seller": 2,
+        "meeting": 1
     }
 ]

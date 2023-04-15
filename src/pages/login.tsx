@@ -2,24 +2,15 @@ import React from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../type';
+import { RootStackScreenProps } from '../type';
 
 import {COLOR} from '../../assets/setting'
 import { ImagesAssets } from '../../assets/images/image_assest';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
 
-type Props = {
-  navigation: NavigationProp;
-};
-
-function LoginPage({navigation}: Props): JSX.Element {
+function LoginPage({ navigation, route }: RootStackScreenProps<'Login'>): JSX.Element {
     const handleSubmitPress = () => {
-        navigation.replace('TabNavigationRoutes');
+        navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
     }
   return (
     <SafeAreaView style={styles.container}>

@@ -2,20 +2,10 @@ import React from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { ProfileStackScreenProps } from '../../type';
 
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ProfilePage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-function ProfileEditPage({navigation}: Props): JSX.Element {
+function ProfileEditPage({ navigation, route }: ProfileStackScreenProps<'ProfileEditPage'>): JSX.Element {
   return (
     <SafeAreaView>
       <View >

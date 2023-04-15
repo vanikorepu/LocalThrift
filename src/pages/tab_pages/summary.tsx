@@ -2,24 +2,13 @@ import React, {useLayoutEffect} from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { RootStackScreenProps } from '../../type';
 
-
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ProductListPage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-function Summary({navigation}: Props): JSX.Element {
+function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <Button title="Cancel" onPress={() => {
-        navigation.navigate('TabNavigationRoutes', {screen: 'Home'})
+        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})
       }} />
     });
   }, [navigation]);

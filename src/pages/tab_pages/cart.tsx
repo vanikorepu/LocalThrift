@@ -6,23 +6,12 @@ import CartProduct from '../../../data/cart.json';
 import Empty from '../../../assets/icons/empty.svg';
 import {COLOR} from '../../../assets/setting';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { TabScreenProps } from '../../type';
 
 import { ImagesAssets } from '../../../assets/images/image_assest';
 import Trash from '../../../assets/icons/trash.svg';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'BuyerHomePage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-
-function CartPage({navigation}: Props): JSX.Element {
+function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
   const cart = CartProduct;
   const sum = cart.reduce((acc, cur) => acc + cur.product.length, 0);
 
@@ -34,7 +23,7 @@ function CartPage({navigation}: Props): JSX.Element {
       <TouchableOpacity
           style={[styles.button]}
           activeOpacity={0.5}
-          onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home'})}}>
+          onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})}}>
           <Text style={styles.buttonText}>Start Shopping</Text>
       </TouchableOpacity>
     </View>);

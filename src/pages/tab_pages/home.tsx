@@ -6,29 +6,19 @@ import BuyerHomePage from './buyer_home';
 import SellerHomePage from './seller_home';
 import ProductListPage from './product_list';
 import ProductDescriptionPage from './product_description'
-import UploadPage from './upload';
 
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { HomeStackScreenProps, TabScreenProps, HomeStackParamList } from '../../type';
 
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
-
-import { COLOR, FONT } from '../../../assets/setting';
+import { COLOR } from '../../../assets/setting';
 import { ImagesAssets } from '../../../assets/images/image_assest';
 
 import Upload from '../../../assets/icons/upload.svg';
 import Back from '../../../assets/icons/left_arrow.svg';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'HomePage'
->;
+import Category from '../../../data/category.json'
 
-type Props = {
-  navigation: NavigationProp;
-};
-
-function HomePage({navigation}: Props): JSX.Element {
+function HomePage({ navigation, route }: HomeStackScreenProps<'HomePage'>): JSX.Element {
   return (
     <SafeAreaView>
       <View>
@@ -55,9 +45,9 @@ function HomePage({navigation}: Props): JSX.Element {
   );
 }
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<HomeStackParamList>();
 
-function HomeStack({navigation}: Props): JSX.Element {
+function HomeStack({ navigation, route }: TabScreenProps<'Home'>): JSX.Element {
 
   return (
     <Stack.Navigator 
@@ -95,7 +85,7 @@ function HomeStack({navigation}: Props): JSX.Element {
             component={ProductListPage}
             options={
               ({ route }) => ({ 
-                title: route.params.name,
+                title: Category[route.params.category],
                 headerShown: true,
                 gestureEnabled: true, 
                 headerTitleStyle: styles.headerTitle,
@@ -104,18 +94,7 @@ function HomeStack({navigation}: Props): JSX.Element {
                 </TouchableOpacity>
             })}
         />
-        <Stack.Screen
-            name="ProductDescriptionPage"
-            component={ProductDescriptionPage}
-            options={{
-              headerShown: true,
-              gestureEnabled: false, 
-              headerTitleStyle: styles.headerTitle,
-              headerLeft: () => <TouchableOpacity onPress={navigation.goBack}>
-                    <Back style={styles.back} stroke={'black'}/>
-              </TouchableOpacity>
-            }}
-        />
+        
         <Stack.Screen
             name="SellerHomePage"
             component={SellerHomePage}

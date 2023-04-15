@@ -5,15 +5,12 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-nati
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
-import { Modal } from "../components/modal";
-import { TabActions } from '@react-navigation/native';
 
 import HomePage from './tab_pages/home';
 import CartPage from './tab_pages/cart';
 import ProfilePage from './tab_pages/profile';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../type';
+import { RootStackScreenProps, TabParamList } from '../type';
 
 import { COLOR, FONT, CLICK_COLOR } from '../../assets/setting';
 
@@ -21,19 +18,9 @@ import Home from '../../assets/icons/home.svg';
 import Profile from '../../assets/icons/profile.svg';
 import Cart from '../../assets/icons/cart.svg';
 
+const Tab = createBottomTabNavigator<TabParamList>();
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'TabNavigationRoutes'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-const Tab = createBottomTabNavigator();
-
-function TabNavigationRoutes({navigation}: Props): JSX.Element {
+function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNavigationRoutes'>): JSX.Element {
 
   return (
     <Tab.Navigator 
@@ -54,12 +41,8 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
           ),
           tabBarActiveTintColor: CLICK_COLOR,
           tabBarInactiveTintColor: 'white',
+          // unmountOnBlur: true,
         }}
-        listeners={() => ({
-          tabPress: (e) => {
-            navigation.replace('HomePage');
-          },
-        })}
         />
       <Tab.Screen 
         name="Profile" 
@@ -72,12 +55,8 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
           ),
           tabBarActiveTintColor: CLICK_COLOR,
           tabBarInactiveTintColor: 'white',
+          unmountOnBlur: true,
         }}
-        listeners={() => ({
-          tabPress: (e) => {
-            navigation.replace('ProfilePage');
-          },
-        })}
       />
       <Tab.Screen 
         name="Cart" 
@@ -93,11 +72,6 @@ function TabNavigationRoutes({navigation}: Props): JSX.Element {
           tabBarActiveTintColor: CLICK_COLOR,
           tabBarInactiveTintColor: 'white',
         }}
-        listeners={() => ({
-          tabPress: (e) => {
-            navigation.navigate('Cart');
-          },
-        })}
       />
     </Tab.Navigator>
   );

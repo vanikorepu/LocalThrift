@@ -2,45 +2,14 @@ import React from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../type';
+import { RootStackScreenProps } from '../type';
 
 import {COLOR} from '../../assets/setting'
 import { ImagesAssets } from '../../assets/images/image_assest';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Register'
->;
 
-type Props = {
-    navigation: NavigationProp;
-  };
-
-function RegisterPage({navigation}: Props): JSX.Element {
+function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): JSX.Element {
   return (
-    // <SafeAreaView>
-    //   <View >
-    //     <Text>Account ID</Text>
-    //     <TextInput placeholder="Account ID" />
-    //     <Text>Email</Text>
-    //     <TextInput placeholder="Email" />
-    //     <Text>Password</Text>
-    //     <TextInput placeholder="Password" />
-    //     <Text>Contact Number</Text>
-    //     <TextInput placeholder="Contact Number" />
-    //     <TouchableOpacity
-    //         activeOpacity={0.5}
-    //         onPress={() => {navigation.replace('TabNavigationRoutes');}}>
-    //         <Text>REGISTER</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity
-    //         activeOpacity={0.5}
-    //         onPress={() => {navigation.replace('Login');}}>
-    //         <Text>back to LOGIN</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </SafeAreaView>
 
     <SafeAreaView style={styles.container}>
         <Image source={ImagesAssets.logo} style={styles.image}/>
@@ -55,7 +24,7 @@ function RegisterPage({navigation}: Props): JSX.Element {
         <TouchableOpacity
             style={[styles.button, {width: '80%', marginTop: 10}]}
             activeOpacity={0.5}
-            onPress={() => {navigation.replace('TabNavigationRoutes');}}>
+            onPress={() => {navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});}}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 

@@ -2,21 +2,12 @@ import React, {useEffect, useState} from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, Image} from 'react-native';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../type';
+import { RootStackScreenProps } from '../type';
 
 import { ImagesAssets } from '../../assets/images/image_assest';
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Splash'
->;
 
-type Props = {
-  navigation: NavigationProp;
-};
-
-function SplashPage({navigation}: Props): JSX.Element {
+function SplashPage({ navigation, route }: RootStackScreenProps<'Splash'>): JSX.Element {
     const [animating, setAnimating] = useState(true);
 
     useEffect(() => {

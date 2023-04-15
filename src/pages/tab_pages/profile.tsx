@@ -4,20 +4,11 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-nati
 
 import ProfileEditPage from './profile_edit';
 
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from '../../type';
+import { createStackNavigator } from '@react-navigation/stack';
+import { TabScreenProps, ProfileStackScreenProps, ProfileStackParamList } from '../../type';
 
 
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ProfilePage'
->;
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-function ProfilePage({navigation}: Props): JSX.Element {
+function ProfilePage({ navigation, route }: ProfileStackScreenProps<'ProfilePage'>): JSX.Element {
     return (
         <SafeAreaView>
           <View >
@@ -41,9 +32,9 @@ function ProfilePage({navigation}: Props): JSX.Element {
       );
 }
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<ProfileStackParamList>();
 
-function ProfileStack({navigation}: Props): JSX.Element {
+function ProfileStack({ navigation, route }: TabScreenProps<'Profile'>): JSX.Element {
   return (
     <Stack.Navigator 
         initialRouteName="ProfilePage"
