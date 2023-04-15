@@ -5,7 +5,7 @@ import {SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacit
 import RNPickerSelect from 'react-native-picker-select';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { RootStackScreenProps } from '../../type';
+import { RootStackScreenProps, ProductParamsList } from '../../type';
 
 import { COLOR } from '../../../assets/setting';
 
@@ -25,6 +25,20 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       // }} />
     });
   }, [navigation]);
+
+  const [product, setProduct] = useState<ProductParamsList>({
+    id: undefined,
+    category: 0,
+    price: 0,
+    size: '',
+    brand: '',
+    usage: '',
+    meeting: 0,
+  })
+
+  const submit = (product: ProductParamsList) => {
+    navigation.push('Summary', {product: product});
+  }
 
   // const [catOpen, setCatOpen] = useState(false);
   // const [catValue, setCatValue] = useState(null);
@@ -108,7 +122,7 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
-          onPress={() => navigation.push('Summary')}>
+          onPress={() => {submit(product)}}>
           <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
       

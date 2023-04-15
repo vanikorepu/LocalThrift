@@ -17,7 +17,7 @@ function SplashPage({ navigation, route }: RootStackScreenProps<'Splash'>): JSX.
           //If not then send for Authentication
           //else send to Home Screen
           navigation.replace('Auth');
-        }, 5000);
+        }, 3000);
       }, []);
       
   return (

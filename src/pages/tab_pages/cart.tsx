@@ -12,6 +12,10 @@ import { ImagesAssets } from '../../../assets/images/image_assest';
 import Trash from '../../../assets/icons/trash.svg';
 
 function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
+  const trash = (item: number) => {
+
+  }
+  
   const cart = CartProduct;
   const sum = cart.reduce((acc, cur) => acc + cur.product.length, 0);
 
@@ -45,7 +49,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
                       <Text style={styles.text}>Usage: {item.usage}</Text>
                       <TouchableOpacity
                           activeOpacity={0.5}
-                          onPress={() => {}}>
+                          onPress={() => {trash(item.id)}}>
                           <Trash style={styles.trash} />
                       </TouchableOpacity>
                       

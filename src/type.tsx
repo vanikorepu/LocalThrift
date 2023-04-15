@@ -5,6 +5,16 @@ import type {
   import type { StackScreenProps } from '@react-navigation/stack';
   import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
+type ProductParamsList = {
+    id: undefined,
+    size: string,
+    price: number,
+    brand: string,
+    usage: string,
+    meeting: number,
+    category: number
+}
+
 type RootStackParamList = {
     Splash: undefined,
     Auth: undefined; 
@@ -12,7 +22,7 @@ type RootStackParamList = {
     Register: undefined;
     TabNavigationRoutes: NavigatorScreenParams<TabParamList>;
     UploadPage: undefined;
-    Summary: undefined;
+    Summary: {product: ProductParamsList};
     ProductDescriptionPage: {category: number, product: number};
   };
 
@@ -62,6 +72,7 @@ namespace ReactNavigation {
 }
 
 export {
+    type ProductParamsList,
     type RootStackParamList,
     type RootStackScreenProps,
     type TabParamList,

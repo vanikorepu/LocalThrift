@@ -3,6 +3,7 @@ import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions} from 'react-native';
 
 import Carousel from 'react-native-reanimated-carousel';
+import {ICarouselInstance} from 'react-native-reanimated-carousel';
 
 import { RootStackScreenProps } from '../../type';
 
@@ -27,15 +28,21 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
     });
   }, [navigation]);
 
+  const addToCart = (item: number) => {
+
+  }
 
   const product = Product[route.params.product - 1];
   const images = [ImagesAssets.bottoms, ImagesAssets.buying, ImagesAssets.home, ImagesAssets.logo, ImagesAssets.selling, ImagesAssets.tops, ImagesAssets.winterwear];
 
   const {height, width} = Dimensions.get('window');
 
+  const carousel = React.useRef<ICarouselInstance>(null);
+
   return (
     <SafeAreaView style={styles.container}>
       <Carousel
+          ref={carousel}
           width={width}
           height={height * 0.6}
           loop
@@ -50,8 +57,18 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
           )}
       />
       <View style={styles.arrows}>
-        <LeftArrow stroke={'white'} style={[styles.arrow]}/>
-        <RightArrow stroke={'white'} style={[styles.arrow]}/>
+        <TouchableOpacity
+          style={styles.arrowButton}
+          activeOpacity={0.5}
+          onPress={() => {carousel.current?.prev()}}>
+          <LeftArrow stroke={'white'} style={[styles.arrow]}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.arrowButton}
+          activeOpacity={0.5}
+          onPress={() => {carousel.current?.next()}}>
+          <RightArrow stroke={'white'} style={[styles.arrow]}/>
+        </TouchableOpacity>
       </View>
       {/* <View style={{flex: 3}}/> */}
       <View style={styles.info}>
@@ -66,7 +83,7 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
         <TouchableOpacity
             style={[styles.button]}
             activeOpacity={0.5}
-            onPress={() => {}}>
+            onPress={() => {addToCart(product.id)}}>
             <Cart style={styles.cart} fill={COLOR} />
             <Text style={styles.buttonText}>Add to Bag</Text>
         </TouchableOpacity>
@@ -98,8 +115,13 @@ const styles = StyleSheet.create({
     width: '94%',
     marginHorizontal: '3%',
     flex: 1,
-    top: '30%',
+    height: '65%',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  arrowButton: {
+    height: '100%',
+    justifyContent: 'center',
   },
   arrow: {
     height: 60, 

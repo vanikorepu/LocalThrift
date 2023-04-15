@@ -9,7 +9,7 @@ import { ImagesAssets } from '../../assets/images/image_assest';
 
 
 function LoginPage({ navigation, route }: RootStackScreenProps<'Login'>): JSX.Element {
-    const handleSubmitPress = () => {
+    const login = () => {
         navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
     }
   return (
@@ -18,13 +18,23 @@ function LoginPage({ navigation, route }: RootStackScreenProps<'Login'>): JSX.El
         <Text style={[styles.title, styles.text]}>LOCALTHRIFT</Text>
         <Text style={[styles.subTitle, styles.text]}>Hello</Text>
 
-        <TextInput placeholder="Email" style={styles.input} placeholderTextColor={'white'}/>
-        <TextInput placeholder="Password" style={styles.input} placeholderTextColor={'white'}/>
+        <TextInput 
+            autoCorrect={false} 
+            inputMode='email'
+            keyboardType='email-address'
+            placeholder="Email" 
+            style={styles.input} 
+            placeholderTextColor={'white'}/>
+        <TextInput 
+            placeholder="Password" 
+            secureTextEntry={true}
+            style={styles.input} 
+            placeholderTextColor={'white'}/>
 
         <TouchableOpacity
             style={[styles.button, {width: '80%', marginTop: 10}]}
             activeOpacity={0.5}
-            onPress={handleSubmitPress}>
+            onPress={login}>
             <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
         <Text style={[styles.text, {fontSize: 10, fontWeight: '300', marginTop: 3}]}>Forgot password?</Text>

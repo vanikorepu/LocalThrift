@@ -122,7 +122,7 @@ function App(): JSX.Element {
               // animationTypeForReplace: 'pop',
               headerShown: true,
               headerShadowVisible: false,
-              headerTitle: "Summary",
+              headerTitle: "Post Summary",
               gestureEnabled: false, 
               headerLeft: () => <></>,
           }}

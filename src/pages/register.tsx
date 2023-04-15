@@ -9,6 +9,10 @@ import { ImagesAssets } from '../../assets/images/image_assest';
 
 
 function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): JSX.Element {
+
+    const register = () => {
+        navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
+    }
   return (
 
     <SafeAreaView style={styles.container}>
@@ -17,14 +21,29 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
         <Text style={[styles.subTitle, styles.text]}>Welcome</Text>
 
         <TextInput placeholder="Full Name" style={[styles.input, {marginTop: 10}]} placeholderTextColor={'white'}/>
-        <TextInput placeholder="Email" style={styles.input} placeholderTextColor={'white'}/>
-        <TextInput placeholder="Password" style={styles.input} placeholderTextColor={'white'}/>
-        <TextInput placeholder="Mobile Contact" style={styles.input} placeholderTextColor={'white'}/>
+        <TextInput 
+            placeholder="Email" 
+            autoCorrect={false}
+            inputMode='email'
+            keyboardType='email-address'
+            style={styles.input} 
+            placeholderTextColor={'white'}/>
+        <TextInput 
+            placeholder="Password" 
+            secureTextEntry={true}
+            style={styles.input} 
+            placeholderTextColor={'white'}/>
+        <TextInput 
+            placeholder="Mobile Contact" 
+            inputMode='tel'
+            keyboardType='phone-pad'
+            style={styles.input} 
+            placeholderTextColor={'white'}/>
 
         <TouchableOpacity
             style={[styles.button, {width: '80%', marginTop: 10}]}
             activeOpacity={0.5}
-            onPress={() => {navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});}}>
+            onPress={register}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
