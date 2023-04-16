@@ -56,5 +56,9 @@
 		<string>Montserrat-Italic-VariableFont_wght.ttf</string>
 		<string>Montserrat-VariableFont_wght.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.</string>
 </dict>
 </plist>

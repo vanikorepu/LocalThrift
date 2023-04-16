@@ -5,7 +5,7 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Dimensio
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
 
-import { ImagesAssets } from '../../../assets/images/image_assest';
+// import { ImagesAssets } from '../../../assets/images/image_assest';
 
 import LeftArrow from '../../../assets/icons/left_arrow.svg';
 import RightArrow from '../../../assets/icons/right_arrow.svg';
@@ -34,13 +34,15 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
     navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}});
   }
 
-  const images = [ImagesAssets.bottoms, ImagesAssets.buying, ImagesAssets.home, ImagesAssets.logo, ImagesAssets.selling, ImagesAssets.tops, ImagesAssets.winterwear];
+  // const images = [ImagesAssets.bottoms, ImagesAssets.buying, ImagesAssets.home, ImagesAssets.logo, ImagesAssets.selling, ImagesAssets.tops, ImagesAssets.winterwear];
 
   const width = Dimensions.get('window').width;
 
   const carousel = React.useRef<ICarouselInstance>(null);
 
   const product = route.params.product;
+  console.log(product.images);
+  console.log(product.images.length);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -52,12 +54,12 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
             height={width * 0.8}
             loop
             // autoPlay={true}
-            data={[...new Array(images.length).keys()]}
+            data={[...new Array(product.images.length).keys()]}
             scrollAnimationDuration={1000}
             onSnapToItem={(index) => console.log('current index:', index)}
             renderItem={({ index }) => (
               <View>
-                <Image style={styles.image} resizeMode='cover' source={images[index]}/>
+                <Image style={styles.image} resizeMode='cover' source={{uri: product.images[index]}}/>
               </View>
             )}
         />

@@ -75,7 +75,7 @@
     },
     {
       "path": "assets/icons/edit.svg",
-      "sha1": "946ce04f1cfb05ac545095b2a6bd82b875fa259b"
+      "sha1": "f05d5d2b31d11ca1a0f264c22a597a17cb0d5ee5"
     },
     {
       "path": "assets/icons/empty.svg",
@@ -84,6 +84,10 @@
     {
       "path": "assets/icons/filter.svg",
       "sha1": "09afbf7db152b5fdde1f4e9448ac2258be2a954d"
+    },
+    {
+      "path": "assets/icons/gmail.svg",
+      "sha1": "febf016f9e21086711b5d3ce5388b42b18857cfe"
     },
     {
       "path": "assets/icons/home.svg",
@@ -98,20 +102,24 @@
       "sha1": "71494f8cd1dce4eb66fda6b9ebbd7c7f5400aa82"
     },
     {
+      "path": "assets/icons/plus.svg",
+      "sha1": "a22ea9d0fb3c60f053477648834acf396f2be0d2"
+    },
+    {
       "path": "assets/icons/profile.svg",
       "sha1": "df524a3505982768dea17bf25fffe96436e0f0f6"
     },
     {
       "path": "assets/icons/right_arrow.svg",
-      "sha1": "ce35cd141a5e483aaa9831152f7832c44f788adc"
+      "sha1": "3fc30603ad7e839967f7639bb5341f961ce629b3"
     },
     {
       "path": "assets/icons/sms.svg",
-      "sha1": "d8ac839a99d2c5e7f4fa6c21b502c6054056bfc8"
+      "sha1": "4935cc6eaff3fbab1bbc08c1efc313071bf155ea"
     },
     {
       "path": "assets/icons/sold.svg",
-      "sha1": "d4576403deba2b8081de1e08977e54a3d170206b"
+      "sha1": "796f6d0c56fd3c4f81b5244d6e8b4d15b36f8957"
     },
     {
       "path": "assets/icons/trash.svg",

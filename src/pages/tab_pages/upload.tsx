@@ -1,6 +1,8 @@
 import React, {useLayoutEffect, useState, useCallback} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image} from 'react-native';
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import RNPickerSelect from 'react-native-picker-select';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -10,13 +12,14 @@ import { RootStackScreenProps, ProductParamsList } from '../../type';
 import { COLOR } from '../../../assets/setting';
 
 import Cross from '../../../assets/icons/cross.svg';
+import Plus from '../../../assets/icons/plus.svg';
 
 function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => 
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})
+        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}})
           }}>
         <Cross style={styles.cancel}/>
       </TouchableOpacity>
@@ -26,6 +29,59 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     });
   }, [navigation]);
 
+  const [photos, setPhotos] = useState<string[]>([...new Array(4)]);
+  const [count, setCount] = useState(0);
+
+  const takePhotoFromCamera = async () => {
+    if (count >= 4) {
+      return;
+    }
+    const result = await launchCamera({
+      mediaType: 'photo',
+    });
+    if (result.didCancel) {
+      return;
+    }
+    if (result.errorMessage) {
+      return;
+    }
+    if (result.assets) {
+      if (result.assets[0].uri !== undefined) {
+        photos[count] = result.assets[0].uri;
+        setCount(count + 1);
+      }
+    }
+  };
+
+  const renderPhoto = (index: number) => {
+    if (photos[index] === undefined) {
+      return (
+        <View style={styles.image}>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Image
+            source={{uri: photos[index]}}
+            style={styles.image}
+          />
+          <TouchableOpacity 
+            activeOpacity={0.5}
+            onPress={() => {
+              photos.splice(index, 1);
+              photos.push(undefined)
+              setPhotos(photos);
+              setCount(count - 1);
+            }}
+            style={styles.deleteButton}>
+            <Cross style={styles.delete}/>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  };
+
   const [product, setProduct] = useState<ProductParamsList>({
     id: undefined,
     category: 0,
@@ -34,9 +90,11 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     brand: '',
     usage: '',
     meeting: 0,
+    images: photos,
   })
 
   const submit = (product: ProductParamsList) => {
+    product.images = photos.filter((photo) => photo !== undefined);
     navigation.push('Summary', {product: product});
   }
 
@@ -67,6 +125,14 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     <View style={styles.container}>
       <View style={styles.picture}>
         <Text style={styles.text}>Upload images of your item</Text>
+        <TouchableOpacity 
+          onPress={async () => {await takePhotoFromCamera()}}
+          style={styles.cameraButton}>
+          <Plus style={styles.plus}/>
+        </TouchableOpacity>
+        <View style={styles.images}>
+          {photos.map((photo, index) => renderPhoto(index))}
+        </View>
       </View>
       <RNPickerSelect
         style={pickerSelectStyles}
@@ -148,6 +214,50 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginBottom: 20,
     alignItems: 'center',
+  },
+  cameraButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  plus: {
+    width: 30,
+    height: 30,
+  },
+  images: {
+    width: '100%',
+    height: 70,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: 'white'
+  },
+  deleteButton: {
+    position: 'absolute',
+    top: -10,
+    left: -10,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: '#AAA',
+    borderColor: 'black',
+  },
+  delete: {
+    width: 10,
+    height: 10,
   },
   text: {
     paddingTop: 10,

@@ -12,7 +12,8 @@ type ProductParamsList = {
     brand: string,
     usage: string,
     meeting: number,
-    category: number
+    category: number,
+    images: string[],
 }
 
 type RootStackParamList = {
