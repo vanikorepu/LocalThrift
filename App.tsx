@@ -33,6 +33,7 @@ import TabNavigationRoutes from './src/pages/tab_navigation_routes';
 import UploadPage from './src/pages/tab_pages/upload';
 import Summary from './src/pages/tab_pages/summary';
 import ProductDescriptionPage from './src/pages/tab_pages/product_description';
+import ProfileEditPage from './src/pages/tab_pages/profile_edit';
 
 import { RootStackParamList } from './src/type';
 
@@ -142,6 +143,17 @@ function App(): JSX.Element {
               headerTitleStyle: styles.headerTitle,
               headerLeft: () =>  <></>,
             })}
+        />
+        <Stack.Screen
+            name="ProfileEditPage"
+            component={ProfileEditPage}
+            options={{
+                headerShown: false,
+                // headerTitle: "Edit Profile",
+                // headerTitleStyle: styles.headerTitle,
+                gestureEnabled: false, 
+                headerLeft: () => <></>
+              }}
         />
         </Stack.Navigator>
       </NavigationContainer>

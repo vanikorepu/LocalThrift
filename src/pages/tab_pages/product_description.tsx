@@ -30,6 +30,7 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
 
   const addToCart = (item: number) => {
 
+    navigation.goBack();
   }
 
   const product = Product[route.params.product - 1];
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: COLOR,
-    // borderColor: COLOR,
     paddingTop: 20,
     alignItems: 'center',
   },

@@ -20,14 +20,20 @@ const isIOS = Platform.OS === "ios";
 interface ManuProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
+  alignment: "left" | "right" | "center" | undefined;
   style: {};
+  backgroundStyle: {};
+  topOffset: number;
 }
 
 const defaultManuProps = {
   style: {},
+  backgroundStyle: {},
+  alignment: undefined,
+  topOffset: 0,
 }
 
-const Menu = ({ trigger, children, style}: ManuProps) => {
+const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}: ManuProps) => {
   const triggerWrapperRef = useRef(null);
   const itemsWrapperRef = useRef(null);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -125,20 +131,31 @@ const Menu = ({ trigger, children, style}: ManuProps) => {
     let left = 0;
     let top = 0;
 
-    left =
-      triggerDimensions.left - modalDimensions.width + triggerDimensions.width;
-    // if the popup is outside the screen from the left
-    if (triggerDimensions.left - modalDimensions.width < 0)
+    if (alignment === undefined) {
+      left =
+        triggerDimensions.left - modalDimensions.width + triggerDimensions.width;
+      // if the popup is outside the screen from the left
+      if (triggerDimensions.left - modalDimensions.width < 0)
+        left = triggerDimensions.left;
+    } else {
       left = triggerDimensions.left;
+  
+      if (alignment === "center") {
+        left -= modalDimensions.width / 2 - triggerDimensions.width / 2;
+      } else if (alignment === "right") {
+        left -= modalDimensions.width + triggerDimensions.width;
+      }
+    }
+
 
     if (isIOS) {
       const initialTriggerTop =
-        triggerDimensions.top + triggerDimensions.height + 1;
+        triggerDimensions.top + triggerDimensions.height + 1 + topOffset;
       if (
         modalDimensions.height + initialTriggerTop >
         layoutHeight - keyboardHeight
       )
-        top = triggerDimensions.top - modalDimensions.height - 1;
+        top = triggerDimensions.top - modalDimensions.height - 1 + topOffset;
       else top = initialTriggerTop;
     } else {
       const initialTriggerTop =
@@ -175,7 +192,7 @@ const Menu = ({ trigger, children, style}: ManuProps) => {
           <TouchableOpacity
             activeOpacity={1}
             onPress={closeModal}
-            style={styles.modalWrapper}
+            style={[styles.modalWrapper, backgroundStyle]}
           >
             <Animated.View
               style={[styles.activeSection, menuPositionStyles, style]}
@@ -226,9 +243,9 @@ export const MenuItem = ({ element, onPress, closeModal, style }: MenuItemProps)
 
   return (
     <>
-      <Pressable onPress={handleOnPress} style={style}>
+      <TouchableOpacity activeOpacity={0.8} onPress={handleOnPress} style={style}>
         {element}
-      </Pressable>
+      </TouchableOpacity>
     </>
   );
 };

@@ -24,6 +24,7 @@ type RootStackParamList = {
     UploadPage: undefined;
     Summary: {product: ProductParamsList};
     ProductDescriptionPage: {category: number, product: number};
+    ProfileEditPage: undefined;
   };
 
 type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -31,7 +32,7 @@ type RootStackScreenProps<T extends keyof RootStackParamList> =
 
 type TabParamList = {
     Home: NavigatorScreenParams<HomeStackParamList>;
-    Profile: NavigatorScreenParams<ProfileStackParamList>;
+    ProfilePage: undefined;
     Cart: undefined;
 }
 
@@ -54,16 +55,16 @@ type HomeStackScreenProps<T extends keyof HomeStackParamList> =
     TabScreenProps<keyof TabParamList>
   >;
 
-type ProfileStackParamList = {
-    ProfilePage: undefined;
-    ProfileEditPage: undefined;
-}
+// type ProfileStackParamList = {
+//     ProfilePage: undefined;
+//     ProfileEditPage: undefined;
+// }
 
-type ProfileStackScreenProps<T extends keyof ProfileStackParamList> =
-  CompositeScreenProps<
-    StackScreenProps<ProfileStackParamList, T>,
-    TabScreenProps<keyof TabParamList>
-  >;
+// type ProfileStackScreenProps<T extends keyof ProfileStackParamList> =
+//   CompositeScreenProps<
+//     StackScreenProps<ProfileStackParamList, T>,
+//     TabScreenProps<keyof TabParamList>
+//   >;
 
 declare global {
 namespace ReactNavigation {
@@ -79,6 +80,6 @@ export {
     type TabScreenProps,
     type HomeStackParamList,
     type HomeStackScreenProps,
-    type ProfileStackParamList,
-    type ProfileStackScreenProps
+    // type ProfileStackParamList,
+    // type ProfileStackScreenProps
 };

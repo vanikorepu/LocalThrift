@@ -4,7 +4,7 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-nati
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
+import Menu, { MenuItem } from '../components/manu';
 
 import HomePage from './tab_pages/home';
 import CartPage from './tab_pages/cart';
@@ -45,18 +45,42 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
         }}
         />
       <Tab.Screen 
-        name="Profile" 
+        name="ProfilePage" 
         component={ProfilePage} 
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "Profile",
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Profile style={{width: size, height: size}} fill={color}/>
+            // <Profile style={{width: size, height: size}} fill={color}/>
+            <Menu 
+              style={styles.modal}
+              alignment="center"
+              topOffset={-10}
+              backgroundStyle={{backgroundColor: 'rgba(0, 0, 0, 0.7)'}}
+              trigger={<Profile style={{width: size, height: size}} fill={color}/>}
+              >
+              <MenuItem
+                element={<Text style={styles.buttonText}>Edit Profile</Text>}
+                style={[styles.button, {backgroundColor: 'rgb(0, 122, 255)'}]}
+                onPress={() => {navigation.push('ProfileEditPage')}}
+              />
+              <MenuItem
+                element={<Text style={styles.buttonText}>Logout</Text>}
+              style={[styles.button, {backgroundColor: 'rgb(255, 45, 85)'}]}
+              onPress={() => {navigation.push('Auth')}}
+              />
+            </Menu>
           ),
           tabBarActiveTintColor: CLICK_COLOR,
           tabBarInactiveTintColor: 'white',
           unmountOnBlur: true,
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault()
+          },
+        })}
       />
       <Tab.Screen 
         name="Cart" 
@@ -87,7 +111,24 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 30,
     fontFamily: FONT,
-  }
+  },
+  modal: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  button: {
+    borderRadius: 15,
+    width: 350,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '500',
+  },
 });
 
 export default TabNavigationRoutes;
