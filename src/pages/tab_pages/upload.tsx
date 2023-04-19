@@ -56,6 +56,8 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     }
     const result = await launchCamera({
       mediaType: 'photo',
+      maxWidth: 500,
+      maxHeight: 500,
     });
     if (result.didCancel) {
       return;

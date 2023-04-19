@@ -42,9 +42,9 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
 
   const confirm = async () => {
     if (state == 'edit') {
-     UpdateProduct(productId, product);
+      await UpdateProduct(productId, product);
     } else {
-     PostProduct(user_id, product);
+      await PostProduct(user_id, product);
     }
     navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage', params:{reload: true}}});
   }

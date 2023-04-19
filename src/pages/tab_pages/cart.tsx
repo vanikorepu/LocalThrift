@@ -110,22 +110,22 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
 
   const send_sms = async (items: {}) => {
     let message = 'Hi, I am interested in your products: ';
-    for (const item of items.product) {
+    for (const item of items.products) {
       message += item.brand + ' ' + item.size + ', ';
     }
     const separator = Platform.OS === 'ios' ? '&' : '?'
-    const url = `sms:${items.phone}${separator}body=${message}`;
+    const url = `sms:${items.phone}${separator}body=${encodeURIComponent(message)}`;
     await Linking.openURL(url);
   }
 
-  const send_gmail = (items: {}) => {
+  const send_gmail = async (items: {}) => {
     const subject = 'LocalThrift'
     let message = 'Hi, I am interested in your products: ';
-    for (const item of items.product) {
+    for (const item of items.products) {
       message += item.brand + ' ' + item.size + ', ';
     }
-    const url = `mailto:${items.email}?subject=${subject}&body=${message}`;
-    Linking.openURL(url);
+    const url = `googlegmail://co?to=${items.email}&subject=${subject}&body=${encodeURIComponent(message)}`;
+    await Linking.openURL(url);
   }
 
   return (
