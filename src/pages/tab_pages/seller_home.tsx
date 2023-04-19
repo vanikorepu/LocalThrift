@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground} from 'react-native';
 
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+
 import AutoHeightImage from 'react-native-auto-height-image';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Edit from '../../../assets/icons/edit.svg';
 import Sold from '../../../assets/icons/sold.svg';
@@ -11,35 +14,53 @@ import {COLOR} from '../../../assets/setting';
 import Product from '../../../data/product_list.json';
 
 import {ImagesAssets} from '../../../assets/images/image_assest';
-import { HomeStackScreenProps } from '../../type';
+import { HomeStackScreenProps, ProductParamsList, ImageParamsList } from '../../type';
+
+import { GetSellerProduct, DeleteProduct, GetImage } from '../../api/api';
 
 function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomePage'>): JSX.Element {
-  const edit = (item: number) => {
+  const [lst, setLst] = useState([[], []]);
+  const [update, setUpdate] = useState(true);
 
-  }
-  const sold = (item: number) => {
+  const fetchData = async () => {
+    const id = await AsyncStorage.getItem('user_id');
+    const products = await GetSellerProduct(id);
 
-  }
-  const images = [ImagesAssets.bottoms, ImagesAssets.tops]
-  const products = Product.map((item, index) => {
-    return {
-      ...item,
-      image: images[index % 2],
+    let _lst = [[], []];
+    let cnt = 0
+    for (const product of products) {
+      _lst[cnt % 2].push(product)
+      cnt += 1
     }
-  })
-  const lst: Array<typeof Product> = [[], []]
-  let sum = [0, 0]
-  for (const product of products) {
-    const aspectRatio = product.height / product.width
-    if (sum[0] > sum[1]) {
-      lst[1].push(product)
-      sum[1] += aspectRatio
-    } else {
-      lst[0].push(product)
-      sum[0] += aspectRatio
-    }
+    setLst(_lst);
   }
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+    navigation.setParams({reload: false});
+  }, [route.params.reload]);
+
+  const edit = async (id: string, product: ProductParamsList) => {
+    product.images = product.images.map((image: ImageParamsList) => {
+      return {
+        name: image.name,
+        type: 'image/' + image.name.split('.')[1],
+        uri: GetImage(image.name),
+        height: image.height,
+        width: image.width
+      }
+    })
+    navigation.navigate('UploadPage', {state: "edit", product: product, product_id: id});
+  }
+  const sold = async (item: string) => {
+    await DeleteProduct(item);
+    fetchData();
+  }
+  
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -49,17 +70,17 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
               {
                 items.map((item, index) => {
                   return <View style={styles.product}>
-                      <ImageBackground source={item.image} style={styles.image}/>
+                      <ImageBackground source={{uri: GetImage(item.images[0].name)}} style={styles.image}/>
                       <TouchableOpacity
                         style={[styles.button, {left: '5%'}]}
                         activeOpacity={0.5}
-                        onPress={() => {edit(item.id);}}>
+                        onPress={() => {edit(item._id, item);}}>
                         <Edit fill="black" style={[styles.icon]}/>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={[styles.button, {right: '5%'}]}
                         activeOpacity={0.5}
-                        onPress={() => {sold(item.id);}}>
+                        onPress={() => {sold(item._id);}}>
                         <Sold fill="black" style={[styles.icon]}/>
                       </TouchableOpacity>
                       <Text 

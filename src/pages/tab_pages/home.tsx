@@ -36,7 +36,7 @@ function HomePage({ navigation, route }: HomeStackScreenProps<'HomePage'>): JSX.
         <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            onPress={() => navigation.push('SellerHomePage')}>
+            onPress={() => navigation.push('SellerHomePage', {reload: true})}>
             <ImageBackground source={ImagesAssets.selling} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Selling</Text>
         </TouchableOpacity>
@@ -89,7 +89,7 @@ function HomeStack({ navigation, route }: TabScreenProps<'Home'>): JSX.Element {
                 headerShown: true,
                 gestureEnabled: true, 
                 headerTitleStyle: styles.headerTitle,
-                headerLeft: () => <TouchableOpacity onPress={navigation.goBack}>
+                headerLeft: () => <TouchableOpacity onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'BuyerHomePage'}})}}>
                       <Back style={styles.back} stroke={'black'}/>
                 </TouchableOpacity>
             })}
@@ -105,14 +105,10 @@ function HomeStack({ navigation, route }: TabScreenProps<'Home'>): JSX.Element {
                 headerTitleStyle: styles.headerTitle,
                 headerLeft: () => <></>,
                 headerRight: () => <TouchableOpacity onPress={()=>{
-                      navigation.push('UploadPage')
+                      navigation.push('UploadPage', {state: "post", product: undefined, product_id: undefined})
                     }}>
                       <Upload style={styles.upload}/>
                 </TouchableOpacity>
-                
-                // <Button title="Upload" onPress={() => {
-                //   navigation.push('UploadPage')
-                // }} />
             }}
         />
         

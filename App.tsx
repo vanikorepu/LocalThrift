@@ -85,7 +85,9 @@ function App(): JSX.Element {
           <Stack.Screen
             name="Splash"
             component={SplashPage}
-            options={{headerShown: false}}
+            options={{
+              headerShown: false
+            }}
           />
           <Stack.Screen
             name="Auth"

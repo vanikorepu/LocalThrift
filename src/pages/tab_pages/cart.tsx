@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Linking, Platform} from 'react-native';
 
 import Menu, { MenuItem } from '../../components/manu';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CartProduct from '../../../data/cart.json';
 import Empty from '../../../assets/icons/empty.svg';
@@ -16,86 +18,124 @@ import Trash from '../../../assets/icons/trash.svg';
 import Gmail from '../../../assets/icons/gmail.svg';
 import SMS from '../../../assets/icons/sms.svg';
 
-function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
-  const trash = (item: number) => {
+import {RemoveItemFromCart, GetCart, GetImage} from '../../api/api';
 
+function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
+  let user_id = '';
+  const [cart, setCart] = useState([]);
+  const [load, setLoad] = useState(false);
+  const [content, setContent] = useState(<View></View>);
+  const [sum, setSum] = useState(0);
+
+  const fetchData = async () => {
+    user_id = await AsyncStorage.getItem('user_id');
+    // await setUser(id);
+    const _cart = await GetCart(user_id);
+    await setCart(_cart);
+    
+    const _sum = _cart.reduce((acc, cur) => acc + cur.products.length, 0);
+    await setSum(_sum);
+  
+    let _content: JSX.Element;
+    if (_sum === 0) {
+      _content = (<View style={styles.container}>
+        <Text style={styles.subTitle}>Your cart is empty!</Text>
+        <Empty style={styles.empty}/>
+        <TouchableOpacity
+            style={[styles.button]}
+            activeOpacity={0.5}
+            onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'BuyerHomePage'}})}}>
+            <Text style={styles.buttonText}>Start Shopping</Text>
+        </TouchableOpacity>
+      </View>);
+    } else {
+      _content = (<ScrollView>
+        <View style={[styles.container, {paddingTop: 10}]}>
+          {_cart.map((items, idx) => (
+            <View key={idx}>
+              <Text style={styles.sellerText}>Selled by: {items.seller}</Text>
+              <View style={styles.seller}>
+                <View style={styles.product}>
+                  {items.products.map((item, index) =>(
+                    <View style={styles.infos} key={index}>
+                      <Image style={styles.image} source={{uri: GetImage(item.images[0].name)}} resizeMode="cover" />
+                      <View style={styles.info}>
+                        <Text style={styles.text}>Size: {item.size}</Text>
+                        <Text style={styles.text}>Price: ${item.price}</Text>
+                        <Text style={styles.text}>Brand: {item.brand}</Text>
+                        <Text style={styles.text}>Usage: {item.usage}</Text>
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            onPress={() => {trash(item._id)}}>
+                            <Trash style={styles.trash} />
+                        </TouchableOpacity>
+                        
+                      </View>
+                    </View>
+                  ))
+                  }
+                </View>
+                <Menu 
+                  style={styles.modal}
+                  trigger={<View style={styles.contactButton}><Text style={styles.contactText}>Contact Seller</Text></View>}
+                  >
+                  <MenuItem
+                    element={<SMS style={[styles.icon]}/>}
+                    onPress={() => {send_sms(items)}}
+                  />
+                  <MenuItem
+                    element={<Gmail style={[styles.icon]}/>}
+                    onPress={() => {send_gmail(items)}}
+                  />
+                </Menu>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>)
+    }
+    await setContent(_content)
+
+    await setLoad(true)
   }
 
-  const send_sms = (items: {}) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const trash = async (item: string) => {
+    await RemoveItemFromCart(item, user_id);
+    fetchData();
+  }
+
+  const send_sms = async (items: {}) => {
+    let message = 'Hi, I am interested in your products: ';
+    for (const item of items.product) {
+      message += item.brand + ' ' + item.size + ', ';
+    }
+    const separator = Platform.OS === 'ios' ? '&' : '?'
+    const url = `sms:${items.phone}${separator}body=${message}`;
+    await Linking.openURL(url);
   }
 
   const send_gmail = (items: {}) => {
-  
-  }
-  
-  const cart = CartProduct;
-  const sum = cart.reduce((acc, cur) => acc + cur.product.length, 0);
-  
-  let content: JSX.Element;
-  if (sum === 0) {
-    content = (<View style={styles.container}>
-      <Text style={styles.subTitle}>Your cart is empty!</Text>
-      <Empty style={styles.empty}/>
-      <TouchableOpacity
-          style={[styles.button]}
-          activeOpacity={0.5}
-          onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})}}>
-          <Text style={styles.buttonText}>Start Shopping</Text>
-      </TouchableOpacity>
-    </View>);
-  } else {
-    content = (<ScrollView>
-      <View style={[styles.container, {paddingTop: 10}]}>
-        {cart.map((items, index) => (
-          <View>
-            <Text style={styles.sellerText}>Selled by: {items.seller}</Text>
-            <View style={styles.seller}>
-              <View style={styles.product}>
-                {items.product.map((item) =>(
-                  <View style={styles.infos}>
-                    <Image style={styles.image} source={ImagesAssets.logo} resizeMode="cover" />
-                    <View style={styles.info}>
-                      <Text style={styles.text}>Size: {item.size}</Text>
-                      <Text style={styles.text}>Price: ${item.price}</Text>
-                      <Text style={styles.text}>Brand: {item.brand}</Text>
-                      <Text style={styles.text}>Usage: {item.usage}</Text>
-                      <TouchableOpacity
-                          activeOpacity={0.5}
-                          onPress={() => {trash(item.id)}}>
-                          <Trash style={styles.trash} />
-                      </TouchableOpacity>
-                      
-                    </View>
-                  </View>
-                ))
-                }
-              </View>
-              <Menu 
-                style={styles.modal}
-                trigger={<View style={styles.contactButton}><Text style={styles.contactText}>Contact Seller</Text></View>}
-                >
-                <MenuItem
-                  element={<SMS style={[styles.icon]}/>}
-                  onPress={() => {send_sms(items)}}
-                />
-                <MenuItem
-                  element={<Gmail style={[styles.icon]}/>}
-                  onPress={() => {send_gmail(items)}}
-                />
-              </Menu>
-            </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>)
+    const subject = 'LocalThrift'
+    let message = 'Hi, I am interested in your products: ';
+    for (const item of items.product) {
+      message += item.brand + ' ' + item.size + ', ';
+    }
+    const url = `mailto:${items.email}?subject=${subject}&body=${message}`;
+    Linking.openURL(url);
   }
 
   return (
     <SafeAreaView>
       <View >
-        <Text style={styles.total}>{sum} Items</Text>
+        {load && <Text style={styles.total}>{sum} Items</Text>}
       </View>
-      {content}
+      <View>
+      {load && content}
+      </View>
     </SafeAreaView>
   );
 }

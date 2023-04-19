@@ -1,11 +1,11 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image} from 'react-native';
 
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
 
-// import { ImagesAssets } from '../../../assets/images/image_assest';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LeftArrow from '../../../assets/icons/left_arrow.svg';
 import RightArrow from '../../../assets/icons/right_arrow.svg';
@@ -17,32 +17,42 @@ import MeetingPoint from '../../../data/meeting_point.json';
 
 import { RootStackScreenProps } from '../../type';
 
+import {PostProduct, UpdateProduct} from '../../api/api';
+
 function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.Element {
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => <Button title="Cancel" onPress={() => {
-  //       navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}})
-  //     }} />
-  //   });
-  // }, [navigation]);
+
+  const state = route.params.state;
+  const product = route.params.product;
+  const productId = route.params.product_id;
+  const [user_id, setUser] = useState('');
+
+  const fetchData = async () => {
+    const id = await AsyncStorage.getItem('user_id');
+    setUser(id);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   const edit = () => {
-    navigation.goBack();
+    navigation.navigate("UploadPage", {state: state, product: product, product_id: productId});
   }
 
-  const confirm = () => {
-    navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}});
+  const confirm = async () => {
+    if (state == 'edit') {
+     UpdateProduct(productId, product);
+    } else {
+     PostProduct(user_id, product);
+    }
+    navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage', params:{reload: true}}});
   }
-
-  // const images = [ImagesAssets.bottoms, ImagesAssets.buying, ImagesAssets.home, ImagesAssets.logo, ImagesAssets.selling, ImagesAssets.tops, ImagesAssets.winterwear];
 
   const width = Dimensions.get('window').width;
 
   const carousel = React.useRef<ICarouselInstance>(null);
 
-  const product = route.params.product;
-  console.log(product.images);
-  console.log(product.images.length);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -53,13 +63,12 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
             width={width * 0.8}
             height={width * 0.8}
             loop
-            // autoPlay={true}
             data={[...new Array(product.images.length).keys()]}
             scrollAnimationDuration={1000}
-            onSnapToItem={(index) => console.log('current index:', index)}
+            onSnapToItem={(index) => {}}
             renderItem={({ index }) => (
               <View>
-                <Image style={styles.image} resizeMode='cover' source={{uri: product.images[index]}}/>
+                <Image style={styles.image} resizeMode='cover' source={{uri: product.images[index].uri}}/>
               </View>
             )}
         />

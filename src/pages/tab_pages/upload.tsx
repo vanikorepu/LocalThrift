@@ -1,36 +1,54 @@
-import React, {useLayoutEffect, useState, useCallback} from 'react';
+import React, {useLayoutEffect, useState, useCallback, createRef, useEffect} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image} from 'react-native';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import RNPickerSelect from 'react-native-picker-select';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { RootStackScreenProps, ProductParamsList } from '../../type';
+
+import { RootStackScreenProps, ProductParamsList, ImageParamsList } from '../../type';
 
 import { COLOR } from '../../../assets/setting';
 
 import Cross from '../../../assets/icons/cross.svg';
 import Plus from '../../../assets/icons/plus.svg';
 
+import Category from '../../../data/category.json';
+import MeetingPoint from '../../../data/meeting_point.json';
+
+
 function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitle: state === "post" ? 'Upload' : "Edit Post",
       headerRight: () => 
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}})
+        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage', params: {reload: false}}})
           }}>
         <Cross style={styles.cancel}/>
       </TouchableOpacity>
-      // <Button title="Cancel" onPress={() => {
-      //   navigation.navigate('TabNavigationRoutes', {screen: 'Home'})
-      // }} />
     });
   }, [navigation]);
 
-  const [photos, setPhotos] = useState<string[]>([...new Array(4)]);
-  const [count, setCount] = useState(0);
+  const state = route.params.state;
+  const product = route.params.product;
+  const product_id = route.params.product_id;
+
+  const [photos, setPhotos] = useState<ImageParamsList[]>(product === undefined ? [...new Array(4)] : [...product.images, ...new Array(4 - product.images.length)]);
+  const [count, setCount] = useState(product === undefined ? 0 : product.images.length);
+  const [price, setPrice] = useState(product === undefined ? '' : product.price);
+  const [size, setSize] = useState(product === undefined ? '' : product.size);
+  const [brand, setBrand] = useState(product === undefined ? '' : product.brand);
+  const [usage, setUsage] = useState(product === undefined ? '' : product.usage);
+  const [category, setCategory] = useState(product === undefined ? undefined : product.category);
+  const [meeting, setMeeting] = useState(product === undefined ? undefined : product.meeting);
+
+  const sizeInputRef = createRef<TextInput>();
+  const brandInputRef = createRef<TextInput>();
+  const usageInputRef = createRef<TextInput>();
+  
 
   const takePhotoFromCamera = async () => {
     if (count >= 4) {
@@ -46,10 +64,14 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       return;
     }
     if (result.assets) {
-      if (result.assets[0].uri !== undefined) {
-        photos[count] = result.assets[0].uri;
-        setCount(count + 1);
-      }
+      photos[count] = {
+        name: result.assets[0].fileName,
+        type: result.assets[0].type,
+        uri: result.assets[0].uri,
+        width: result.assets[0].width,
+        height: result.assets[0].height,
+      };
+      setCount(count + 1);
     }
   };
 
@@ -63,7 +85,7 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       return (
         <View>
           <Image
-            source={{uri: photos[index]}}
+            source={{uri: photos[index].uri}}
             style={styles.image}
           />
           <TouchableOpacity 
@@ -82,127 +104,127 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     }
   };
 
-  const [product, setProduct] = useState<ProductParamsList>({
-    id: undefined,
-    category: 0,
-    price: 0,
-    size: '',
-    brand: '',
-    usage: '',
-    meeting: 0,
-    images: photos,
-  })
-
-  const submit = (product: ProductParamsList) => {
-    product.images = photos.filter((photo) => photo !== undefined);
-    navigation.push('Summary', {product: product});
+  const submit = () => {
+    const product: ProductParamsList = {
+      price: price,
+      size: size,
+      brand: brand,
+      usage: usage,
+      category: category,
+      meeting: meeting,
+      images: photos.filter((photo) => photo !== undefined)
+    };
+    navigation.push('Summary', {state: state, product: product, product_id: product_id});
   }
 
-  // const [catOpen, setCatOpen] = useState(false);
-  // const [catValue, setCatValue] = useState(null);
-  // const [catItems, setCatItems] = useState([
-  //   {label: 'Tops', value: 'tops'},
-  //   {label: 'Bottoms', value: 'bottoms'},
-  //   {label: 'Winter Clothes', value: 'winter'}
-  // ]);
-
-  // const [meetOpen, setMeetOpen] = useState(false);
-  // const [meetValue, setMeetValue] = useState(null);
-  // const [meetItems, setMeetItems] = useState([
-  //   {label: 'On Campus', value: 'on'},
-  //   {label: 'Off Campus', value: 'off'}
-  // ]);
-
-  // const onCatOpen = useCallback(() => {
-  //   setMeetOpen(false);
-  // }, []);
-
-  // const onMeetOpen = useCallback(() => {
-  //   setCatOpen(false);
-  // }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.picture}>
-        <Text style={styles.text}>Upload images of your item</Text>
-        <TouchableOpacity 
-          onPress={async () => {await takePhotoFromCamera()}}
-          style={styles.cameraButton}>
-          <Plus style={styles.plus}/>
-        </TouchableOpacity>
-        <View style={styles.images}>
-          {photos.map((photo, index) => renderPhoto(index))}
+    <ScrollView 
+        automaticallyAdjustKeyboardInsets={true}
+        style={{height: '100%'}}>
+      <View style={styles.container}>
+        <View style={styles.picture}>
+          <Text style={styles.text}>Upload images of your item</Text>
+          <TouchableOpacity 
+            onPress={async () => {await takePhotoFromCamera()}}
+            style={styles.cameraButton}>
+            <Plus style={styles.plus}/>
+          </TouchableOpacity>
+          <View style={styles.images}>
+            {photos.map((photo, index) => renderPhoto(index))}
+          </View>
         </View>
-      </View>
-      <RNPickerSelect
-        style={pickerSelectStyles}
-        placeholder={{label: "Category"}}
-        onValueChange={(value) => console.log(value)}
-        items={[
-            { label: 'Tops', value: 'tops' },
-            { label: 'Bottoms', value: 'bottoms' },
-            { label: 'Winter Clothes', value: 'winter' },
-        ]}
-      />
-      {/* <DropDownPicker
-        open={catOpen}
-        value={catValue}
-        items={catItems}
-        onOpen={onCatOpen}
-        setOpen={setCatOpen}
-        setValue={setCatValue}
-        setItems={setCatItems}
-        placeholder="Category"
-        style={pickerSelectStyles.container}
-        placeholderStyle={{color: '#BBB'}}
-        dropDownContainerStyle={pickerSelectStyles.dropDown}
-      /> */}
-      <TextInput placeholder="Price" style={styles.input}/>
-      <TextInput placeholder="Size" style={styles.input}/>
-      <TextInput placeholder="Brand" style={styles.input}/>
-      <TextInput placeholder="Usage" style={styles.input}/>
-      <RNPickerSelect
-        style={pickerSelectStyles}
-        placeholder={{label: "Meeting Point"}}
-        onValueChange={(value) => console.log(value)}
-        items={[
-            { label: 'On Campus', value: 'on' },
-            { label: 'Off Campus', value: 'off' },
-        ]}
-      />
-      {/* <DropDownPicker
-        open={meetOpen}
-        value={meetValue}
-        items={meetItems}
-        onOpen={onMeetOpen}
-        setOpen={setMeetOpen}
-        setValue={setMeetValue}
-        setItems={setMeetItems}
-        multiple={true}
-        placeholder="Meeting Point"
-        style={pickerSelectStyles.container}
-        placeholderStyle={{color: '#BBB'}}
-        dropDownContainerStyle={pickerSelectStyles.dropDown}
-      /> */}
+        <RNPickerSelect
+          style={pickerSelectStyles}
+          placeholder={{label: "Category"}}
+          onValueChange={(cat) => 
+            setCategory(cat)
+          }
+          value={category}
+          items={Category.map((cat, index) => {return {label: cat, value: index}})}
+        />
+        <TextInput 
+          autoCorrect={false} 
+          placeholderTextColor={'#AAA'}
+          autoCapitalize='none'
+          placeholder="Price" 
+          returnKeyType="next"
+          keyboardType="number-pad"
+          onSubmitEditing={() =>
+            sizeInputRef.current &&
+            sizeInputRef.current.focus()
+          }
+          onChangeText={(price) =>
+              setPrice(price)
+          }
+          value={price}
+          style={styles.input}/>
+        <TextInput 
+          placeholder="Size" 
+          placeholderTextColor={'#AAA'}
+          autoCorrect={false} 
+          autoCapitalize='none'
+          returnKeyType="next"
+          onSubmitEditing={() =>
+            brandInputRef.current &&
+            brandInputRef.current.focus()
+          }
+          onChangeText={(size) =>
+              setSize(size)
+          }
+          value={size}
+          style={styles.input}/>
+        <TextInput 
+          placeholder="Brand" 
+          placeholderTextColor={'#AAA'}
+          autoCorrect={false} 
+          autoCapitalize='none'
+          returnKeyType="next"
+          onSubmitEditing={() =>
+            usageInputRef.current &&
+            usageInputRef.current.focus()
+          }
+          onChangeText={(brand) =>
+              setBrand(brand)
+          }
+          value={brand}
+          style={styles.input}/>
+        <TextInput 
+          placeholder="Usage" 
+          placeholderTextColor={'#AAA'}
+          autoCorrect={false} 
+          autoCapitalize='none'
+          returnKeyType="next"
+          onChangeText={(usage) =>
+              setUsage(usage)
+          }
+          value={usage}
+          style={styles.input}/>
+        <RNPickerSelect
+          style={pickerSelectStyles}
+          placeholder={{label: "Meeting Point"}}
+          onValueChange={(meeting) => 
+            setMeeting(meeting)
+          }
+          value={meeting}
+          items={MeetingPoint.map((meeting, index) => {return {label: meeting, value: index}})}
+        />
 
-      <TouchableOpacity
-          style={styles.button}
-          activeOpacity={0.5}
-          onPress={() => {submit(product)}}>
-          <Text style={styles.buttonText}>Save</Text>
-      </TouchableOpacity>
-      
-    </View>
+        <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.5}
+            onPress={() => {submit()}}>
+            <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+        
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    height: '100%',
     alignItems: 'center',
   },
   picture: {

@@ -16,7 +16,7 @@ function BuyerHomePage({ navigation, route }: HomeStackScreenProps<'BuyerHomePag
             style={styles.button}
             activeOpacity={0.5}
             onPress={() => {
-              navigation.push('ProductListPage', {category: 0});
+              navigation.push('ProductListPage', {category: 0, reload: false});
             }}>
             <ImageBackground source={ImagesAssets.tops} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Tops</Text>
@@ -24,14 +24,14 @@ function BuyerHomePage({ navigation, route }: HomeStackScreenProps<'BuyerHomePag
         <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            onPress={() => {navigation.push('ProductListPage', {category: 1});}}>
+            onPress={() => {navigation.push('ProductListPage', {category: 1, reload: false});}}>
             <ImageBackground source={ImagesAssets.bottoms} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Bottoms</Text>
         </TouchableOpacity>
         <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            onPress={() => {navigation.push('ProductListPage', {category: 2});}}>
+            onPress={() => {navigation.push('ProductListPage', {category: 2, reload: false});}}>
             <ImageBackground source={ImagesAssets.winterwear} resizeMode="cover" style={styles.image}/>
             <Text style={styles.buttonText}>Winter Wear</Text>
         </TouchableOpacity>

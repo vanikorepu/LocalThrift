@@ -52,7 +52,6 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
           headerTitle: "Profile",
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            // <Profile style={{width: size, height: size}} fill={color}/>
             <Menu 
               style={styles.modal}
               alignment="center"
@@ -95,6 +94,7 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
           ),
           tabBarActiveTintColor: CLICK_COLOR,
           tabBarInactiveTintColor: 'white',
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>

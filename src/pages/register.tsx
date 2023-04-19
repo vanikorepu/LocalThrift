@@ -1,35 +1,87 @@
-import React from 'react';
+import React, {useState, createRef} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {ScrollView, KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 
-import { RootStackScreenProps } from '../type';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { RootStackScreenProps, UserProfileParamsList } from '../type';
 
 import {COLOR} from '../../assets/setting'
 import { ImagesAssets } from '../../assets/images/image_assest';
 
+import {Register} from '../api/api';
 
 function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): JSX.Element {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
 
-    const register = () => {
-        navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
+    const emailInputRef = createRef<TextInput>();
+    const passwordInputRef = createRef<TextInput>();
+    const phoneInputRef = createRef<TextInput>();
+    
+    const register = async () => {
+        const res = await Register(name, email, password, phone);
+        if (res.state === 1) {
+            await AsyncStorage.setItem('user_id', res.id);
+            navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
+        } else {
+            return;
+        }
     }
   return (
 
-    <SafeAreaView style={styles.container}>
+    <ScrollView 
+        automaticallyAdjustKeyboardInsets={true}
+        style={{height: '100%', backgroundColor: COLOR}}>
+        <View style={styles.container}>
         <Image source={ImagesAssets.logo} style={styles.image}/>
         <Text style={[styles.title, styles.text]}>LOCALTHRIFT</Text>
         <Text style={[styles.subTitle, styles.text]}>Welcome</Text>
 
-        <TextInput placeholder="Full Name" style={[styles.input, {marginTop: 10}]} placeholderTextColor={'white'}/>
+        <TextInput 
+            placeholder="Full Name" 
+            autoCapitalize='none'
+            style={[styles.input, {marginTop: 10}]} 
+            returnKeyType="next"
+            onSubmitEditing={() =>
+                emailInputRef.current &&
+                emailInputRef.current.focus()
+            }
+            onChangeText={(name) =>
+                setName(name)
+            }
+            placeholderTextColor={'white'}/>
         <TextInput 
             placeholder="Email" 
+            autoCapitalize='none'
             autoCorrect={false}
             inputMode='email'
+            returnKeyType="next"
+            onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+            }
+            onChangeText={(email) =>
+                setEmail(email)
+            }
+            ref={emailInputRef}
             keyboardType='email-address'
             style={styles.input} 
             placeholderTextColor={'white'}/>
         <TextInput 
             placeholder="Password" 
+            autoCapitalize='none'
+            returnKeyType="next"
+            onSubmitEditing={() =>
+                phoneInputRef.current &&
+                phoneInputRef.current.focus()
+            }
+            onChangeText={(password) =>
+                setPassword(password)
+            }
+            ref={passwordInputRef}
             secureTextEntry={true}
             style={styles.input} 
             placeholderTextColor={'white'}/>
@@ -37,6 +89,15 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
             placeholder="Mobile Contact" 
             inputMode='tel'
             keyboardType='phone-pad'
+            returnKeyType="next"
+            onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+            }
+            onChangeText={(phone) =>
+                setPhone(phone)
+            }
+            ref={phoneInputRef}
             style={styles.input} 
             placeholderTextColor={'white'}/>
 
@@ -54,7 +115,8 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
             onPress={() => {navigation.replace('Login');}}>
             <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-    </SafeAreaView>
+        </View>
+    </ScrollView>
   );
 }
 

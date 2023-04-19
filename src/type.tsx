@@ -5,15 +5,31 @@ import type {
   import type { StackScreenProps } from '@react-navigation/stack';
   import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
+type UserProfileParamsList = {
+  name: string,
+  email: string,
+  phone: string,
+  password: string,
+  _id: string,
+  cart: string[]
+}
+
+type ImageParamsList = {
+  name: string,
+  type: string,
+  uri: string,
+  height: number,
+  width: number,
+}
+
 type ProductParamsList = {
-    id: undefined,
-    size: string,
-    price: number,
-    brand: string,
-    usage: string,
-    meeting: number,
-    category: number,
-    images: string[],
+    size?: string,
+    price?: string,
+    brand?: string,
+    usage?: string,
+    meeting?: number,
+    category?: number,
+    images?: ImageParamsList[],
 }
 
 type RootStackParamList = {
@@ -22,9 +38,9 @@ type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     TabNavigationRoutes: NavigatorScreenParams<TabParamList>;
-    UploadPage: undefined;
-    Summary: {product: ProductParamsList};
-    ProductDescriptionPage: {category: number, product: number};
+    UploadPage: {state: "post"|"edit", product: ProductParamsList|undefined, product_id: string|undefined};
+    Summary: {state: "post"|"edit", product: ProductParamsList, product_id: string|undefined};
+    ProductDescriptionPage: {category: number, product: string};
     ProfileEditPage: undefined;
   };
 
@@ -46,8 +62,8 @@ type TabScreenProps<T extends keyof TabParamList> =
 type HomeStackParamList = {
     HomePage: undefined;
     BuyerHomePage: undefined;
-    SellerHomePage: undefined;
-    ProductListPage: {category: number};
+    SellerHomePage: {reload: boolean};
+    ProductListPage: {category: number, reload: boolean};
 }
 
 type HomeStackScreenProps<T extends keyof HomeStackParamList> =
@@ -56,17 +72,6 @@ type HomeStackScreenProps<T extends keyof HomeStackParamList> =
     TabScreenProps<keyof TabParamList>
   >;
 
-// type ProfileStackParamList = {
-//     ProfilePage: undefined;
-//     ProfileEditPage: undefined;
-// }
-
-// type ProfileStackScreenProps<T extends keyof ProfileStackParamList> =
-//   CompositeScreenProps<
-//     StackScreenProps<ProfileStackParamList, T>,
-//     TabScreenProps<keyof TabParamList>
-//   >;
-
 declare global {
 namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {}
@@ -74,6 +79,8 @@ namespace ReactNavigation {
 }
 
 export {
+    type UserProfileParamsList,
+    type ImageParamsList,
     type ProductParamsList,
     type RootStackParamList,
     type RootStackScreenProps,
@@ -81,6 +88,4 @@ export {
     type TabScreenProps,
     type HomeStackParamList,
     type HomeStackScreenProps,
-    // type ProfileStackParamList,
-    // type ProfileStackScreenProps
 };
