@@ -1,44 +1,72 @@
 import React from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Image, ImageBackground} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Button,
+  Image,
+  ImageBackground,
+} from 'react-native';
 
 import BuyerHomePage from './buyer_home';
 import SellerHomePage from './seller_home';
 import ProductListPage from './product_list';
-import ProductDescriptionPage from './product_description'
+import ProductDescriptionPage from './product_description';
 
-import { createStackNavigator } from '@react-navigation/stack';
-import { HomeStackScreenProps, TabScreenProps, HomeStackParamList } from '../../type';
+import {createStackNavigator} from '@react-navigation/stack';
+import {
+  HomeStackScreenProps,
+  TabScreenProps,
+  HomeStackParamList,
+} from '../../type';
 
-import { COLOR } from '../../../assets/setting';
-import { ImagesAssets } from '../../../assets/images/image_assest';
+import {COLOR} from '../../../assets/setting';
+import {ImagesAssets} from '../../../assets/images/image_assest';
 
 import Upload from '../../../assets/icons/upload.svg';
 import Back from '../../../assets/icons/left_arrow.svg';
 
-import Category from '../../../data/category.json'
+import Category from '../../../data/category.json';
 
-function HomePage({ navigation, route }: HomeStackScreenProps<'HomePage'>): JSX.Element {
+function HomePage({
+  navigation,
+  route,
+}: HomeStackScreenProps<'HomePage'>): JSX.Element {
   return (
     <SafeAreaView>
       <View>
         <View style={styles.placeholder}>
-          <ImageBackground source={ImagesAssets.home} resizeMode="cover" style={styles.image}/>
+          <ImageBackground
+            source={ImagesAssets.home}
+            resizeMode="cover"
+            style={styles.image}
+          />
         </View>
         <Text style={styles.text}>What are you looking to do today?</Text>
         <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.5}
-            onPress={() => navigation.push('BuyerHomePage')}>
-            <ImageBackground source={ImagesAssets.buying} resizeMode="cover" style={styles.image}/>
-            <Text style={styles.buttonText}>Buying</Text>
+          style={styles.button}
+          activeOpacity={0.5}
+          onPress={() => navigation.push('BuyerHomePage')}>
+          <ImageBackground
+            source={ImagesAssets.buying}
+            resizeMode="cover"
+            style={styles.image}
+          />
+          <Text style={styles.buttonText}>Buying</Text>
         </TouchableOpacity>
         <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.5}
-            onPress={() => navigation.push('SellerHomePage', {reload: true})}>
-            <ImageBackground source={ImagesAssets.selling} resizeMode="cover" style={styles.image}/>
-            <Text style={styles.buttonText}>Selling</Text>
+          style={styles.button}
+          activeOpacity={0.5}
+          onPress={() => navigation.push('SellerHomePage', {reload: true})}>
+          <ImageBackground
+            source={ImagesAssets.selling}
+            resizeMode="cover"
+            style={styles.image}
+          />
+          <Text style={styles.buttonText}>Selling</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -47,71 +75,82 @@ function HomePage({ navigation, route }: HomeStackScreenProps<'HomePage'>): JSX.
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
-function HomeStack({ navigation, route }: TabScreenProps<'Home'>): JSX.Element {
-
+function HomeStack({navigation, route}: TabScreenProps<'Home'>): JSX.Element {
   return (
-    <Stack.Navigator 
+    <Stack.Navigator
       initialRouteName="HomePage"
       screenOptions={{
-        cardStyle: {backgroundColor: 'white'}, 
+        cardStyle: {backgroundColor: 'white'},
         headerShadowVisible: false,
-        animationEnabled: false
-      }}
-    >
-        <Stack.Screen
-            name="HomePage"
-            component={HomePage}
-            options={{
-              headerShown: true,
-              headerTitle: "Explore",
-              gestureEnabled: false, 
-              headerTitleStyle: styles.headerTitle,
-              headerLeft: () => <></>
-            }}
-        />
-        <Stack.Screen
-            name="BuyerHomePage"
-            component={BuyerHomePage}
-            options={{
-              headerShown: true,
-              headerTitle: "Explore",
-              gestureEnabled: false, 
-              headerTitleStyle: styles.headerTitle,
-              headerLeft: () => <></>
-            }}
-        />
-        <Stack.Screen
-            name="ProductListPage"
-            component={ProductListPage}
-            options={
-              ({ route }) => ({ 
-                title: Category[route.params.category],
-                headerShown: true,
-                gestureEnabled: true, 
-                headerTitleStyle: styles.headerTitle,
-                headerLeft: () => <TouchableOpacity onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'BuyerHomePage'}})}}>
-                      <Back style={styles.back} stroke={'black'}/>
-                </TouchableOpacity>
-            })}
-        />
-        
-        <Stack.Screen
-            name="SellerHomePage"
-            component={SellerHomePage}
-            options={{
-                headerShown: true,
-                headerTitle: "Clothes to Sell",
-                gestureEnabled: false, 
-                headerTitleStyle: styles.headerTitle,
-                headerLeft: () => <></>,
-                headerRight: () => <TouchableOpacity onPress={()=>{
-                      navigation.push('UploadPage', {state: "post", product: undefined, product_id: undefined})
-                    }}>
-                      <Upload style={styles.upload}/>
-                </TouchableOpacity>
-            }}
-        />
-        
+        animationEnabled: false,
+      }}>
+      <Stack.Screen
+        name="HomePage"
+        component={HomePage}
+        options={{
+          headerShown: true,
+          headerTitle: 'Explore',
+          gestureEnabled: false,
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => <></>,
+        }}
+      />
+      <Stack.Screen
+        name="BuyerHomePage"
+        component={BuyerHomePage}
+        options={{
+          headerShown: true,
+          headerTitle: 'Explore',
+          gestureEnabled: false,
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => <></>,
+        }}
+      />
+      <Stack.Screen
+        name="ProductListPage"
+        component={ProductListPage}
+        options={({route}) => ({
+          title: Category[route.params.category],
+          headerShown: true,
+          gestureEnabled: true,
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('TabNavigationRoutes', {
+                  screen: 'Home',
+                  params: {screen: 'BuyerHomePage'},
+                });
+              }}>
+              <Back style={styles.back} stroke={'black'} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="SellerHomePage"
+        component={SellerHomePage}
+        options={{
+          headerShown: true,
+          headerTitle: 'Clothes to Sell',
+          gestureEnabled: false,
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => <></>,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push('UploadPage', {
+                  state: 'post',
+                  product: undefined,
+                  product_id: undefined,
+                });
+              }}>
+              <Upload style={styles.upload} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -128,7 +167,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '300',
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   button: {
     height: 170,
@@ -138,13 +177,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 5,
     alignItems: 'flex-end',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
     height: '100%',
     width: '100%',
     resizeMode: 'cover',
-    flex:1
+    flex: 1,
   },
   buttonText: {
     position: 'absolute',
@@ -170,8 +209,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     marginLeft: 20,
-  }
+  },
 });
-
 
 export default HomeStack;

@@ -1,15 +1,23 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { RootStackScreenProps } from '../../type';
+import {RootStackScreenProps} from '../../type';
 
-import { ImagesAssets } from '../../../assets/images/image_assest';
+import {ImagesAssets} from '../../../assets/images/image_assest';
 import Product from '../../../data/product_list.json';
 import MeetingPoint from '../../../data/meeting_point.json';
 
@@ -20,10 +28,17 @@ import RightArrow from '../../../assets/icons/right_arrow.svg';
 
 import {COLOR} from '../../../assets/setting';
 
-import {GetProduct, AddItemToCart, GetUserProfile, GetImage} from '../../api/api';
+import {
+  GetProduct,
+  AddItemToCart,
+  GetUserProfile,
+  GetImage,
+} from '../../api/api';
 
-function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'ProductDescriptionPage'>): JSX.Element {
-
+function ProductDescriptionPage({
+  navigation,
+  route,
+}: RootStackScreenProps<'ProductDescriptionPage'>): JSX.Element {
   const product_id = route.params.product;
   const [user_id, setUser] = useState('');
   const [load, setLoad] = useState(false);
@@ -33,13 +48,13 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
     const product = await GetProduct(product_id);
-    const seller = await GetUserProfile(product.seller)
+    const seller = await GetUserProfile(product.seller);
     setProduct(product);
-    console.log(product)
+    console.log(product);
     setSeller(seller);
     setUser(id);
     setLoad(true);
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -47,47 +62,75 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <TouchableOpacity onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'ProductListPage', params: {category: route.params.category, reload: false}}})}}>
-            <Back style={styles.back} stroke={'black'}/>
-      </TouchableOpacity>
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('TabNavigationRoutes', {
+              screen: 'Home',
+              params: {
+                screen: 'ProductListPage',
+                params: {category: route.params.category, reload: false},
+              },
+            });
+          }}>
+          <Back style={styles.back} stroke={'black'} />
+        </TouchableOpacity>
+      ),
     });
   }, [navigation]);
 
   const addToCart = async (item: string) => {
     await AddItemToCart(item, user_id);
-    navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'ProductListPage', params: {category: route.params.category, reload: true}}})
-  }
+    navigation.navigate('TabNavigationRoutes', {
+      screen: 'Home',
+      params: {
+        screen: 'ProductListPage',
+        params: {category: route.params.category, reload: true},
+      },
+    });
+  };
 
   const {height, width} = Dimensions.get('window');
 
   const carousel = React.useRef<ICarouselInstance>(null);
 
-  return !load ? <View></View> : <SafeAreaView style={styles.container}>
+  return !load ? (
+    <View></View>
+  ) : (
+    <SafeAreaView style={styles.container}>
       <Carousel
-          ref={carousel}
-          width={width}
-          height={height * 0.6}
-          loop
-          data={[...new Array(product.images.length).keys()]}
-          scrollAnimationDuration={1000}
-          onSnapToItem={(index) => {}}
-          renderItem={({ index }) => (
-            <View style={styles.carouselContent}>
-              <Image style={styles.image} resizeMode='cover' source={{uri: GetImage(product.images[index].name)}}/>
-            </View>
-          )}
+        ref={carousel}
+        width={width}
+        height={height * 0.6}
+        loop
+        data={[...new Array(product.images.length).keys()]}
+        scrollAnimationDuration={1000}
+        onSnapToItem={index => {}}
+        renderItem={({index}) => (
+          <View style={styles.carouselContent}>
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={{uri: GetImage(product.images[index].name)}}
+            />
+          </View>
+        )}
       />
       <TouchableOpacity
         style={[styles.arrowButton, {}]}
         activeOpacity={0.5}
-        onPress={() => {carousel.current?.prev()}}>
-        <LeftArrow stroke={'white'} style={[styles.arrow]}/>
+        onPress={() => {
+          carousel.current?.prev();
+        }}>
+        <LeftArrow stroke={'white'} style={[styles.arrow]} />
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.arrowButton, {right: 0}]}
         activeOpacity={0.5}
-        onPress={() => {carousel.current?.next()}}>
-        <RightArrow stroke={'white'} style={[styles.arrow]}/>
+        onPress={() => {
+          carousel.current?.next();
+        }}>
+        <RightArrow stroke={'white'} style={[styles.arrow]} />
       </TouchableOpacity>
       <View style={styles.info}>
         <View style={{width: '100%'}}>
@@ -96,17 +139,22 @@ function ProductDescriptionPage({ navigation, route }: RootStackScreenProps<'Pro
           <Text style={styles.text}>Brand: {product.brand}</Text>
           <Text style={styles.text}>Usage: {product.usage}</Text>
           <Text style={styles.text}>Sold by: {seller.name}</Text>
-          <Text style={styles.text}>Meeting point: {MeetingPoint[product.meeting]}</Text>
+          <Text style={styles.text}>
+            Meeting point: {MeetingPoint[product.meeting]}
+          </Text>
         </View>
         <TouchableOpacity
-            style={[styles.button]}
-            activeOpacity={0.5}
-            onPress={() => {addToCart(product._id)}}>
-            <Cart style={styles.cart} fill={COLOR} />
-            <Text style={styles.buttonText}>Add to Bag</Text>
+          style={[styles.button]}
+          activeOpacity={0.5}
+          onPress={() => {
+            addToCart(product._id);
+          }}>
+          <Cart style={styles.cart} fill={COLOR} />
+          <Text style={styles.buttonText}>Add to Bag</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>;
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -143,8 +191,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   arrow: {
-    height: 60, 
-    width: 60
+    height: 60,
+    width: 60,
   },
   info: {
     position: 'absolute',
@@ -162,7 +210,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginVertical: 3,
     fontSize: 15,
-    fontWeight: '400'
+    fontWeight: '400',
   },
   button: {
     marginVertical: 20,
@@ -181,7 +229,7 @@ const styles = StyleSheet.create({
   cart: {
     width: 20,
     height: 20,
-  }
+  },
 });
 
 export default ProductDescriptionPage;

@@ -1,10 +1,23 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 
-import {ScrollView, StyleSheet, Modal, Text, View, TouchableOpacity, Image, ImageBackground, Dimensions} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Modal,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  Dimensions,
+} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { HomeStackScreenProps } from '../../type';
+import RNBottomActionSheet from 'react-native-bottom-action-sheet';
+
+import {HomeStackScreenProps} from '../../type';
 
 import {COLOR} from '../../../assets/setting';
 
@@ -16,33 +29,43 @@ import {ImagesAssets} from '../../../assets/images/image_assest';
 import AutoHeightImage from 'react-native-auto-height-image';
 import RNPickerSelect from 'react-native-picker-select';
 
-import { GetProductList, GetImage } from '../../api/api';
+import {GetProductList, GetImage} from '../../api/api';
 
-function ProductListPage({ navigation, route }: HomeStackScreenProps<'ProductListPage'>): JSX.Element {
+function ProductListPage({
+  navigation,
+  route,
+}: HomeStackScreenProps<'ProductListPage'>): JSX.Element {
   // const [modalVisible, setModalVisible] = useState(false);
-  let order = undefined
+  let order = undefined;
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => 
-      <RNPickerSelect
-        style={pickerSelectStyles}
-        onValueChange={(value) => {order = value}}
-        onDonePress={async () => {
-          setOrder(order)
-        }}
-        placeholder={{label: ""}}
-        Icon={() => {
-          return (
-            <TouchableOpacity>
-              <Filter style={styles.filter}/>
-            </TouchableOpacity>
-          );
-        }}
-        items={[
-            { label: 'Low to High', value: 1 },
-            { label: 'High to Low', value: -1 },
-        ]}
-      />
+      headerRight: () => (
+        <RNPickerSelect
+          style={pickerSelectStyles}
+          onValueChange={value => {
+            order = value;
+          }}
+          onDonePress={async () => {
+            setOrder(order);
+          }}
+          placeholder={{label: ''}}
+          Icon={() => {
+            return (
+              <TouchableOpacity>
+                <Filter style={styles.filter} />
+              </TouchableOpacity>
+            );
+          }}
+          items={[
+            {label: 'Price: Low to High', value: 1},
+            {label: 'Price: High to Low', value: -1},
+            {label: 'Size: S', value: 'Small'},
+            {label: 'Size: L', value: 'Large'},
+            {label: 'Size: M', value: 'Medium'},
+            {label: 'Size: XL', value: 'XLarge'},
+          ]}
+        />
+      ),
     });
   }, [navigation]);
 
@@ -56,24 +79,26 @@ function ProductListPage({ navigation, route }: HomeStackScreenProps<'ProductLis
     const id = await AsyncStorage.getItem('user_id');
     let _products = await GetProductList(id, categrory);
     if (orderState !== undefined) {
-      _products.sort((a, b) => orderState * (Number(a.price) - Number(b.price)))  
+      _products.sort(
+        (a, b) => orderState * (Number(a.price) - Number(b.price)),
+      );
     }
 
-    let _lst = [[], []]
-    let sum = [0, 0]
+    let _lst = [[], []];
+    let sum = [0, 0];
     for (const product of _products) {
-      const aspectRatio = product.images[0].height / product.images[0].width
+      const aspectRatio = product.images[0].height / product.images[0].width;
       if (sum[0] > sum[1]) {
-        _lst[1].push(product)
-        sum[1] += aspectRatio
+        _lst[1].push(product);
+        sum[1] += aspectRatio;
       } else {
-        _lst[0].push(product)
-        sum[0] += aspectRatio
+        _lst[0].push(product);
+        sum[0] += aspectRatio;
       }
     }
     setLst(_lst);
     setLoad(true);
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -81,33 +106,43 @@ function ProductListPage({ navigation, route }: HomeStackScreenProps<'ProductLis
 
   useEffect(() => {
     fetchData();
-    navigation.setParams({reload: false})
-  }, [route.params.reload])
-  
+    navigation.setParams({reload: false});
+  }, [route.params.reload]);
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        {
-          load && lst.map((items) => {
-            return <View style={styles.list}>
-              {
-                items.map((item, index) => {
-                  return <TouchableOpacity
+        {load &&
+          lst.map(items => {
+            return (
+              <View style={styles.list}>
+                {items.map((item, index) => {
+                  return (
+                    <TouchableOpacity
                       style={styles.product}
                       activeOpacity={0.5}
-                      onPress={() => {navigation.push('ProductDescriptionPage', {category: item.category, product: item._id});}}>
-                      <AutoHeightImage source={{uri: GetImage(item.images[0].name)}} width={200}/>
-                      <Text 
+                      onPress={() => {
+                        navigation.push('ProductDescriptionPage', {
+                          category: item.category,
+                          product: item._id,
+                        });
+                      }}>
+                      <AutoHeightImage
+                        source={{uri: GetImage(item.images[0].name)}}
+                        width={200}
+                      />
+                      <Text
                         style={styles.price}
                         adjustsFontSizeToFit={true}
-                        numberOfLines={1}
-                      >${item.price}</Text>
-                  </TouchableOpacity>
-                })
-              }
-            </View>
-          })
-        }
+                        numberOfLines={1}>
+                        ${item.price}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            );
+          })}
       </View>
     </ScrollView>
   );
@@ -163,7 +198,7 @@ const pickerSelectStyles = StyleSheet.create({
     right: '-70%',
     width: 30,
     height: 30,
-  }
+  },
 });
 
 export default ProductListPage;
