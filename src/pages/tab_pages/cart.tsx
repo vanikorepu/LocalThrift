@@ -53,7 +53,6 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
         <View style={[styles.container, {paddingTop: 10}]}>
           {_cart.map((items, idx) => (
             <View key={idx}>
-              <Text style={styles.sellerText}>Selled by: {items.seller}</Text>
               <View style={styles.seller}>
                 <View style={styles.product}>
                   {items.products.map((item, index) =>(
@@ -208,8 +207,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   trash: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     marginTop: 2,
   },
   text: {

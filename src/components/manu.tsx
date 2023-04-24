@@ -37,6 +37,7 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
   const triggerWrapperRef = useRef(null);
   const itemsWrapperRef = useRef(null);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const [triggerDimensions, setTriggerDimensions] = useState({
     top: 0,
@@ -99,17 +100,21 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   const calculateDimensions = () => {
+    console.log('calculateDimensions')
     triggerWrapperRef?.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
+      console.log('setTriggerDimension')
       setTriggerDimensions({
         top: Math.max(y, 0),
         left: x,
         width,
         height,
       });
+      console.log('after setTriggerDimension')
     });
 
     setTimeout(() => {
       itemsWrapperRef?.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
+
         setModalDimensions({ width, height });
       });
     }, 100);
@@ -119,6 +124,7 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
     if (menuVisible) {
       if (triggerWrapperRef?.current) calculateDimensions();
     }
+    setLoad(true)
   }, [menuVisible, itemsWrapperRef, setModalDimensions]);
 
   const closeModal = () => {
@@ -188,7 +194,7 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
         {trigger}
       </Pressable>
       <Portal hostName="menu">
-        {menuVisible && (
+        {load && menuVisible && (
           <TouchableOpacity
             activeOpacity={1}
             onPress={closeModal}

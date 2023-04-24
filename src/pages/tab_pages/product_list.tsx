@@ -77,7 +77,7 @@ function ProductListPage({ navigation, route }: HomeStackScreenProps<'ProductLis
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [orderState]);
 
   useEffect(() => {
     fetchData();

@@ -16,7 +16,8 @@ import {
   useColorScheme,
   View,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  LogBox
 } from 'react-native';
 
 import { PortalHost, PortalProvider } from "@gorhom/portal";
@@ -43,11 +44,7 @@ import setDefaultProps from 'react-native-simple-default-props'
 
 import Category from './data/category.json'
 
-const defaultText = {
-  style: [{fontFamily: FONT}],
-};
-
-setDefaultProps(Text, defaultText)
+LogBox.ignoreAllLogs();
 
 function Auth(): JSX.Element {
   return (
