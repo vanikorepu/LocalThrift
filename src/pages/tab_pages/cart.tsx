@@ -134,6 +134,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
         {load && <Text style={styles.total}>{sum} Items</Text>}
       </View>
       <View>
+      {!load && <Text>Loading ...</Text>}
       {load && content}
       </View>
     </SafeAreaView>

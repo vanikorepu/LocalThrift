@@ -95,7 +95,7 @@ function ProductDescriptionPage({
   const carousel = React.useRef<ICarouselInstance>(null);
 
   return !load ? (
-    <View></View>
+    <Text>Loading ...</Text>
   ) : (
     <SafeAreaView style={styles.container}>
       <Carousel

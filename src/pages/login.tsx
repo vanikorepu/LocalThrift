@@ -29,21 +29,23 @@ function LoginPage({
   const [password, setPassword] = useState('');
 
   const passwordInputRef = createRef<TextInput>();
+  const buttonRef = createRef<TouchableOpacity>();
 
   const login = async () => {
-    //const res = await Login(email, password);
+    buttonRef.current?.setNativeProps({disabled: true});
+    const res = await Login(email, password);
 
-    navigation.replace('TabNavigationRoutes', {
-      screen: 'Home',
-      params: {screen: 'HomePage'},
-    });
-
-    // if (res.state === 1) {
-    //   await AsyncStorage.setItem('user_id', res.id);
-
-    // } else {
-    //   return;
-    // }
+    
+    if (res.state === 1) {
+      await AsyncStorage.setItem('user_id', res.id);
+      navigation.replace('TabNavigationRoutes', {
+        screen: 'Home',
+        params: {screen: 'HomePage'},
+      });
+      
+    } else {
+      buttonRef.current?.setNativeProps({disabled: false});
+    }
   };
 
   return (
@@ -101,6 +103,7 @@ function LoginPage({
         <TouchableOpacity
           style={[styles.button, {width: '40%'}]}
           activeOpacity={0.5}
+          ref={buttonRef}
           onPress={() => {
             navigation.replace('Register');
           }}>

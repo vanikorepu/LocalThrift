@@ -20,14 +20,17 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
     const emailInputRef = createRef<TextInput>();
     const passwordInputRef = createRef<TextInput>();
     const phoneInputRef = createRef<TextInput>();
+
+    const buttonRef = createRef<TouchableOpacity>();
     
     const register = async () => {
+        buttonRef.current?.setNativeProps({disabled: true});
         const res = await Register(name, email, password, phone);
         if (res.state === 1) {
             await AsyncStorage.setItem('user_id', res.id);
             navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
         } else {
-            return;
+            buttonRef.current?.setNativeProps({disabled: false});
         }
     }
   return (
@@ -104,6 +107,7 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
         <TouchableOpacity
             style={[styles.button, {width: '80%', marginTop: 10}]}
             activeOpacity={0.5}
+            ref={buttonRef}
             onPress={register}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>

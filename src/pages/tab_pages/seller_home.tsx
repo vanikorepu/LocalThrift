@@ -19,6 +19,7 @@ import { HomeStackScreenProps, ProductParamsList, ImageParamsList } from '../../
 import { GetSellerProduct, DeleteProduct, GetImage } from '../../api/api';
 
 function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomePage'>): JSX.Element {
+  const [load, setLoad] = useState(false);
   const [lst, setLst] = useState([[], []]);
   const [update, setUpdate] = useState(true);
 
@@ -33,6 +34,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
       cnt += 1
     }
     setLst(_lst);
+    setLoad(true);
   }
 
   useEffect(() => {
@@ -65,7 +67,13 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
     <ScrollView>
       <View style={styles.container}>
         {
-          lst.map((items) => {
+          !load && <Text>Loading ...</Text>
+        }
+        {
+          load && (lst[0].length + lst[1].length) === 0 && <Text>No selling product, tap + to make a new post</Text>
+        }
+        {
+          load && lst.map((items) => {
             return <View style={styles.list}>
               {
                 items.map((item, index) => {
