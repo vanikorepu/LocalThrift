@@ -61,12 +61,12 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
               >
               <MenuItem
                 element={<Text style={styles.buttonText}>Edit Profile</Text>}
-                style={[styles.button, {backgroundColor: 'rgb(0, 122, 255)'}]}
+                style={[styles.button, {backgroundColor: 'white', color: 'black'}]}
                 onPress={() => {navigation.push('ProfileEditPage')}}
               />
               <MenuItem
                 element={<Text style={styles.buttonText}>Logout</Text>}
-              style={[styles.button, {backgroundColor: 'rgb(255, 45, 85)'}]}
+              style={[styles.button, {backgroundColor: COLOR, color: 'white'}]}
               onPress={() => {navigation.push('Auth')}}
               />
             </Menu>
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   buttonText: {
-    color: 'white',
     fontSize: 18,
     fontWeight: '500',
   },

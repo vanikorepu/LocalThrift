@@ -53,7 +53,6 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
         <View style={[styles.container, {paddingTop: 10}]}>
           {_cart.map((items, idx) => (
             <View key={idx}>
-              <Text style={styles.sellerText}>Selled by: {items.seller}</Text>
               <View style={styles.seller}>
                 <View style={styles.product}>
                   {items.products.map((item, index) =>(
@@ -108,22 +107,24 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
     fetchData();
   }
 
-  const send_sms = async (items: {}) => {
-    let message = 'Hi, I am interested in your products: ';
+  const composeMessage = (items: {}) => {
+    let message = 'Hi, I am interested in your product' + ('s' ? items.products.length > 1 : '' ) + ': ';
     for (const item of items.products) {
-      message += item.brand + ' ' + item.size + ', ';
+      message += 'brand:' + item.brand + ' size:' + item.size + ', ';
     }
+    message += ('Are they' ? items.products.length > 1 : 'Is it' ) + ' available for sale? If so, can you please let me know a time and place that would work for pickup? What is your preferred mode of payment? Thank you.'
+    return message;
+  }
+
+  const send_sms = async (items: {}) => {
+    let message = composeMessage(items);
     const separator = Platform.OS === 'ios' ? '&' : '?'
     const url = `sms:${items.phone}${separator}body=${encodeURIComponent(message)}`;
     await Linking.openURL(url);
   }
 
   const send_gmail = async (items: {}) => {
-    const subject = 'LocalThrift'
-    let message = 'Hi, I am interested in your products: ';
-    for (const item of items.products) {
-      message += item.brand + ' ' + item.size + ', ';
-    }
+    let message = composeMessage(items);
     const url = `googlegmail://co?to=${items.email}&subject=${subject}&body=${encodeURIComponent(message)}`;
     await Linking.openURL(url);
   }

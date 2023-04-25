@@ -148,6 +148,7 @@ function ProductDescriptionPage({
           activeOpacity={0.5}
           onPress={() => {
             addToCart(product._id);
+            
           }}>
           <Cart style={styles.cart} fill={COLOR} />
           <Text style={styles.buttonText}>Add to Bag</Text>
