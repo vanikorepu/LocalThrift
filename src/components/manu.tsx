@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, cloneElement } from "react";
 import {
   View,
   Pressable,
@@ -98,6 +98,23 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
   });
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
+
+  const closeModal = () => {
+    setMenuVisible(false);
+    setModalDimensions({ width: 0, height: 0 });
+    setTriggerDimensions({ top: 0, left: 0, width: 0, height: 0 });
+  };
+
+  children = Array.isArray(children) ? children : [children];
+  children = children.map(child => {
+    const f = child.props.onPress;
+    child.props.onPress = () => {
+      closeModal();
+      f();
+    }
+    return child;
+  })
+
   const calculateDimensions = () => {
     triggerWrapperRef?.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
       setTriggerDimensions({
@@ -121,11 +138,6 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
     }
   }, [menuVisible, itemsWrapperRef, setModalDimensions]);
 
-  const closeModal = () => {
-    setMenuVisible(false);
-    setModalDimensions({ width: 0, height: 0 });
-    setTriggerDimensions({ top: 0, left: 0, width: 0, height: 0 });
-  };
 
   const { top, left } = useMemo(() => {
     let left = 0;
@@ -199,16 +211,9 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
               collapsable={false}
               ref={itemsWrapperRef}
             >
-              {/* pass the closeModal to children prop  */}
-              {Array.isArray(children)
-                ? children.map((childrenItem) => {
-                    return React.cloneElement(childrenItem, {
-                      closeModal,
-                    });
-                  })
-                : React.cloneElement(children, {
-                    closeModal,
-                  })}
+              {
+                children
+              }
             </Animated.View>
           </TouchableOpacity>
         )}

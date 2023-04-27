@@ -5,18 +5,19 @@ import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, Imag
 import Menu, { MenuItem } from '../../components/manu';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image'
 
-import CartProduct from '../../../data/cart.json';
+import Category from '../../../data/category.json';
+
 import Empty from '../../../assets/icons/empty.svg';
+import Gmail from '../../../assets/icons/gmail.svg';
+import SMS from '../../../assets/icons/sms.svg';
+
 import {COLOR, CLICK_COLOR} from '../../../assets/setting';
 
 import { TabScreenProps } from '../../type';
 
-import { ImagesAssets } from '../../../assets/images/image_assest';
 import Trash from '../../../assets/icons/trash.svg';
-
-import Gmail from '../../../assets/icons/gmail.svg';
-import SMS from '../../../assets/icons/sms.svg';
 
 import {RemoveItemFromCart, GetCart, GetImage} from '../../api/api';
 
@@ -26,15 +27,46 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
   const [load, setLoad] = useState(false);
   const [content, setContent] = useState(<View></View>);
   const [sum, setSum] = useState(0);
+  const [disabled, setDisabled] = useState(false);
+
+  const trash = async (item: string) => {
+    setDisabled(true);
+    await RemoveItemFromCart(item, user_id);
+    fetchData();
+  }
+
+  const composeMessage = (items: {}) => {
+    let message = 'Hi, I am interested in your product' + (items.products.length > 1 ? 's' : '' ) + ':\n';
+    for (const item of items.products) {
+      message += 'The ' + Category[item.category].toLowerCase() + ' with the brand ' + item.brand + ' in size ' + item.size.toUpperCase() + ',\n';
+    }
+    message += (items.products.length > 1 ? 'Are they' : 'Is it' ) + ' available for sale? If so, can you please let me know a time and place that would work for pickup? What is your preferred mode of payment?\nThank you.'
+    return message;
+  }
+
+  const send_sms = async (items: {}) => {
+    let message = composeMessage(items);
+    const separator = Platform.OS === 'ios' ? '&' : '?'
+    const url = `sms:${items.phone}${separator}body=${encodeURIComponent(message)}`;
+    await Linking.openURL(url);
+  }
+
+  const send_gmail = async (items: {}) => {
+    let message = composeMessage(items);
+    const url = `googlegmail://co?to=${items.email}&subject=${subject}&body=${encodeURIComponent(message)}`;
+    await Linking.openURL(url);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     user_id = await AsyncStorage.getItem('user_id');
     // await setUser(id);
     const _cart = await GetCart(user_id);
-    await setCart(_cart);
     
     const _sum = _cart.reduce((acc, cur) => acc + cur.products.length, 0);
-    await setSum(_sum);
   
     let _content: JSX.Element;
     if (_sum === 0) {
@@ -57,7 +89,10 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
                 <View style={styles.product}>
                   {items.products.map((item, index) =>(
                     <View style={styles.infos} key={index}>
-                      <Image style={styles.image} source={{uri: GetImage(item.images[0].name)}} resizeMode="cover" />
+                      <FastImage 
+                        style={styles.image} 
+                        source={{uri: GetImage(item.images[0]?.name)}}
+                        resizeMode="cover" />
                       <View style={styles.info}>
                         <Text style={styles.text}>Size: {item.size}</Text>
                         <Text style={styles.text}>Price: ${item.price}</Text>
@@ -65,6 +100,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
                         <Text style={styles.text}>Usage: {item.usage}</Text>
                         <TouchableOpacity
                             activeOpacity={0.5}
+                            disabled={disabled}
                             onPress={() => {trash(item._id)}}>
                             <Trash style={styles.trash} />
                         </TouchableOpacity>
@@ -93,40 +129,11 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
         </View>
       </ScrollView>)
     }
-    await setContent(_content)
-
-    await setLoad(true)
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const trash = async (item: string) => {
-    await RemoveItemFromCart(item, user_id);
-    fetchData();
-  }
-
-  const composeMessage = (items: {}) => {
-    let message = 'Hi, I am interested in your product' + ('s' ? items.products.length > 1 : '' ) + ': ';
-    for (const item of items.products) {
-      message += 'brand:' + item.brand + ' size:' + item.size + ', ';
-    }
-    message += ('Are they' ? items.products.length > 1 : 'Is it' ) + ' available for sale? If so, can you please let me know a time and place that would work for pickup? What is your preferred mode of payment? Thank you.'
-    return message;
-  }
-
-  const send_sms = async (items: {}) => {
-    let message = composeMessage(items);
-    const separator = Platform.OS === 'ios' ? '&' : '?'
-    const url = `sms:${items.phone}${separator}body=${encodeURIComponent(message)}`;
-    await Linking.openURL(url);
-  }
-
-  const send_gmail = async (items: {}) => {
-    let message = composeMessage(items);
-    const url = `googlegmail://co?to=${items.email}&subject=${subject}&body=${encodeURIComponent(message)}`;
-    await Linking.openURL(url);
+    setCart(_cart);
+    setSum(_sum);
+    setContent(_content);
+    setDisabled(false);
+    setLoad(true);
   }
 
   return (

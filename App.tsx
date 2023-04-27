@@ -6,17 +6,10 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
-  View,
-  Button,
-  TouchableOpacity
+  LogBox
 } from 'react-native';
 
 import { PortalHost, PortalProvider } from "@gorhom/portal";
@@ -42,6 +35,8 @@ import { FONT } from './assets/setting';
 import setDefaultProps from 'react-native-simple-default-props'
 
 import Category from './data/category.json'
+
+LogBox.ignoreAllLogs();
 
 const defaultText = {
   style: [{fontFamily: FONT}],

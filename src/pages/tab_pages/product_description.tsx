@@ -5,20 +5,17 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
-
+import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {RootStackScreenProps} from '../../type';
 
-import {ImagesAssets} from '../../../assets/images/image_assest';
-import Product from '../../../data/product_list.json';
 import MeetingPoint from '../../../data/meeting_point.json';
 
 import Back from '../../../assets/icons/left_arrow.svg';
@@ -44,6 +41,7 @@ function ProductDescriptionPage({
   const [load, setLoad] = useState(false);
   const [product, setProduct] = useState({});
   const [seller, setSeller] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
@@ -69,7 +67,7 @@ function ProductDescriptionPage({
               screen: 'Home',
               params: {
                 screen: 'ProductListPage',
-                params: {category: route.params.category, reload: false},
+                params: {category: route.params.category},
               },
             });
           }}>
@@ -80,12 +78,13 @@ function ProductDescriptionPage({
   }, [navigation]);
 
   const addToCart = async (item: string) => {
+    setDisabled(true);
     await AddItemToCart(item, user_id);
     navigation.navigate('TabNavigationRoutes', {
       screen: 'Home',
       params: {
         screen: 'ProductListPage',
-        params: {category: route.params.category, reload: true},
+        params: {category: route.params.category},
       },
     });
   };
@@ -108,7 +107,7 @@ function ProductDescriptionPage({
         onSnapToItem={index => {}}
         renderItem={({index}) => (
           <View style={styles.carouselContent}>
-            <Image
+            <FastImage
               style={styles.image}
               resizeMode="cover"
               source={{uri: GetImage(product.images[index].name)}}
@@ -146,9 +145,9 @@ function ProductDescriptionPage({
         <TouchableOpacity
           style={[styles.button]}
           activeOpacity={0.5}
+          disabled={disabled}
           onPress={() => {
             addToCart(product._id);
-            
           }}>
           <Cart style={styles.cart} fill={COLOR} />
           <Text style={styles.buttonText}>Add to Bag</Text>

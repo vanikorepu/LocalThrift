@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image} from 'react-native';
 
@@ -25,8 +25,7 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
   const product = route.params.product;
   const productId = route.params.product_id;
   const [user_id, setUser] = useState('');
-
-  const buttonRef = createRef<TouchableOpacity>();
+  const [disabled, setDisabled] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
@@ -43,13 +42,13 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
   }
 
   const confirm = async () => {
-    buttonRef.current?.setNativeProps({disabled: true});
+    setDisabled(true);
     if (state == 'edit') {
       await UpdateProduct(productId, product);
     } else {
       await PostProduct(user_id, product);
     }
-    navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage', params:{reload: true}}});
+    navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}});
   }
 
   const width = Dimensions.get('window').width;
@@ -93,7 +92,7 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.5}
-            ref={buttonRef}
+            disabled={disabled}
             onPress={() => {confirm()}}>
             <Text style={styles.buttonText}>Confirm</Text>
           </TouchableOpacity>

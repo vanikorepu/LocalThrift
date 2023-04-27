@@ -62,8 +62,8 @@ type TabScreenProps<T extends keyof TabParamList> =
 type HomeStackParamList = {
     HomePage: undefined;
     BuyerHomePage: undefined;
-    SellerHomePage: {reload: boolean};
-    ProductListPage: {category: number, reload: boolean};
+    SellerHomePage: undefined;
+    ProductListPage: {category: number};
 }
 
 type HomeStackScreenProps<T extends keyof HomeStackParamList> =

@@ -6,15 +6,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Button,
-  Image,
   ImageBackground,
 } from 'react-native';
 
 import BuyerHomePage from './buyer_home';
 import SellerHomePage from './seller_home';
 import ProductListPage from './product_list';
-import ProductDescriptionPage from './product_description';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -60,7 +57,7 @@ function HomePage({
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
-          onPress={() => navigation.push('SellerHomePage', {reload: true})}>
+          onPress={() => navigation.push('SellerHomePage')}>
           <ImageBackground
             source={ImagesAssets.selling}
             resizeMode="cover"

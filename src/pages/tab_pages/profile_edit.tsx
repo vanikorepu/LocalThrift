@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -16,8 +16,6 @@ import {RootStackScreenProps} from '../../type';
 
 import {ImagesAssets} from '../../../assets/images/image_assest';
 import {COLOR} from '../../../assets/setting';
-
-import BuyerProfile from '../../../data/buyer_profile.json';
 
 import {GetUserProfile, UpdateUserProfile} from '../../api/api';
 

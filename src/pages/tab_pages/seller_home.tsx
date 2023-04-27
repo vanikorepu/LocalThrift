@@ -1,19 +1,15 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-
-import AutoHeightImage from 'react-native-auto-height-image';
+import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Edit from '../../../assets/icons/edit.svg';
 import Sold from '../../../assets/icons/sold.svg';
 
 import {COLOR} from '../../../assets/setting';
-import Product from '../../../data/product_list.json';
 
-import {ImagesAssets} from '../../../assets/images/image_assest';
 import { HomeStackScreenProps, ProductParamsList, ImageParamsList } from '../../type';
 
 import { GetSellerProduct, DeleteProduct, GetImage } from '../../api/api';
@@ -22,6 +18,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
   const [load, setLoad] = useState(false);
   const [lst, setLst] = useState([[], []]);
   const [update, setUpdate] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
@@ -34,17 +31,17 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
       cnt += 1
     }
     setLst(_lst);
+    setDisabled(false);
     setLoad(true);
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    navigation.setParams({reload: false});
-  }, [route.params.reload]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+  
+    return unsubscribe;
+  }, [navigation]);
 
   const edit = async (id: string, product: ProductParamsList) => {
     product.images = product.images.map((image: ImageParamsList) => {
@@ -59,6 +56,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
     navigation.navigate('UploadPage', {state: "edit", product: product, product_id: id});
   }
   const sold = async (item: string) => {
+    setDisabled(true);
     await DeleteProduct(item);
     fetchData();
   }
@@ -78,7 +76,10 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
               {
                 items.map((item, index) => {
                   return <View style={styles.product}>
-                      <ImageBackground source={{uri: GetImage(item.images[0].name)}} style={styles.image}/>
+                      <FastImage 
+                        source={{uri: GetImage(item.images[0]?.name)}} 
+                        resizeMode='contain'
+                        style={styles.image}/>
                       <TouchableOpacity
                         style={[styles.button, {left: '5%'}]}
                         activeOpacity={0.5}
@@ -88,6 +89,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
                       <TouchableOpacity
                         style={[styles.button, {right: '5%'}]}
                         activeOpacity={0.5}
+                        disabled={disabled}
                         onPress={() => {sold(item._id);}}>
                         <Sold fill="black" style={[styles.icon]}/>
                       </TouchableOpacity>

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -60,13 +60,13 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
               trigger={<Profile style={{width: size, height: size}} fill={color}/>}
               >
               <MenuItem
-                element={<Text style={styles.buttonText}>Edit Profile</Text>}
-                style={[styles.button, {backgroundColor: 'white', color: 'black'}]}
+                element={<Text style={[styles.buttonText, {color: 'black'}]}>Edit Profile</Text>}
+                style={[styles.button, {backgroundColor: 'white'}]}
                 onPress={() => {navigation.push('ProfileEditPage')}}
               />
               <MenuItem
-                element={<Text style={styles.buttonText}>Logout</Text>}
-              style={[styles.button, {backgroundColor: COLOR, color: 'white'}]}
+                element={<Text style={[styles.buttonText, {color: 'white'}]}>Logout</Text>}
+              style={[styles.button, {backgroundColor: COLOR}]}
               onPress={() => {navigation.push('Auth')}}
               />
             </Menu>

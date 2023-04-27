@@ -4,28 +4,21 @@ import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Modal,
   Text,
   View,
   TouchableOpacity,
-  Image,
-  ImageBackground,
   Dimensions,
 } from 'react-native';
 
+import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNPickerSelect from 'react-native-picker-select';
 
 import {HomeStackScreenProps} from '../../type';
 
 import {COLOR} from '../../../assets/setting';
 
 import Filter from '../../../assets/icons/filter.svg';
-import Product from '../../../data/product_list.json';
-
-import {ImagesAssets} from '../../../assets/images/image_assest';
-
-import AutoHeightImage from 'react-native-auto-height-image';
-import RNPickerSelect from 'react-native-picker-select';
 
 import {GetProductList, GetImage} from '../../api/api';
 
@@ -77,15 +70,14 @@ function ProductListPage({
   
   const categrory = route.params.category;
   const fetchData = async () => {
+    setLoad(false);
     const id = await AsyncStorage.getItem('user_id');
     const _products = await GetProductList(id, categrory);
     setProducts(_products);
-    setShow(false);
     setLoad(true);
   };
 
   const arrangeProduct = async () => {
-    setShow(false);
     let _products = products;
     if (orderState === 'XSmall') {
       _products = _products.filter(product => product.size === 'XS');
@@ -122,13 +114,18 @@ function ProductListPage({
   }
 
   useEffect(() => {
-    arrangeProduct();
+    if (load) {
+      arrangeProduct();
+    }
   }, [load, orderState]);
 
   useEffect(() => {
-    fetchData();
-    navigation.setParams({reload: false});
-  }, [route.params.reload]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+  
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <ScrollView>
@@ -142,7 +139,7 @@ function ProductListPage({
               <View style={styles.list}>
                 {items.map((item, index) => {
                   const width = Dimensions.get('window').width * 0.5 * 0.95;
-                  const height = width * (item.images[0].height / item.images[0].width);
+                  const height = width * (item.images[0]?.height / item.images[0]?.width);
                   return (
                     <TouchableOpacity
                       style={[styles.product, {width: width, height: height}]}
@@ -153,8 +150,8 @@ function ProductListPage({
                           product: item._id,
                         });
                       }}>
-                      <Image
-                        source={{uri: GetImage(item.images[0].name)}}
+                      <FastImage
+                        source={{uri: GetImage(item.images[0]?.name)}}
                         style={{width: width, height: height}}
                         resizeMode='contain'
                       />

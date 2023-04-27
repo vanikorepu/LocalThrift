@@ -1,7 +1,6 @@
 import React, {useState, createRef} from 'react';
 
 import {
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,12 +26,12 @@ function LoginPage({
 }: RootStackScreenProps<'Login'>): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [disabled,setDisabled]=useState(false)
 
   const passwordInputRef = createRef<TextInput>();
-  const buttonRef = createRef<TouchableOpacity>();
 
   const login = async () => {
-    buttonRef.current?.setNativeProps({disabled: true});
+    setDisabled(true);
     const res = await Login(email, password);
 
     
@@ -44,7 +43,7 @@ function LoginPage({
       });
       
     } else {
-      buttonRef.current?.setNativeProps({disabled: false});
+      setDisabled(false);
     }
   };
 
@@ -86,6 +85,7 @@ function LoginPage({
         <TouchableOpacity
           style={[styles.button, {width: '80%', marginTop: 10}]}
           activeOpacity={0.5}
+          disabled={disabled}
           onPress={login}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
@@ -103,7 +103,7 @@ function LoginPage({
         <TouchableOpacity
           style={[styles.button, {width: '40%'}]}
           activeOpacity={0.5}
-          ref={buttonRef}
+          
           onPress={() => {
             navigation.replace('Register');
           }}>

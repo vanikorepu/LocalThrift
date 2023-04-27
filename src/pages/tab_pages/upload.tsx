@@ -1,11 +1,10 @@
-import React, {useLayoutEffect, useState, useCallback, createRef, useEffect} from 'react';
+import React, {useLayoutEffect, useState, createRef} from 'react';
 
-import {ScrollView, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import RNPickerSelect from 'react-native-picker-select';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 
 import { RootStackScreenProps, ProductParamsList, ImageParamsList } from '../../type';
@@ -25,7 +24,7 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       headerTitle: state === "post" ? 'Upload' : "Edit Post",
       headerRight: () => 
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage', params: {reload: false}}})
+        navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}})
           }}>
         <Cross style={styles.cancel}/>
       </TouchableOpacity>
