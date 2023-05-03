@@ -22,6 +22,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashPage from './src/pages/splash';
 import LoginPage from './src/pages/login';
 import RegisterPage from './src/pages/register';
+import VericationPage from './src/pages/verification';
 import TabNavigationRoutes from './src/pages/tab_navigation_routes';
 import UploadPage from './src/pages/tab_pages/upload';
 import Summary from './src/pages/tab_pages/summary';
@@ -48,7 +49,7 @@ function Auth(): JSX.Element {
   return (
     <Stack.Navigator 
       initialRouteName="Login"
-      screenOptions={{cardStyle: { backgroundColor: 'white' }}}
+      // screenOptions={{cardStyle: { backgroundColor: 'white' }}}
     >
       <Stack.Screen
         name="Login"
@@ -59,6 +60,14 @@ function Auth(): JSX.Element {
         name="Register"
         component={RegisterPage}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Verification"
+        component={VericationPage}
+        options={{
+          headerShown: false,
+          presentation: 'transparentModal',
+        }}
       />
     </Stack.Navigator>
   );
@@ -72,6 +81,7 @@ function App(): JSX.Element {
       <PortalHost name="menu" />
       <NavigationContainer>
         <Stack.Navigator 
+          id="root"
           initialRouteName="Splash"
           screenOptions={{
             cardStyle: { backgroundColor: 'white' }

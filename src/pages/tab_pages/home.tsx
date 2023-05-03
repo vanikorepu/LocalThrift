@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   ImageBackground,
+  Dimensions
 } from 'react-native';
 
 import BuyerHomePage from './buyer_home';
@@ -28,21 +29,49 @@ import Back from '../../../assets/icons/left_arrow.svg';
 
 import Category from '../../../data/category.json';
 
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
 function HomePage({
   navigation,
   route,
 }: HomeStackScreenProps<'HomePage'>): JSX.Element {
+  // const [count, setCount] = useState<number|undefined>(undefined);
+  // const fetchData = async () => {
+  //   const id = await AsyncStorage.getItem('user_id');
+  //   if (id == null) {
+  //     navigation.navigate('Auth');
+  //   } else {
+  //     const _count = await GetCartCount(id);
+  //     setCount(_count);
+  //   }
+  // }
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  // useLayoutEffect(() => {
+  //   navigation.getParent()?.setOptions({
+  //     tabBarBadge: count !== undefined && count > 0 ? count : undefined,
+  //   });
+  // }, [count]);
+
   return (
-    <SafeAreaView>
-      <View>
-        <View style={styles.placeholder}>
+    <SafeAreaView style={[styles.container]}>
+      <View style={[styles.subcontainer, {flex: 1}]}>
+        <View style={[styles.subcontainer, {flex: 8}]}>
           <ImageBackground
             source={ImagesAssets.home}
             resizeMode="cover"
             style={styles.image}
           />
         </View>
-        <Text style={styles.text}>What are you looking to do today?</Text>
+        <View style={[styles.subcontainer, {flex: 2, justifyContent: 'center'}]}>
+          <Text style={styles.text}>What are you looking to do today?</Text>
+        </View>
+      </View>
+      <View style={[styles.subcontainer, {flex: 1, justifyContent: 'center'}]}>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
@@ -52,8 +81,12 @@ function HomePage({
             resizeMode="cover"
             style={styles.image}
           />
-          <Text style={styles.buttonText}>Buying</Text>
+          <View style={styles.textBox}>
+            <Text style={styles.buttonText}>Buying</Text>
+          </View>
         </TouchableOpacity>
+      </View>
+      <View style={[styles.subcontainer, {flex: 1, justifyContent: 'center'}]}>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
@@ -63,18 +96,83 @@ function HomePage({
             resizeMode="cover"
             style={styles.image}
           />
-          <Text style={styles.buttonText}>Selling</Text>
+          <View style={styles.textBox}>
+            <Text style={styles.buttonText}>Selling</Text>
+          </View>
         </TouchableOpacity>
       </View>
+      
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%'
+  },
+  subcontainer: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontWeight: 'normal',
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '300',
+  },
+  button: {
+    height: '95%',
+    width: '95%',
+    borderColor: COLOR,
+    borderWidth: 1,
+    marginVertical: 3,
+    marginHorizontal: 10,
+    borderRadius: 5,
+    alignItems: 'flex-end',
+    overflow: 'hidden',
+  },
+  image: {
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    flex: 1,
+  },
+  textBox: {
+    position: 'absolute',
+    height: '12%',
+    width: '20%',
+    backgroundColor: COLOR,
+    borderRadius: 5,
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 12,
+    color: 'white',
+    fontWeight: '600',
+  },
+  upload: {
+    height: 30,
+    width: 30,
+    marginRight: 20,
+  },
+  back: {
+    height: 20,
+    width: 20,
+    marginLeft: 20,
+  },
+});
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
 function HomeStack({navigation, route}: TabScreenProps<'Home'>): JSX.Element {
   return (
     <Stack.Navigator
+      id="HomeStack"
       initialRouteName="HomePage"
       screenOptions={{
         cardStyle: {backgroundColor: 'white'},
@@ -151,62 +249,5 @@ function HomeStack({navigation, route}: TabScreenProps<'Home'>): JSX.Element {
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  headerTitle: {
-    fontWeight: 'normal',
-  },
-  placeholder: {
-    height: 130,
-    backgroundColor: '#AAA',
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: '300',
-    paddingVertical: 10,
-  },
-  button: {
-    height: 170,
-    borderColor: COLOR,
-    borderWidth: 1,
-    marginVertical: 3,
-    marginHorizontal: 10,
-    borderRadius: 5,
-    alignItems: 'flex-end',
-    overflow: 'hidden',
-  },
-  image: {
-    height: '100%',
-    width: '100%',
-    resizeMode: 'cover',
-    flex: 1,
-  },
-  buttonText: {
-    position: 'absolute',
-    textAlign: 'center',
-    fontSize: 12,
-    color: 'white',
-    paddingVertical: 1,
-    backgroundColor: COLOR,
-    overflow: 'hidden',
-    borderRadius: 5,
-    borderColor: COLOR,
-    borderWidth: 1,
-    width: 70,
-    fontWeight: '600',
-    // height: 20,
-  },
-  upload: {
-    height: 30,
-    width: 30,
-    marginRight: 20,
-  },
-  back: {
-    height: 20,
-    width: 20,
-    marginLeft: 20,
-  },
-});
 
 export default HomeStack;

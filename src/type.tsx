@@ -5,6 +5,13 @@ import type {
   import type { StackScreenProps } from '@react-navigation/stack';
   import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
+type CartParamsList = {
+    seller: string,
+    email: string,
+    phone: string,
+    products: ProductParamsList[],
+}
+
 type UserProfileParamsList = {
   name: string,
   email: string,
@@ -15,21 +22,23 @@ type UserProfileParamsList = {
 }
 
 type ImageParamsList = {
-  name: string,
-  type: string,
-  uri: string,
-  height: number,
-  width: number,
+  name?: string,
+  type?: string,
+  uri?: string,
+  height?: number,
+  width?: number,
 }
 
 type ProductParamsList = {
+    _id?: string,
+    seller?: string,
     size?: string,
     price?: string,
     brand?: string,
     usage?: string,
     meeting?: number,
     category?: number,
-    images?: ImageParamsList[],
+    images: Array<ImageParamsList|undefined>,
 }
 
 type RootStackParamList = {
@@ -37,6 +46,7 @@ type RootStackParamList = {
     Auth: undefined; 
     Login: undefined;
     Register: undefined;
+    Verification: {code: string, name: string, email: string, phone: string, password: string};
     TabNavigationRoutes: NavigatorScreenParams<TabParamList>;
     UploadPage: {state: "post"|"edit", product: ProductParamsList|undefined, product_id: string|undefined};
     Summary: {state: "post"|"edit", product: ProductParamsList, product_id: string|undefined};
@@ -50,7 +60,7 @@ type RootStackScreenProps<T extends keyof RootStackParamList> =
 type TabParamList = {
     Home: NavigatorScreenParams<HomeStackParamList>;
     ProfilePage: undefined;
-    Cart: undefined;
+    Cart: {setCount: React.Dispatch<React.SetStateAction<number>>};
 }
 
 type TabScreenProps<T extends keyof TabParamList> =
@@ -79,6 +89,7 @@ namespace ReactNavigation {
 }
 
 export {
+    type CartParamsList,
     type UserProfileParamsList,
     type ImageParamsList,
     type ProductParamsList,

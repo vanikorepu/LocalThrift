@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {StyleSheet, Text} from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Menu, { MenuItem } from '../components/manu';
@@ -18,12 +19,34 @@ import Home from '../../assets/icons/home.svg';
 import Profile from '../../assets/icons/profile.svg';
 import Cart from '../../assets/icons/cart.svg';
 
+import {GetCartCount} from '../api/api'
+
 const Tab = createBottomTabNavigator<TabParamList>();
 
 function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNavigationRoutes'>): JSX.Element {
+  const [count, setCount] = useState<number>(0);
+
+  const fetchData = async () => {
+    const id = await AsyncStorage.getItem('user_id');
+    if (id == null) {
+      navigation.navigate('Auth');
+    } else {
+      const _count = await GetCartCount(id);
+      setCount(_count);
+    }
+  }
+  
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+  
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Tab.Navigator 
+      id="tab"
       screenOptions={{
         tabBarStyle: styles.tabBar,
         headerShadowVisible: false,
@@ -84,11 +107,13 @@ function TabNavigationRoutes({ navigation, route }: RootStackScreenProps<'TabNav
       <Tab.Screen 
         name="Cart" 
         component={CartPage} 
+        initialParams={{setCount: setCount}}
         options={{
           headerShown: true,
           headerTitle: "Shopping Cart",
           headerTitleStyle: styles.headerTitle,
           tabBarShowLabel: false,
+          tabBarBadge: count > 0 ? count : undefined,
           tabBarIcon: ({ color, size }) => (
             <Cart style={{width: size, height: size}} fill={color}/>
           ),
@@ -109,7 +134,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR,
     marginHorizontal: 40,
     marginVertical: 10,
+    height: 60,
+    justifyContent: 'center',
     borderRadius: 30,
+    paddingBottom: 0,
     fontFamily: FONT,
   },
   modal: {

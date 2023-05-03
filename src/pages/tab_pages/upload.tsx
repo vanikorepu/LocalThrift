@@ -1,6 +1,8 @@
 import React, {useLayoutEffect, useState, createRef} from 'react';
 
-import {ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Dimensions} from 'react-native';
+
+import { useHeaderHeight } from '@react-navigation/elements';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
@@ -17,7 +19,6 @@ import Plus from '../../../assets/icons/plus.svg';
 import Category from '../../../data/category.json';
 import MeetingPoint from '../../../data/meeting_point.json';
 
-
 function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): JSX.Element {
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -30,12 +31,13 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       </TouchableOpacity>
     });
   }, [navigation]);
+  const height = Dimensions.get('window').height - useHeaderHeight();
 
   const state = route.params.state;
   const product = route.params.product;
   const product_id = route.params.product_id;
 
-  const [photos, setPhotos] = useState<ImageParamsList[]>(product === undefined ? [...new Array(4)] : [...product.images, ...new Array(4 - product.images.length)]);
+  const [photos, setPhotos] = useState<Array<ImageParamsList|undefined>>(product === undefined ? [...new Array(4)] : [...product.images, ...new Array(4 - product.images.length)]);
   const [count, setCount] = useState(product === undefined ? 0 : product.images.length);
   const [price, setPrice] = useState(product === undefined ? '' : product.price);
   const [size, setSize] = useState(product === undefined ? '' : product.size);
@@ -84,10 +86,11 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
       );
     } else {
       return (
-        <View>
+        <View style={styles.image}>
           <Image
-            source={{uri: photos[index].uri}}
-            style={styles.image}
+            source={{uri: photos[index]?.uri}}
+            style={{width: '100%', height: '100%', borderRadius: 5}}
+            resizeMode='cover'
           />
           <TouchableOpacity 
             activeOpacity={0.5}
@@ -123,126 +126,134 @@ function UploadPage({ navigation, route }: RootStackScreenProps<'UploadPage'>): 
     <ScrollView 
         automaticallyAdjustKeyboardInsets={true}
         style={{height: '100%'}}>
-      <View style={styles.container}>
-        <View style={styles.picture}>
-          <Text style={styles.text}>Upload images of your item</Text>
-          <TouchableOpacity 
-            onPress={async () => {await takePhotoFromCamera()}}
-            style={styles.cameraButton}>
-            <Plus style={styles.plus}/>
-          </TouchableOpacity>
-          <View style={styles.images}>
-            {photos.map((photo, index) => renderPhoto(index))}
+      <View style={{height: height}}>
+        <View style={[styles.subcontainer, {flex: 3, justifyContent: 'center'}]}>
+          <View style={styles.picture}>
+            <View style={[styles.subcontainer, {flex: 1, justifyContent: 'center'}]}>
+              <Text style={styles.text}>Upload images of your item</Text>
+            </View>
+            <View style={[styles.subcontainer, {flex: 1, justifyContent: 'center'}]}>
+              <TouchableOpacity 
+                onPress={async () => {await takePhotoFromCamera()}}
+                style={styles.cameraButton}>
+                <Plus style={styles.plus}/>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.images, {flex: 2}]}>
+              {photos.map((photo, index) => renderPhoto(index))}
+            </View>
           </View>
         </View>
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          placeholder={{label: "Category"}}
-          onValueChange={(cat) => 
-            setCategory(cat)
-          }
-          value={category}
-          items={Category.map((cat, index) => {return {label: cat, value: index}})}
-        />
-        <TextInput 
-          autoCorrect={false} 
-          placeholderTextColor={'#AAA'}
-          autoCapitalize='none'
-          placeholder="Price" 
-          returnKeyType="next"
-          keyboardType="number-pad"
-          onSubmitEditing={() =>
-            sizeInputRef.current &&
-            sizeInputRef.current.focus()
-          }
-          onChangeText={(price) =>
-              setPrice(price)
-          }
-          value={price}
-          style={styles.input}/>
-        <TextInput 
-          placeholder="Size" 
-          placeholderTextColor={'#AAA'}
-          autoCorrect={false} 
-          autoCapitalize='none'
-          returnKeyType="next"
-          onSubmitEditing={() =>
-            brandInputRef.current &&
-            brandInputRef.current.focus()
-          }
-          onChangeText={(size) =>
-              setSize(size)
-          }
-          value={size}
-          style={styles.input}/>
-        <TextInput 
-          placeholder="Brand" 
-          placeholderTextColor={'#AAA'}
-          autoCorrect={false} 
-          autoCapitalize='none'
-          returnKeyType="next"
-          onSubmitEditing={() =>
-            usageInputRef.current &&
-            usageInputRef.current.focus()
-          }
-          onChangeText={(brand) =>
-              setBrand(brand)
-          }
-          value={brand}
-          style={styles.input}/>
-        <TextInput 
-          placeholder="Usage" 
-          placeholderTextColor={'#AAA'}
-          autoCorrect={false} 
-          autoCapitalize='none'
-          returnKeyType="next"
-          onChangeText={(usage) =>
-              setUsage(usage)
-          }
-          value={usage}
-          style={styles.input}/>
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          placeholder={{label: "Meeting Point"}}
-          onValueChange={(meeting) => 
-            setMeeting(meeting)
-          }
-          value={meeting}
-          items={MeetingPoint.map((meeting, index) => {return {label: meeting, value: index}})}
-        />
-
-        <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.5}
-            onPress={() => {submit()}}>
-            <Text style={styles.buttonText}>Save</Text>
-        </TouchableOpacity>
-        
+        <View style={[styles.subcontainer, {flex: 5, justifyContent: 'space-around', paddingTop: '5%'}]}>
+          <RNPickerSelect
+            style={pickerSelectStyles}
+            placeholder={{label: "Category"}}
+            onValueChange={(cat) => 
+              setCategory(cat)
+            }
+            value={category}
+            items={Category.map((cat, index) => {return {label: cat, value: index}})}
+          />
+          <TextInput 
+            autoCorrect={false} 
+            placeholderTextColor={'#AAA'}
+            autoCapitalize='none'
+            placeholder="Price" 
+            returnKeyType="next"
+            keyboardType="number-pad"
+            onSubmitEditing={() =>
+              sizeInputRef.current &&
+              sizeInputRef.current.focus()
+            }
+            onChangeText={(price) =>
+                setPrice(price)
+            }
+            value={price}
+            style={styles.input}/>
+          <TextInput 
+            placeholder="Size" 
+            placeholderTextColor={'#AAA'}
+            autoCorrect={false} 
+            autoCapitalize='none'
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              brandInputRef.current &&
+              brandInputRef.current.focus()
+            }
+            onChangeText={(size) =>
+                setSize(size)
+            }
+            value={size}
+            style={styles.input}/>
+          <TextInput 
+            placeholder="Brand" 
+            placeholderTextColor={'#AAA'}
+            autoCorrect={false} 
+            autoCapitalize='none'
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              usageInputRef.current &&
+              usageInputRef.current.focus()
+            }
+            onChangeText={(brand) =>
+                setBrand(brand)
+            }
+            value={brand}
+            style={styles.input}/>
+          <TextInput 
+            placeholder="Usage" 
+            placeholderTextColor={'#AAA'}
+            autoCorrect={false} 
+            autoCapitalize='none'
+            returnKeyType="next"
+            onChangeText={(usage) =>
+                setUsage(usage)
+            }
+            value={usage}
+            style={styles.input}/>
+          <RNPickerSelect
+            style={pickerSelectStyles}
+            placeholder={{label: "Meeting Point"}}
+            onValueChange={(meeting) => 
+              setMeeting(meeting)
+            }
+            value={meeting}
+            items={MeetingPoint.map((meeting, index) => {return {label: meeting, value: index}})}
+          />
+        </View>
+        <View style={[styles.subcontainer, {flex: 2}]}>
+          <TouchableOpacity
+              style={styles.button}
+              activeOpacity={0.5}
+              onPress={() => {submit()}}>
+              <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  subcontainer: {
     height: '100%',
+    width: '100%',
     alignItems: 'center',
   },
   picture: {
     width: '90%',
     backgroundColor: COLOR,
-    height: 170,
+    height: '95%',
     borderColor: COLOR,
     borderWidth: 1,
     borderRadius: 30,
-    marginBottom: 20,
     alignItems: 'center',
   },
   cameraButton: {
-    width: 40,
-    height: 40,
+    aspectRatio: 1,
+    height: '85%',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 1000,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
@@ -252,19 +263,16 @@ const styles = StyleSheet.create({
     height: 30,
   },
   images: {
-    width: '100%',
-    height: 70,
+    width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginTop: 10,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: '20%',
+    aspectRatio: 1,
     borderRadius: 5,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   deleteButton: {
     position: 'absolute',
@@ -290,7 +298,6 @@ const styles = StyleSheet.create({
   input: {
     width: '85%',
     height: 40,
-    marginVertical: 5,
     paddingLeft: 20,
     borderColor: '#AAA',
     borderWidth: 1,
@@ -299,7 +306,7 @@ const styles = StyleSheet.create({
   button: {
     width: 70,
     height: 40,
-    marginVertical: 20,
+    marginTop: 10,
     borderColor: '#AAA',
     borderWidth: 1,
     borderRadius: 10,

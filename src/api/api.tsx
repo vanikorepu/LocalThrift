@@ -15,6 +15,20 @@ const Login = async (email: string, password: string) => {
   return res;
 };
 
+const GetCode = async (email: string) => {
+  const response = await fetch(url + 'users/verification', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email
+    }),
+  });
+  const res = await response.json();
+  return res;
+};
+
 const Register = async (
   name: string,
   email: string,
@@ -37,7 +51,7 @@ const Register = async (
   return res;
 };
 
-const GetUserProfile = async (id: string) => {
+const GetUserProfile = async (id: string): Promise<UserProfileParamsList> => {
   const response = await fetch(url + 'users/' + id, {
     method: 'GET',
     headers: {
@@ -66,7 +80,7 @@ const UpdateUserProfile = async (
   return res;
 };
 
-const GetSellerProduct = async (id: string) => {
+const GetSellerProduct = async (id: string): Promise<ProductParamsList[]> => {
   const response = await fetch(url + 'product/user/' + id, {
     method: 'GET',
     headers: {
@@ -90,18 +104,18 @@ const createFormData = (product: ProductParamsList) => {
     JSON.stringify(
       product.images.map(image => {
         return {
-          name: image.name,
-          width: image.width,
-          height: image.height,
+          name: image?.name,
+          width: image?.width,
+          height: image?.height,
         };
       }),
     ),
   );
   product.images.map((image, index) => {
     data.append('photo', {
-      name: image.name,
-      type: image.type,
-      uri: Platform.OS === 'ios' ? image.uri.replace('file://', '') : image.uri,
+      name: image?.name,
+      type: image?.type,
+      uri: Platform.OS === 'ios' ? image?.uri?.replace('file://', '') : image?.uri,
     });
   });
   return data;
@@ -143,7 +157,7 @@ const DeleteProduct = async (id: string) => {
   return res;
 };
 
-const GetProductList = async (user_id: string, category: number) => {
+const GetProductList = async (user_id: string, category: number): Promise<ProductParamsList[]> => {
   const response = await fetch(
     url + 'product/category/' + category + '/user/' + user_id,
     {
@@ -157,7 +171,7 @@ const GetProductList = async (user_id: string, category: number) => {
   return res.products;
 };
 
-const GetProduct = async (product_id: string) => {
+const GetProduct = async (product_id: string): Promise<ProductParamsList> => {
   const response = await fetch(url + 'product/' + product_id, {
     method: 'GET',
     headers: {
@@ -196,6 +210,17 @@ const RemoveItemFromCart = async (product_id: string, user_id: string) => {
   return res;
 };
 
+const GetCartCount = async (user_id: string) => {
+  const response = await fetch(url + 'cart/' + user_id + '/count', {
+    method: 'GET',
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  });
+  const res = await response.json();
+  return res.count;
+}
+
 const GetCart = async (user_id: string) => {
   const response = await fetch(url + 'cart/' + user_id, {
     method: 'GET',
@@ -214,6 +239,7 @@ const GetImage = (uri: string) => {
 export {
   Login,
   Register,
+  GetCode,
   GetUserProfile,
   UpdateUserProfile,
   GetSellerProduct,
@@ -224,6 +250,7 @@ export {
   GetProduct,
   AddItemToCart,
   RemoveItemFromCart,
+  GetCartCount,
   GetCart,
   GetImage,
 };

@@ -19,14 +19,16 @@ function BuyerHomePage({
   route,
 }: HomeStackScreenProps<'BuyerHomePage'>): JSX.Element {
   return (
-    <SafeAreaView>
-      <View>
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.subcontainer, {flex: 1}]}>
         <Text style={styles.text}>What are you looking to do today?</Text>
+      </View>
+      <View style={[styles.subcontainer, {flex: 5}]}>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
           onPress={() => {
-            navigation.push('ProductListPage', {category: 0, reload: false});
+            navigation.push('ProductListPage', {category: 0});
           }}>
           <ImageBackground
             source={ImagesAssets.tops}
@@ -35,11 +37,13 @@ function BuyerHomePage({
           />
           <Text style={styles.buttonText}>Tops</Text>
         </TouchableOpacity>
+      </View>
+      <View style={[styles.subcontainer, {flex: 5}]}>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
           onPress={() => {
-            navigation.push('ProductListPage', {category: 1, reload: false});
+            navigation.push('ProductListPage', {category: 1});
           }}>
           <ImageBackground
             source={ImagesAssets.bottoms}
@@ -48,11 +52,13 @@ function BuyerHomePage({
           />
           <Text style={styles.buttonText}>Bottoms</Text>
         </TouchableOpacity>
+      </View>
+      <View style={[styles.subcontainer, {flex: 5}]}>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.5}
           onPress={() => {
-            navigation.push('ProductListPage', {category: 2, reload: false});
+            navigation.push('ProductListPage', {category: 2});
           }}>
           <ImageBackground
             source={ImagesAssets.winterwear}
@@ -67,6 +73,15 @@ function BuyerHomePage({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+  },
+  subcontainer: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   text: {
     textAlign: 'center',
     fontSize: 18,
@@ -74,7 +89,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   button: {
-    height: 150,
+    width: '90%',
+    height: '90%',
     borderColor: COLOR,
     borderWidth: 1,
     marginVertical: 5,

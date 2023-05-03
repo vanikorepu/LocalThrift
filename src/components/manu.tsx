@@ -34,8 +34,8 @@ const defaultManuProps = {
 }
 
 const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}: ManuProps) => {
-  const triggerWrapperRef = useRef(null);
-  const itemsWrapperRef = useRef(null);
+  const triggerWrapperRef = useRef<View>(null);
+  const itemsWrapperRef = useRef<View>(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
   const [triggerDimensions, setTriggerDimensions] = useState({
@@ -105,8 +105,8 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
     setTriggerDimensions({ top: 0, left: 0, width: 0, height: 0 });
   };
 
-  children = Array.isArray(children) ? children : [children];
-  children = children.map(child => {
+  children = (Array.isArray(children)) ? children : [children];
+  children = children.map((child: JSX.Element) => {
     const f = child.props.onPress;
     child.props.onPress = () => {
       closeModal();
@@ -173,7 +173,7 @@ const Menu = ({ trigger, children, style, backgroundStyle, alignment, topOffset}
       const initialTriggerTop =
         triggerDimensions.top +
         triggerDimensions.height +
-        StatusBar.currentHeight;
+        (StatusBar.currentHeight ?? 0);
 
       top =
         initialTriggerTop + modalDimensions.height >

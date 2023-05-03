@@ -16,23 +16,27 @@ import { GetSellerProduct, DeleteProduct, GetImage } from '../../api/api';
 
 function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomePage'>): JSX.Element {
   const [load, setLoad] = useState(false);
-  const [lst, setLst] = useState([[], []]);
+  const [lst, setLst] = useState<Array<Array<ProductParamsList>>>([[], []]);
   const [update, setUpdate] = useState(true);
   const [disabled, setDisabled] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
-    const products = await GetSellerProduct(id);
-
-    let _lst = [[], []];
-    let cnt = 0
-    for (const product of products) {
-      _lst[cnt % 2].push(product)
-      cnt += 1
+    if (id === null) {
+      navigation.navigate('Auth');
+    } else {
+      const products = await GetSellerProduct(id);
+  
+      let _lst: Array<Array<ProductParamsList>> = [[], []];
+      let cnt = 0
+      for (const product of products) {
+        _lst[cnt % 2].push(product)
+        cnt += 1
+      }
+      setLst(_lst);
+      setDisabled(false);
+      setLoad(true);
     }
-    setLst(_lst);
-    setDisabled(false);
-    setLoad(true);
   }
 
   useEffect(() => {
@@ -44,13 +48,13 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
   }, [navigation]);
 
   const edit = async (id: string, product: ProductParamsList) => {
-    product.images = product.images.map((image: ImageParamsList) => {
+    product.images = product.images.map((image: ImageParamsList|undefined) => {
       return {
-        name: image.name,
-        type: 'image/' + image.name.split('.')[1],
-        uri: GetImage(image.name),
-        height: image.height,
-        width: image.width
+        name: image?.name,
+        type: 'image/' + image?.name?.split('.')[1],
+        uri: GetImage(image?.name ?? ''),
+        height: image?.height,
+        width: image?.width
       }
     })
     navigation.navigate('UploadPage', {state: "edit", product: product, product_id: id});
@@ -58,6 +62,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
   const sold = async (item: string) => {
     setDisabled(true);
     await DeleteProduct(item);
+    setDisabled(false);
     fetchData();
   }
   
@@ -68,7 +73,7 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
           !load && <Text>Loading ...</Text>
         }
         {
-          load && (lst[0].length + lst[1].length) === 0 && <Text>No selling product, tap + to make a new post</Text>
+          load && (lst[0].length + lst[1].length) === 0 && <Text>No selling products, tap + to make a new post</Text>
         }
         {
           load && lst.map((items) => {
@@ -77,20 +82,20 @@ function SellerHomePage({ navigation, route }: HomeStackScreenProps<'SellerHomeP
                 items.map((item, index) => {
                   return <View style={styles.product}>
                       <FastImage 
-                        source={{uri: GetImage(item.images[0]?.name)}} 
-                        resizeMode='contain'
+                        source={{uri: GetImage(item?.images[0]?.name ?? '')}} 
+                        resizeMode='cover'
                         style={styles.image}/>
                       <TouchableOpacity
                         style={[styles.button, {left: '5%'}]}
                         activeOpacity={0.5}
-                        onPress={() => {edit(item._id, item);}}>
+                        onPress={() => {edit(item?._id ?? '', item);}}>
                         <Edit fill="black" style={[styles.icon]}/>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={[styles.button, {right: '5%'}]}
                         activeOpacity={0.5}
                         disabled={disabled}
-                        onPress={() => {sold(item._id);}}>
+                        onPress={() => {sold(item?._id ?? '');}}>
                         <Sold fill="black" style={[styles.icon]}/>
                       </TouchableOpacity>
                       <Text 
@@ -141,8 +146,8 @@ const styles = StyleSheet.create({
     top: '5%',
   },
   icon: {
-    width: 30,
-    height: 30,
+    height: 250 * 0.1,
+    aspectRatio: 1,
   },
   price: {
     position: 'absolute',
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     textAlign: 'center',
-    lineHeight: 25,
+    lineHeight: 27,
     fontSize: 12,
   },
 });

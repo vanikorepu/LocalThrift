@@ -14,7 +14,7 @@ import {ICarouselInstance} from 'react-native-reanimated-carousel';
 import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {RootStackScreenProps} from '../../type';
+import {RootStackScreenProps, ProductParamsList, UserProfileParamsList} from '../../type';
 
 import MeetingPoint from '../../../data/meeting_point.json';
 
@@ -32,6 +32,8 @@ import {
   GetImage,
 } from '../../api/api';
 
+
+
 function ProductDescriptionPage({
   navigation,
   route,
@@ -39,19 +41,22 @@ function ProductDescriptionPage({
   const product_id = route.params.product;
   const [user_id, setUser] = useState('');
   const [load, setLoad] = useState(false);
-  const [product, setProduct] = useState({});
-  const [seller, setSeller] = useState({});
+  const [product, setProduct] = useState<ProductParamsList|undefined>(undefined);
+  const [seller, setSeller] = useState<UserProfileParamsList|undefined>(undefined);
   const [disabled, setDisabled] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
-    const product = await GetProduct(product_id);
-    const seller = await GetUserProfile(product.seller);
-    setProduct(product);
-    console.log(product);
-    setSeller(seller);
-    setUser(id);
-    setLoad(true);
+    if (id == null) {
+      navigation.navigate('Auth');
+    } else {
+      const product = await GetProduct(product_id);
+      const seller = await GetUserProfile(product.seller ?? '');
+      setProduct(product);
+      setSeller(seller);
+      setUser(id);
+      setLoad(true);
+    }
   };
 
   useEffect(() => {
@@ -79,14 +84,20 @@ function ProductDescriptionPage({
 
   const addToCart = async (item: string) => {
     setDisabled(true);
-    await AddItemToCart(item, user_id);
-    navigation.navigate('TabNavigationRoutes', {
-      screen: 'Home',
-      params: {
-        screen: 'ProductListPage',
-        params: {category: route.params.category},
-      },
-    });
+    const res = await AddItemToCart(item, user_id);
+    setDisabled(false);
+    if (res.state) {
+      navigation.getParent()?.setOptions({
+        tabBarBadge: res.count
+      });
+      navigation.navigate('TabNavigationRoutes', {
+        screen: 'Home',
+        params: {
+          screen: 'ProductListPage',
+          params: {category: route.params.category},
+        },
+      });
+    }
   };
 
   const {height, width} = Dimensions.get('window');
@@ -102,7 +113,7 @@ function ProductDescriptionPage({
         width={width}
         height={height * 0.6}
         loop
-        data={[...new Array(product.images.length).keys()]}
+        data={[...new Array(product?.images.length).keys()]}
         scrollAnimationDuration={1000}
         onSnapToItem={index => {}}
         renderItem={({index}) => (
@@ -110,7 +121,7 @@ function ProductDescriptionPage({
             <FastImage
               style={styles.image}
               resizeMode="cover"
-              source={{uri: GetImage(product.images[index].name)}}
+              source={{uri: GetImage(product?.images[index]?.name ?? '')}}
             />
           </View>
         )}
@@ -132,26 +143,28 @@ function ProductDescriptionPage({
         <RightArrow stroke={'white'} style={[styles.arrow]} />
       </TouchableOpacity>
       <View style={styles.info}>
-        <View style={{width: '100%'}}>
-          <Text style={styles.text}>Price: ${product.price}</Text>
-          <Text style={styles.text}>Size: {product.size}</Text>
-          <Text style={styles.text}>Brand: {product.brand}</Text>
-          <Text style={styles.text}>Usage: {product.usage}</Text>
-          <Text style={styles.text}>Sold by: {seller.name}</Text>
+        <View style={[styles.subcontainer, {flex: 7, justifyContent: 'center'}]}>
+          <Text style={styles.text}>Price: ${product?.price}</Text>
+          <Text style={styles.text}>Size: {product?.size}</Text>
+          <Text style={styles.text}>Brand: {product?.brand}</Text>
+          <Text style={styles.text}>Usage: {product?.usage}</Text>
+          <Text style={styles.text}>Sold by: {seller?.name}</Text>
           <Text style={styles.text}>
-            Meeting point: {MeetingPoint[product.meeting]}
+            Meeting point: {product?.meeting !== undefined ? MeetingPoint[product.meeting] : ''}
           </Text>
         </View>
-        <TouchableOpacity
-          style={[styles.button]}
-          activeOpacity={0.5}
-          disabled={disabled}
-          onPress={() => {
-            addToCart(product._id);
-          }}>
-          <Cart style={styles.cart} fill={COLOR} />
-          <Text style={styles.buttonText}>Add to Bag</Text>
-        </TouchableOpacity>
+        <View style={[styles.subcontainer, {flex: 3, alignItems: 'center'}]}>
+          <TouchableOpacity
+            style={[styles.button]}
+            activeOpacity={0.5}
+            disabled={disabled}
+            onPress={() => {
+              addToCart(product?._id ?? '');
+            }}>
+            <Cart style={styles.cart} fill={COLOR} />
+            <Text style={styles.buttonText}>Add to Bag</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -191,11 +204,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   arrow: {
-    height: 60,
-    width: 60,
+    aspectRatio: 1,
+    height: '10%'
   },
   info: {
     position: 'absolute',
+    height: '44%',
     width: '100%',
     bottom: 0,
     flex: 4,
@@ -205,10 +219,13 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     alignItems: 'center',
   },
+  subcontainer: {
+    width: '100%',
+  },
   text: {
+    flex: 1,
     color: 'white',
     marginLeft: 30,
-    marginVertical: 3,
     fontSize: 15,
     fontWeight: '400',
   },

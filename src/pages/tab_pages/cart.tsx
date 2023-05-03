@@ -21,11 +21,12 @@ import Trash from '../../../assets/icons/trash.svg';
 
 import {RemoveItemFromCart, GetCart, GetImage} from '../../api/api';
 
+import {CartParamsList, ProductParamsList} from '../../type';
+
 function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
-  let user_id = '';
-  const [cart, setCart] = useState([]);
+  const [user_id, setUser] = useState('');
   const [load, setLoad] = useState(false);
-  const [content, setContent] = useState(<View></View>);
+  const [cart, setCart] = useState<CartParamsList[]>([]);
   const [sum, setSum] = useState(0);
   const [disabled, setDisabled] = useState(false);
 
@@ -35,24 +36,25 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
     fetchData();
   }
 
-  const composeMessage = (items: {}) => {
+  const composeMessage = (items: CartParamsList) => {
     let message = 'Hi, I am interested in your product' + (items.products.length > 1 ? 's' : '' ) + ':\n';
     for (const item of items.products) {
-      message += 'The ' + Category[item.category].toLowerCase() + ' with the brand ' + item.brand + ' in size ' + item.size.toUpperCase() + ',\n';
+      message += 'The ' + (item.category !== undefined ? Category[item.category] : '').toLowerCase() + ' of the brand ' + item.brand + ' in size ' + item.size?.toUpperCase() + ',\n';
     }
     message += (items.products.length > 1 ? 'Are they' : 'Is it' ) + ' available for sale? If so, can you please let me know a time and place that would work for pickup? What is your preferred mode of payment?\nThank you.'
     return message;
   }
 
-  const send_sms = async (items: {}) => {
+  const send_sms = async (items: CartParamsList) => {
     let message = composeMessage(items);
     const separator = Platform.OS === 'ios' ? '&' : '?'
     const url = `sms:${items.phone}${separator}body=${encodeURIComponent(message)}`;
     await Linking.openURL(url);
   }
 
-  const send_gmail = async (items: {}) => {
+  const send_gmail = async (items: CartParamsList) => {
     let message = composeMessage(items);
+    const subject = "LocalThrift";
     const url = `googlegmail://co?to=${items.email}&subject=${subject}&body=${encodeURIComponent(message)}`;
     await Linking.openURL(url);
   }
@@ -62,15 +64,32 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
   }, []);
 
   const fetchData = async () => {
-    user_id = await AsyncStorage.getItem('user_id');
+    const id = await AsyncStorage.getItem('user_id');
     // await setUser(id);
-    const _cart = await GetCart(user_id);
+    if (id === null) {
+      navigation.navigate('Auth');
+    } else {
+      const _cart = await GetCart(id);
+      
+      const _sum = _cart.reduce((acc: number, cur: CartParamsList) => acc + cur.products.length, 0);
     
-    const _sum = _cart.reduce((acc, cur) => acc + cur.products.length, 0);
-  
-    let _content: JSX.Element;
-    if (_sum === 0) {
-      _content = (<View style={styles.container}>
+      setUser(id);
+      setSum(_sum);
+      setCart(_cart);
+      setDisabled(false);
+      setLoad(true);
+      route.params?.setCount(_sum);
+    }
+  }
+
+  return (
+    <SafeAreaView>
+      <View >
+        {load && <Text style={styles.total}>{sum} Items</Text>}
+      </View>
+      <View>
+      {!load && <Text>Loading ...</Text>}
+      {load && sum === 0 && <View style={styles.container}>
         <Text style={styles.subTitle}>Your cart is empty!</Text>
         <Empty style={styles.empty}/>
         <TouchableOpacity
@@ -79,19 +98,18 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
             onPress={() => {navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'BuyerHomePage'}})}}>
             <Text style={styles.buttonText}>Start Shopping</Text>
         </TouchableOpacity>
-      </View>);
-    } else {
-      _content = (<ScrollView>
+      </View>}
+      {load && sum !== 0 && <ScrollView>
         <View style={[styles.container, {paddingTop: 10}]}>
-          {_cart.map((items, idx) => (
+          {cart.map((items: CartParamsList, idx: number) => (
             <View key={idx}>
               <View style={styles.seller}>
                 <View style={styles.product}>
-                  {items.products.map((item, index) =>(
+                  {items.products.map((item: ProductParamsList, index: number) =>(
                     <View style={styles.infos} key={index}>
                       <FastImage 
                         style={styles.image} 
-                        source={{uri: GetImage(item.images[0]?.name)}}
+                        source={{uri: GetImage(item.images[0]?.name ?? '')}}
                         resizeMode="cover" />
                       <View style={styles.info}>
                         <Text style={styles.text}>Size: {item.size}</Text>
@@ -101,7 +119,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
                         <TouchableOpacity
                             activeOpacity={0.5}
                             disabled={disabled}
-                            onPress={() => {trash(item._id)}}>
+                            onPress={() => {trash(item._id ?? '')}}>
                             <Trash style={styles.trash} />
                         </TouchableOpacity>
                         
@@ -127,23 +145,7 @@ function CartPage({ navigation, route }: TabScreenProps<'Cart'>): JSX.Element {
             </View>
           ))}
         </View>
-      </ScrollView>)
-    }
-    setCart(_cart);
-    setSum(_sum);
-    setContent(_content);
-    setDisabled(false);
-    setLoad(true);
-  }
-
-  return (
-    <SafeAreaView>
-      <View >
-        {load && <Text style={styles.total}>{sum} Items</Text>}
-      </View>
-      <View>
-      {!load && <Text>Loading ...</Text>}
-      {load && content}
+      </ScrollView>}
       </View>
     </SafeAreaView>
   );

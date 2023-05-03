@@ -14,7 +14,7 @@ import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
 
-import {HomeStackScreenProps} from '../../type';
+import {HomeStackScreenProps, ProductParamsList} from '../../type';
 
 import {COLOR} from '../../../assets/setting';
 
@@ -27,7 +27,7 @@ function ProductListPage({
   route,
 }: HomeStackScreenProps<'ProductListPage'>): JSX.Element {
   // const [modalVisible, setModalVisible] = useState(false);
-  let order = undefined;
+  let order: number|string|undefined = undefined;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -64,17 +64,21 @@ function ProductListPage({
 
   const [load, setLoad] = useState(false);
   const [show, setShow] = useState(false);
-  const [lst, setLst] = useState([[], []]);
-  const [products, setProducts] = useState([]);
-  const [orderState, setOrder] = useState(undefined);
+  const [lst, setLst] = useState<Array<Array<ProductParamsList>>>([[], []]);
+  const [products, setProducts] = useState<Array<ProductParamsList>>([]);
+  const [orderState, setOrder] = useState<number|string|undefined>(undefined);
   
   const categrory = route.params.category;
   const fetchData = async () => {
     setLoad(false);
     const id = await AsyncStorage.getItem('user_id');
-    const _products = await GetProductList(id, categrory);
-    setProducts(_products);
-    setLoad(true);
+    if (id === null) {
+      navigation.navigate('Auth');
+    } else {
+      const _products = await GetProductList(id, categrory);
+      setProducts(_products);
+      setLoad(true);
+    }
   };
 
   const arrangeProduct = async () => {
@@ -97,10 +101,10 @@ function ProductListPage({
       );
     }
 
-    let _lst = [[], []];
+    let _lst: Array<Array<ProductParamsList>> = [[], []];
     let sum = [0, 0];
     for (const product of _products) {
-      const aspectRatio = product.images[0].height / product.images[0].width;
+      const aspectRatio = (product.images[0]?.height ?? 0) / (product.images[0]?.width ?? 1);
       if (sum[0] > sum[1]) {
         _lst[1].push(product);
         sum[1] += aspectRatio;
@@ -131,7 +135,7 @@ function ProductListPage({
     <ScrollView>
       <View style={styles.container}>
         {!show && <Text>Loading ...</Text>}
-        {show && (lst[0].length + lst[1].length) === 0 && <Text>No product in this category</Text>}
+        {show && (lst[0].length + lst[1].length) === 0 && <Text>No products in this category</Text>}
 
         {show &&
           lst.map(items => {
@@ -139,19 +143,19 @@ function ProductListPage({
               <View style={styles.list}>
                 {items.map((item, index) => {
                   const width = Dimensions.get('window').width * 0.5 * 0.95;
-                  const height = width * (item.images[0]?.height / item.images[0]?.width);
+                  const height = width * ((item.images[0]?.height ?? 0) / (item.images[0]?.width ?? 1));
                   return (
                     <TouchableOpacity
                       style={[styles.product, {width: width, height: height}]}
                       activeOpacity={0.5}
                       onPress={() => {
                         navigation.push('ProductDescriptionPage', {
-                          category: item.category,
-                          product: item._id,
+                          category: item.category ?? 0,
+                          product: item._id ?? '',
                         });
                       }}>
                       <FastImage
-                        source={{uri: GetImage(item.images[0]?.name)}}
+                        source={{uri: GetImage(item.images[0]?.name ?? '')}}
                         style={{width: width, height: height}}
                         resizeMode='contain'
                       />
@@ -211,7 +215,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     textAlign: 'center',
-    lineHeight: 25,
+    lineHeight: 27,
     fontSize: 12,
   },
 });
@@ -222,6 +226,7 @@ const pickerSelectStyles = StyleSheet.create({
     right: '-70%',
     width: 30,
     height: 30,
+    color: 'white',
   },
 });
 
