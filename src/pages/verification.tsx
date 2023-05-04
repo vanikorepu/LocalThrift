@@ -22,9 +22,11 @@ function VerificationPage({ navigation, route }: RootStackScreenProps<'Verificat
     
     const [codeInput, setCodeInput] = useState('');
     const [disable, setDisable] = useState(false);
+    const [error, setError] = useState(false);
 
     const verification = async () => {
         setDisable(true);
+        setError(false);
         if (codeInput === code) {
             const res = await Register(name, email, password, phone);
             if (res.state === 1) {
@@ -34,6 +36,7 @@ function VerificationPage({ navigation, route }: RootStackScreenProps<'Verificat
                 setDisable(false);
             }
         } else {
+            setError(true);
             setDisable(false);
         }
     }
@@ -68,7 +71,7 @@ function VerificationPage({ navigation, route }: RootStackScreenProps<'Verificat
                 onPress={verification}>
                 <Text style={styles.buttonText}>Verify</Text>
             </TouchableOpacity>
-
+            {error && <Text style={[styles.text, {fontSize: 12, marginTop: 10, width: '95%', color: 'red', textAlign: 'center'}]}>Verification failed. Please check your code again.</Text>}
             <Text style={[styles.text, {fontSize: 12, marginTop: 10, width: '95%'}]}>Didn't receive the email? Please check your spam or click 
                 <Text>{' '}</Text>
                 <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={() => {
@@ -88,14 +91,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         alignItems: 'center',
-        height: 300,
+        height: '40%',
         width: '90%',
-        borderRadius: 15,
-    },
-    image: {
-        marginTop: 50,
-        width: 100,
-        height: 100,
         borderRadius: 15,
     },
     text: {

@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image, Animated, Platform} from 'react-native';
 
 import { useHeaderHeight } from '@react-navigation/elements';
 
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
+import Modal from "react-native-modal";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -20,6 +21,8 @@ import MeetingPoint from '../../../data/meeting_point.json';
 import { RootStackScreenProps } from '../../type';
 
 import {PostProduct, UpdateProduct} from '../../api/api';
+import { Portal } from "@gorhom/portal";
+
 
 function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.Element {
   const height = Dimensions.get('window').height - useHeaderHeight();
@@ -29,6 +32,7 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
   const productId = route.params.product_id ?? '';
   const [user_id, setUser] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const fetchData = async () => {
     const id = await AsyncStorage.getItem('user_id');
@@ -50,14 +54,30 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
 
   const confirm = async () => {
     setDisabled(true);
+    let status;
     if (state == 'edit') {
-      await UpdateProduct(productId, product);
+      status = await UpdateProduct(productId, product);
     } else {
-      await PostProduct(user_id, product);
+      status = await PostProduct(user_id, product);
+    }
+    if(status === 1){
+      setModalVisible(!isModalVisible);
     }
     setDisabled(false);
+  }
+
+  const closeModal = () => {
+    setModalVisible(!isModalVisible);
     navigation.navigate('TabNavigationRoutes', {screen: 'Home', params: {screen: 'SellerHomePage'}});
   }
+
+  useEffect(() => {
+    if (isModalVisible) {
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    }
+  }, [isModalVisible]);
 
   const width = Dimensions.get('window').width;
 
@@ -66,6 +86,22 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
 
   return (
     <SafeAreaView style={{height: height}}>
+      <Portal hostName="menu">
+        {isModalVisible && (
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={closeModal}
+            style={[styles.modalWrapper]}
+          >
+            <Animated.View
+              style={[styles.activeSection]}
+              collapsable={false}
+            >
+              <Text style={{textAlign: 'center'}}>You have succesfully uploaded your product!</Text>
+            </Animated.View>
+          </TouchableOpacity>
+        )}
+      </Portal>
       <View style={[styles.subcontainer, {flex: 6, justifyContent: 'center'}]}>
         <Carousel
             style={styles.carousel}
@@ -128,6 +164,39 @@ function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.El
 }
 
 const styles = StyleSheet.create({
+  modalWrapper: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeSection: {
+    // backgroundColor: "white",
+    // alignSelf: "flex-start",
+    ...Platform.select({
+      ios: {
+        // alignSelf: "flex-start",
+        // width: layoutWidth * 0.5,
+
+        // borderRadius: 13,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+        shadowOpacity: 0.35,
+        shadowRadius: 100,
+      },
+    }),
+    width: '80%',
+    height: 90,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    justifyContent: 'center',
+
+    zIndex: 99,
+  },
   subcontainer: {
     alignItems: 'center',
     height: '100%',

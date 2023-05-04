@@ -131,7 +131,7 @@ const PostProduct = async (user_id: string, product: ProductParamsList) => {
     body: createFormData(product),
   });
   const res = await response.json();
-  return res;
+  return res.state;
 };
 
 const UpdateProduct = async (id: string, product: ProductParamsList) => {
@@ -143,7 +143,7 @@ const UpdateProduct = async (id: string, product: ProductParamsList) => {
     body: createFormData(product),
   });
   const res = await response.json();
-  return res;
+  return res.state;
 };
 
 const DeleteProduct = async (id: string) => {

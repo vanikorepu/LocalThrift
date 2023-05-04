@@ -20,6 +20,7 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
     const [password, setPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [disable, setDisable] = useState(false);
+    const [error, setError] = useState(false);
 
     const emailInputRef = createRef<TextInput>();
     const passwordInputRef = createRef<TextInput>();
@@ -27,6 +28,7 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
 
     const register = async () => {
         setDisable(true);
+        setError(false);
         const res = await GetCode(email);
         if (res.state === 1) {
             setDisable(false);
@@ -34,6 +36,7 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
             // await AsyncStorage.setItem('user_id', res.id);
             // navigation.replace('TabNavigationRoutes', {screen: 'Home', params: {screen: 'HomePage'}});
         } else {
+            setError(true);
             setDisable(false);
         }
     }
@@ -84,6 +87,7 @@ function RegisterPage({ navigation, route }: RootStackScreenProps<'Register'>): 
                 keyboardType='email-address'
                 style={styles.input} 
                 placeholderTextColor={'white'}/>
+            {error && <Text style={[{color: 'red', fontSize: 12}]}>Email already exists. Please use another.</Text>}
             <TextInput 
                 placeholder="Password" 
                 autoCapitalize='none'

@@ -30,14 +30,15 @@ function LoginPage({
 }: RootStackScreenProps<'Login'>): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [disabled,setDisabled]=useState(false)
+  const [disabled,setDisabled]=useState(false);
+  const [error, setError] = useState(false);
 
   const passwordInputRef = createRef<TextInput>();
 
   const login = async () => {
     setDisabled(true);
+    setError(false);
     const res = await Login(email, password);
-
     
     if (res.state === 1) {
       setDisabled(false);
@@ -48,6 +49,7 @@ function LoginPage({
       });
       
     } else {
+      setError(true);
       setDisabled(false);
     }
   };
@@ -93,6 +95,7 @@ function LoginPage({
             style={styles.input}
             placeholderTextColor={'white'}
           />
+          {error && <Text style={{fontSize: 12, marginBottom: 10, width: '95%', color: 'red', textAlign: 'center'}}>Login Failed. Please check your email and password again.</Text>}
 
           <TouchableOpacity
             style={[styles.button, {width: '80%', marginTop: 10}]}
