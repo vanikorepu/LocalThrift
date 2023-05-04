@@ -37,26 +37,6 @@ function HomePage({
   navigation,
   route,
 }: HomeStackScreenProps<'HomePage'>): JSX.Element {
-  // const [count, setCount] = useState<number|undefined>(undefined);
-  // const fetchData = async () => {
-  //   const id = await AsyncStorage.getItem('user_id');
-  //   if (id == null) {
-  //     navigation.navigate('Auth');
-  //   } else {
-  //     const _count = await GetCartCount(id);
-  //     setCount(_count);
-  //   }
-  // }
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   navigation.getParent()?.setOptions({
-  //     tabBarBadge: count !== undefined && count > 0 ? count : undefined,
-  //   });
-  // }, [count]);
-
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={[styles.subcontainer, {flex: 1}]}>

@@ -8,11 +8,15 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  Animated, 
+  Platform
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
+import { Portal } from "@gorhom/portal";
+import { useHeaderHeight } from '@react-navigation/elements';
 
 import {HomeStackScreenProps, ProductParamsList} from '../../type';
 
@@ -27,37 +31,20 @@ function ProductListPage({
   route,
 }: HomeStackScreenProps<'ProductListPage'>): JSX.Element {
   // const [modalVisible, setModalVisible] = useState(false);
-  let order: number|string|undefined = undefined;
+  const topOffset = useHeaderHeight();
+  let order: number|undefined = undefined;
+  let filter: string|undefined = undefined;
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          onValueChange={value => {
-            order = value;
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
           }}
-          onDonePress={async () => {
-            setOrder(order);
-          }}
-          placeholder={{label: ''}}
-          Icon={() => {
-            return (
-              <TouchableOpacity>
-                <Filter style={styles.filter} />
-              </TouchableOpacity>
-            );
-          }}
-          items={[
-            {label: 'Price: Low to High', value: 1},
-            {label: 'Price: High to Low', value: -1},
-            {label: 'Size: XS', value: 'XSmall'},
-            {label: 'Size: S', value: 'Small'},
-            {label: 'Size: M', value: 'Medium'},
-            {label: 'Size: L', value: 'Large'},
-            {label: 'Size: XL', value: 'XLarge'},
-          ]}
-        />
+        >
+          <Filter style={styles.filter} />
+        </TouchableOpacity>
       ),
     });
   }, [navigation]);
@@ -66,8 +53,10 @@ function ProductListPage({
   const [show, setShow] = useState(false);
   const [lst, setLst] = useState<Array<Array<ProductParamsList>>>([[], []]);
   const [products, setProducts] = useState<Array<ProductParamsList>>([]);
-  const [orderState, setOrder] = useState<number|string|undefined>(undefined);
-  
+  const [orderState, setOrder] = useState<number|undefined>(undefined);
+  const [filterState, setFilter] = useState<string|undefined>(undefined);
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const categrory = route.params.category;
   const fetchData = async () => {
     setLoad(false);
@@ -83,15 +72,15 @@ function ProductListPage({
 
   const arrangeProduct = async () => {
     let _products = products;
-    if (orderState === 'XSmall') {
+    if (filterState === 'XSmall') {
       _products = _products.filter(product => product.size === 'XS');
-    } else if (orderState === 'Small') {
+    } else if (filterState === 'Small') {
       _products = _products.filter(product => product.size === 'S');
-    } else if (orderState === 'Medium') {
+    } else if (filterState === 'Medium') {
       _products = _products.filter(product => product.size === 'M');
-    } else if (orderState === 'Large') {
+    } else if (filterState === 'Large') {
       _products = _products.filter(product => product.size === 'L');
-    } else if (orderState === 'XLarge') {
+    } else if (filterState === 'XLarge') {
       _products = _products.filter(product => product.size === 'XL');
     }
 
@@ -117,11 +106,15 @@ function ProductListPage({
     setShow(true);
   }
 
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     if (load) {
       arrangeProduct();
     }
-  }, [load, orderState]);
+  }, [load, orderState, filterState]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -133,6 +126,66 @@ function ProductListPage({
 
   return (
     <ScrollView>
+      <Portal hostName="menu">
+        {isModalVisible && (
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={closeModal}
+            style={[styles.modalWrapper]}
+          >
+            <Animated.View
+              style={[styles.activeSection, {top: topOffset}]}
+              collapsable={false}
+            >
+              <TouchableOpacity 
+                style={{alignSelf: 'flex-end', marginRight: '8%', marginTop: 5}}
+                onPress={() => {
+                  setOrder(undefined);
+                  setFilter(undefined);
+                  order = undefined;
+                  filter = undefined;
+                  setModalVisible(false);
+                }}
+                >
+                <Text style={{color: COLOR}}>Clear all</Text>
+              </TouchableOpacity>
+              <RNPickerSelect
+                style={pickerSelectStyles}
+                placeholder={{label: "Sort by"}}
+                onValueChange={value => {
+                  order = value;
+                }}
+                onDonePress={async () => {
+                  setOrder(order);
+                }}
+                items={[
+                  {label: 'Price: Low to High', value: 1},
+                  {label: 'Price: High to Low', value: -1},
+                ]}
+                value={orderState}
+              />
+              <RNPickerSelect
+                style={pickerSelectStyles}
+                placeholder={{label: 'Size'}}
+                onValueChange={value => {
+                  filter = value;
+                }}
+                onDonePress={async () => {
+                  setFilter(filter);
+                }}
+                items={[
+                  {label: 'Size: XS', value: 'XSmall'},
+                  {label: 'Size: S', value: 'Small'},
+                  {label: 'Size: M', value: 'Medium'},
+                  {label: 'Size: L', value: 'Large'},
+                  {label: 'Size: XL', value: 'XLarge'},
+                ]}
+                value={filterState}
+              />
+            </Animated.View>
+          </TouchableOpacity>
+        )}
+      </Portal>
       <View style={styles.container}>
         {!show && <Text>Loading ...</Text>}
         {show && (lst[0].length + lst[1].length) === 0 && <Text>No products in this category</Text>}
@@ -177,6 +230,44 @@ function ProductListPage({
 }
 
 const styles = StyleSheet.create({
+  modalWrapper: {
+    // backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeSection: {
+    // backgroundColor: "white",
+    // alignSelf: "flex-end",
+    position: "absolute",
+    // top: '10%',
+    right: 5,
+    ...Platform.select({
+      ios: {
+        // alignSelf: "flex-start",
+        // width: layoutWidth * 0.5,
+
+        // borderRadius: 13,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+        shadowOpacity: 0.35,
+        shadowRadius: 100,
+      },
+    }),
+    width: '50%',
+    height: 130,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    borderColor: COLOR,
+    borderWidth: 1,
+    justifyContent: 'center',
+
+    zIndex: 99,
+  },
   filter: {
     marginRight: 20,
     width: 30,
@@ -222,12 +313,29 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    top: 0,
-    right: '-70%',
-    width: 30,
-    height: 30,
-    color: 'white',
+    width: '85%',
+    height: 40,
+    marginLeft: '7.5%',
+    marginVertical: 5,
+    paddingLeft: 20,
+    borderColor: '#AAA',
+    borderWidth: 1,
+    borderRadius: 15,
   },
+  container: {
+    width: '85%',
+    height: 40,
+    marginLeft: '7.5%',
+    marginVertical: 5,
+    paddingLeft: 20,
+    borderColor: '#AAA',
+    borderWidth: 1,
+    borderRadius: 15,
+  },
+  dropDown: {
+    width: '85%',
+    marginLeft: '7.5%',
+  }
 });
 
 export default ProductListPage;

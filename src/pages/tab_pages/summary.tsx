@@ -6,7 +6,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 
 import Carousel from 'react-native-reanimated-carousel';
 import {ICarouselInstance} from 'react-native-reanimated-carousel';
-import Modal from "react-native-modal";
+import { Portal } from "@gorhom/portal";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -21,7 +21,6 @@ import MeetingPoint from '../../../data/meeting_point.json';
 import { RootStackScreenProps } from '../../type';
 
 import {PostProduct, UpdateProduct} from '../../api/api';
-import { Portal } from "@gorhom/portal";
 
 
 function Summary({ navigation, route }: RootStackScreenProps<'Summary'>): JSX.Element {
