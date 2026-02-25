@@ -23,6 +23,8 @@ type ImageParamsList = {
 }
 
 type ProductParamsList = {
+    _id?: string,
+    seller_id?: string,
     size?: string,
     price?: string,
     brand?: string,
@@ -30,11 +32,39 @@ type ProductParamsList = {
     meeting?: number,
     category?: number,
     images?: ImageParamsList[],
+    sold?: number,
+}
+
+type MessageType = {
+  id: string,
+  room_id: string,
+  sender_id: string,
+  text: string,
+  created_at: number,
+}
+
+type RoomType = {
+  id: string,
+  buyer_id: string,
+  seller_id: string,
+  product_id: string,
+  other_name: string,
+  product_brand: string,
+  product_images: ImageParamsList[],
+  last_message: string,
+  created_at: number,
+}
+
+type CartGroup = {
+  phone: string,
+  email: string,
+  seller_id: string,
+  products: ProductParamsList[],
 }
 
 type RootStackParamList = {
     Splash: undefined,
-    Auth: undefined; 
+    Auth: undefined;
     Login: undefined;
     Register: undefined;
     TabNavigationRoutes: NavigatorScreenParams<TabParamList>;
@@ -42,6 +72,8 @@ type RootStackParamList = {
     Summary: {state: "post"|"edit", product: ProductParamsList, product_id: string|undefined};
     ProductDescriptionPage: {category: number, product: string};
     ProfileEditPage: undefined;
+    ChatRoom: { room_id: string; other_name: string; product_brand: string };
+    Checkout: { cart: CartGroup[] };
   };
 
 type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -51,6 +83,7 @@ type TabParamList = {
     Home: NavigatorScreenParams<HomeStackParamList>;
     ProfilePage: undefined;
     Cart: undefined;
+    Messages: undefined;
 }
 
 type TabScreenProps<T extends keyof TabParamList> =
@@ -82,6 +115,9 @@ export {
     type UserProfileParamsList,
     type ImageParamsList,
     type ProductParamsList,
+    type MessageType,
+    type RoomType,
+    type CartGroup,
     type RootStackParamList,
     type RootStackScreenProps,
     type TabParamList,

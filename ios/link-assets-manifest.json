@@ -2,20 +2,56 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Montserrat-Italic-VariableFont_wght.ttf",
-      "sha1": "df1a17b6a12a7518575abe3f5cdc1d6cb0c7b390"
-    },
-    {
       "path": "assets/fonts/Montserrat-VariableFont_wght.ttf",
       "sha1": "b30f63a27bcdc61c2458d0ddfbbe738a01e39714"
     },
     {
-      "path": "assets/images/0790601600004NEW_00_041.webp",
-      "sha1": "5088a677d2b7727d6c913356bea9982fd9514bd1"
+      "path": "assets/fonts/Montserrat-Italic-VariableFont_wght.ttf",
+      "sha1": "df1a17b6a12a7518575abe3f5cdc1d6cb0c7b390"
+    },
+    {
+      "path": "assets/fonts/PlayfairDisplay.ttf",
+      "sha1": "a0e3babd3c318e1b14fd3e43b9570153a5b194fe"
+    },
+    {
+      "path": "assets/images/winterwear.jpg",
+      "sha1": "95f5a9e1f300a93c00bee7b01c58df32c2241803"
+    },
+    {
+      "path": "assets/images/image_assest.tsx",
+      "sha1": "a22754e18ae11372c1cd70fa846df7809e2132e0"
     },
     {
       "path": "assets/images/1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp",
       "sha1": "db014494192dbe0039893965c7671e1deadaffe2"
+    },
+    {
+      "path": "assets/images/cover image2.jpg",
+      "sha1": "2060c75f139b325c51fe5bf780c3e400dcf593ae"
+    },
+    {
+      "path": "assets/images/buying2.jpg",
+      "sha1": "c46b20e58c13f5efe60f9c871961994da2fb7488"
+    },
+    {
+      "path": "assets/images/Tops.jpeg",
+      "sha1": "b541595de912559a555349e007d79b29e9401ef0"
+    },
+    {
+      "path": "assets/images/Bottoms.png",
+      "sha1": "d1cf66eae308d9f6263e0e1ab4f3a34b3d5a143d"
+    },
+    {
+      "path": "assets/images/Logo.png",
+      "sha1": "8441b29ccb54fde8d2a60481443b4d6d7256e044"
+    },
+    {
+      "path": "assets/images/selling2.jpg",
+      "sha1": "af38395eaebc2ba52728044fb0efb053166b1742"
+    },
+    {
+      "path": "assets/images/Cover.jpg",
+      "sha1": "3a2e5a8e771ff6bcb6f6f1e6cca6c1cae4db3172"
     },
     {
       "path": "assets/images/16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp",
@@ -26,64 +62,8 @@
       "sha1": "96a5af6d3c96e154807665d223f4693fda80b7cf"
     },
     {
-      "path": "assets/images/Bottoms.png",
-      "sha1": "d1cf66eae308d9f6263e0e1ab4f3a34b3d5a143d"
-    },
-    {
-      "path": "assets/images/Cover.jpg",
-      "sha1": "3a2e5a8e771ff6bcb6f6f1e6cca6c1cae4db3172"
-    },
-    {
-      "path": "assets/images/Logo.png",
-      "sha1": "8441b29ccb54fde8d2a60481443b4d6d7256e044"
-    },
-    {
-      "path": "assets/images/Tops.jpeg",
-      "sha1": "b541595de912559a555349e007d79b29e9401ef0"
-    },
-    {
-      "path": "assets/images/buying2.jpg",
-      "sha1": "c46b20e58c13f5efe60f9c871961994da2fb7488"
-    },
-    {
-      "path": "assets/images/cover image2.jpg",
-      "sha1": "2060c75f139b325c51fe5bf780c3e400dcf593ae"
-    },
-    {
-      "path": "assets/images/image_assest.tsx",
-      "sha1": "a22754e18ae11372c1cd70fa846df7809e2132e0"
-    },
-    {
-      "path": "assets/images/selling2.jpg",
-      "sha1": "af38395eaebc2ba52728044fb0efb053166b1742"
-    },
-    {
-      "path": "assets/images/winterwear.jpg",
-      "sha1": "95f5a9e1f300a93c00bee7b01c58df32c2241803"
-    },
-    {
-      "path": "assets/icons/back.svg",
-      "sha1": "a817d458f78363742891df59bb741332162c9acb"
-    },
-    {
-      "path": "assets/icons/cart.svg",
-      "sha1": "600697a3a018c5737991d88f4f24bd0ca84fee51"
-    },
-    {
-      "path": "assets/icons/cross.svg",
-      "sha1": "d2175ce84924af5de3384edb4881c52e7812e5d6"
-    },
-    {
-      "path": "assets/icons/edit.svg",
-      "sha1": "f05d5d2b31d11ca1a0f264c22a597a17cb0d5ee5"
-    },
-    {
-      "path": "assets/icons/empty.svg",
-      "sha1": "a8c742161d7a2f9676fba8a05601f9c1d2e7a6c6"
-    },
-    {
-      "path": "assets/icons/filter.svg",
-      "sha1": "09afbf7db152b5fdde1f4e9448ac2258be2a954d"
+      "path": "assets/images/0790601600004NEW_00_041.webp",
+      "sha1": "5088a677d2b7727d6c913356bea9982fd9514bd1"
     },
     {
       "path": "assets/icons/gmail.svg",
@@ -94,36 +74,60 @@
       "sha1": "d9e09298c123ae642a86c0aac65f55aeff831867"
     },
     {
-      "path": "assets/icons/left_arrow.svg",
-      "sha1": "e24a35a66b35713f4061ebc53b608636fd7ade92"
+      "path": "assets/icons/right_arrow.svg",
+      "sha1": "3fc30603ad7e839967f7639bb5341f961ce629b3"
+    },
+    {
+      "path": "assets/icons/empty.svg",
+      "sha1": "a8c742161d7a2f9676fba8a05601f9c1d2e7a6c6"
     },
     {
       "path": "assets/icons/pen.svg",
       "sha1": "71494f8cd1dce4eb66fda6b9ebbd7c7f5400aa82"
     },
     {
-      "path": "assets/icons/plus.svg",
-      "sha1": "a22ea9d0fb3c60f053477648834acf396f2be0d2"
+      "path": "assets/icons/left_arrow.svg",
+      "sha1": "e24a35a66b35713f4061ebc53b608636fd7ade92"
     },
     {
-      "path": "assets/icons/profile.svg",
-      "sha1": "df524a3505982768dea17bf25fffe96436e0f0f6"
-    },
-    {
-      "path": "assets/icons/right_arrow.svg",
-      "sha1": "3fc30603ad7e839967f7639bb5341f961ce629b3"
+      "path": "assets/icons/cart.svg",
+      "sha1": "600697a3a018c5737991d88f4f24bd0ca84fee51"
     },
     {
       "path": "assets/icons/sms.svg",
       "sha1": "4935cc6eaff3fbab1bbc08c1efc313071bf155ea"
     },
     {
+      "path": "assets/icons/plus.svg",
+      "sha1": "d9465cd18e29502da79892ebfd7ab481833f48ba"
+    },
+    {
       "path": "assets/icons/sold.svg",
       "sha1": "796f6d0c56fd3c4f81b5244d6e8b4d15b36f8957"
     },
     {
+      "path": "assets/icons/back.svg",
+      "sha1": "a817d458f78363742891df59bb741332162c9acb"
+    },
+    {
       "path": "assets/icons/trash.svg",
       "sha1": "3af039d71c5000ebf91a85eac4c445fdae7b054e"
+    },
+    {
+      "path": "assets/icons/edit.svg",
+      "sha1": "f05d5d2b31d11ca1a0f264c22a597a17cb0d5ee5"
+    },
+    {
+      "path": "assets/icons/profile.svg",
+      "sha1": "df524a3505982768dea17bf25fffe96436e0f0f6"
+    },
+    {
+      "path": "assets/icons/filter.svg",
+      "sha1": "09afbf7db152b5fdde1f4e9448ac2258be2a954d"
+    },
+    {
+      "path": "assets/icons/cross.svg",
+      "sha1": "d2175ce84924af5de3384edb4881c52e7812e5d6"
     },
     {
       "path": "assets/icons/upload.svg",

@@ -20,6 +20,7 @@
 		323AB5A37AF341E387E9EEE1 /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp in Resources */ = {isa = PBXBuildFile; fileRef = E829200B888A4F8E9CE015AE /* 16614143747ae2cb710483cc00050fd08cb043809e_thumbnail_900x.webp */; };
 		32CFDE8524D142A994AEF93F /* buying2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 180694C3116A4BD5AC8C5DA9 /* buying2.jpg */; };
 		372DE67615C641E79E65207E /* cross.svg in Resources */ = {isa = PBXBuildFile; fileRef = 720B4DA535404DF588C250FD /* cross.svg */; };
+		401467BFEC51BA0C81D24B9C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 74753D9A36D1231D1F710B56 /* PrivacyInfo.xcprivacy */; };
 		43180EF66D3646058F9E0381 /* Tops.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3341CBF0631C41B0B631878E /* Tops.jpeg */; };
 		4FF443DE8788427B96CB1225 /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp in Resources */ = {isa = PBXBuildFile; fileRef = CA47F78D26534A07B822254E /* 1620269166c40612f933599fdca0c82b0bfa59f160_thumbnail_600x.webp */; };
 		562AC522572F41709CA1AAFF /* profile.svg in Resources */ = {isa = PBXBuildFile; fileRef = CB656152ED564B1C9FF71048 /* profile.svg */; };
@@ -27,6 +28,7 @@
 		7699B88040F8A987B510C191 /* libPods-LocalThrift-LocalThriftTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LocalThrift-LocalThriftTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8210E68E4DAA42BE8B8D3189 /* cover image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E1A1B365117241C1BD1888DD /* cover image2.jpg */; };
+		822AD6B71A6B472C960D3257 /* PlayfairDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A687D766221A488199009360 /* PlayfairDisplay.ttf */; };
 		8DBB6F1F18AF48F2AD6D84F5 /* winterwear.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1137EF9EA01E41D9992C7F90 /* winterwear.jpg */; };
 		8DCF6A58278445088D7F918E /* left_arrow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2EFAC5F0263D4A35927020DD /* left_arrow.svg */; };
 		8EE7F6C1C8694311B1069B7B /* trash.svg in Resources */ = {isa = PBXBuildFile; fileRef = 34F6766C7025401380C1CB8B /* trash.svg */; };
@@ -37,10 +39,10 @@
 		9FF793C2CDA544ECBCB00AA5 /* gmail.svg in Resources */ = {isa = PBXBuildFile; fileRef = EDDE117DB18946CCB671A993 /* gmail.svg */; };
 		A46AF584A045493FB2F90441 /* pen.svg in Resources */ = {isa = PBXBuildFile; fileRef = B60F04FC407242B480E43AC2 /* pen.svg */; };
 		A54AE500FA3F432097E250A2 /* selling2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6933128BFEF045A885880276 /* selling2.jpg */; };
+		AE2EE03E2A1341E1ADA58E61 /* plus.svg in Resources */ = {isa = PBXBuildFile; fileRef = C12918F773E943C080CBCBFD /* plus.svg */; };
 		B037FDD7397F4D4FA75C2683 /* Bottoms.png in Resources */ = {isa = PBXBuildFile; fileRef = C3076E68D0E24686B76F3D79 /* Bottoms.png */; };
 		BB2D35E660F44524A99DFF78 /* 0790601600004NEW_00_041.webp in Resources */ = {isa = PBXBuildFile; fileRef = 9B2C8752B01D4D40BFBC4352 /* 0790601600004NEW_00_041.webp */; };
 		C569355AEE434A868EEE23F9 /* sold.svg in Resources */ = {isa = PBXBuildFile; fileRef = AD678EAD27B64A6F806FD49A /* sold.svg */; };
-		D1F1E55EC4574D7BB70A666B /* plus.svg in Resources */ = {isa = PBXBuildFile; fileRef = 282AAF05039545E6BE477DF6 /* plus.svg */; };
 		E00A6B2CADAC4BD79F15022B /* right_arrow.svg in Resources */ = {isa = PBXBuildFile; fileRef = A01502639D684FDD977BBCBF /* right_arrow.svg */; };
 		EFDA0E42D3ED4B30839E6202 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C660F103B827451D9026C62B /* Montserrat-Italic-VariableFont_wght.ttf */; };
 		F331950ABD924B41BCD42523 /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEB266D5661E4546A00FAD04 /* Montserrat-VariableFont_wght.ttf */; };
@@ -74,7 +76,6 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LocalThrift-LocalThriftTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LocalThrift-LocalThriftTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CA51EA9224C4DB1B0C67D32 /* 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = 16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp; path = ../assets/images/16496631559b023bf01b138b7e575ee9bd61ec4dc0_thumbnail_900x.webp; sourceTree = "<group>"; };
 		20E3008C7FFF438D8F719A4D /* empty.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = empty.svg; path = ../assets/icons/empty.svg; sourceTree = "<group>"; };
-		282AAF05039545E6BE477DF6 /* plus.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = plus.svg; path = ../assets/icons/plus.svg; sourceTree = "<group>"; };
 		2AFF678B512B419384D22301 /* image_assest.tsx */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = image_assest.tsx; path = ../assets/images/image_assest.tsx; sourceTree = "<group>"; };
 		2EC769603A0A4303AB498A3A /* filter.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = filter.svg; path = ../assets/icons/filter.svg; sourceTree = "<group>"; };
 		2EFAC5F0263D4A35927020DD /* left_arrow.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = left_arrow.svg; path = ../assets/icons/left_arrow.svg; sourceTree = "<group>"; };
@@ -89,16 +90,19 @@
 		6933128BFEF045A885880276 /* selling2.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = selling2.jpg; path = ../assets/images/selling2.jpg; sourceTree = "<group>"; };
 		720B4DA535404DF588C250FD /* cross.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cross.svg; path = ../assets/icons/cross.svg; sourceTree = "<group>"; };
 		73F6BC46F2264682B442EB5D /* back.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = back.svg; path = ../assets/icons/back.svg; sourceTree = "<group>"; };
+		74753D9A36D1231D1F710B56 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = LocalThrift/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LocalThrift/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LocalThrift-LocalThriftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalThrift-LocalThriftTests.release.xcconfig"; path = "Target Support Files/Pods-LocalThrift-LocalThriftTests/Pods-LocalThrift-LocalThriftTests.release.xcconfig"; sourceTree = "<group>"; };
 		8F1DFD3B75FE40BF93D76FA0 /* home.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = home.svg; path = ../assets/icons/home.svg; sourceTree = "<group>"; };
 		9590C9A59CDF4E43B0941DA2 /* edit.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = edit.svg; path = ../assets/icons/edit.svg; sourceTree = "<group>"; };
 		9B2C8752B01D4D40BFBC4352 /* 0790601600004NEW_00_041.webp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = 0790601600004NEW_00_041.webp; path = ../assets/images/0790601600004NEW_00_041.webp; sourceTree = "<group>"; };
 		A01502639D684FDD977BBCBF /* right_arrow.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = right_arrow.svg; path = ../assets/icons/right_arrow.svg; sourceTree = "<group>"; };
+		A687D766221A488199009360 /* PlayfairDisplay.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = PlayfairDisplay.ttf; path = ../assets/fonts/PlayfairDisplay.ttf; sourceTree = "<group>"; };
 		AD678EAD27B64A6F806FD49A /* sold.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sold.svg; path = ../assets/icons/sold.svg; sourceTree = "<group>"; };
 		B60F04FC407242B480E43AC2 /* pen.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = pen.svg; path = ../assets/icons/pen.svg; sourceTree = "<group>"; };
 		BC8E2D6E652D4C37B1083965 /* cart.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cart.svg; path = ../assets/icons/cart.svg; sourceTree = "<group>"; };
 		BEB266D5661E4546A00FAD04 /* Montserrat-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-VariableFont_wght.ttf"; path = "../assets/fonts/Montserrat-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		C12918F773E943C080CBCBFD /* plus.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = plus.svg; path = ../assets/icons/plus.svg; sourceTree = "<group>"; };
 		C3076E68D0E24686B76F3D79 /* Bottoms.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Bottoms.png; path = ../assets/images/Bottoms.png; sourceTree = "<group>"; };
 		C4E3CF31A63F48F18008F72A /* Logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Logo.png; path = ../assets/images/Logo.png; sourceTree = "<group>"; };
 		C660F103B827451D9026C62B /* Montserrat-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic-VariableFont_wght.ttf"; path = "../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				74753D9A36D1231D1F710B56 /* PrivacyInfo.xcprivacy */,
 			);
 			name = LocalThrift;
 			sourceTree = "<group>";
@@ -244,10 +249,11 @@
 				2AFF678B512B419384D22301 /* image_assest.tsx */,
 				9590C9A59CDF4E43B0941DA2 /* edit.svg */,
 				EDDE117DB18946CCB671A993 /* gmail.svg */,
-				282AAF05039545E6BE477DF6 /* plus.svg */,
 				A01502639D684FDD977BBCBF /* right_arrow.svg */,
 				0DBA441AC39046E59852A45B /* sms.svg */,
 				AD678EAD27B64A6F806FD49A /* sold.svg */,
+				A687D766221A488199009360 /* PlayfairDisplay.ttf */,
+				C12918F773E943C080CBCBFD /* plus.svg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -376,10 +382,12 @@
 				9AB34A76F8F4492CAA336EA5 /* image_assest.tsx in Resources */,
 				0A495C20B4DD4520A6AD374C /* edit.svg in Resources */,
 				9FF793C2CDA544ECBCB00AA5 /* gmail.svg in Resources */,
-				D1F1E55EC4574D7BB70A666B /* plus.svg in Resources */,
 				E00A6B2CADAC4BD79F15022B /* right_arrow.svg in Resources */,
 				0DEC205B72B8426B9DF7F355 /* sms.svg in Resources */,
 				C569355AEE434A868EEE23F9 /* sold.svg in Resources */,
+				401467BFEC51BA0C81D24B9C /* PrivacyInfo.xcprivacy in Resources */,
+				822AD6B71A6B472C960D3257 /* PlayfairDisplay.ttf in Resources */,
+				AE2EE03E2A1341E1ADA58E61 /* plus.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,8 +681,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -700,6 +709,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -719,6 +729,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -736,8 +748,14 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -745,8 +763,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -772,6 +791,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -784,6 +804,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -800,8 +822,13 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
